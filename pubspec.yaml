@@ -1,0 +1,382 @@
+name: flutter_application_1
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  dotted_border: ^2.1.0
+  flutter:
+    sdk: flutter
+  super_drag_and_drop: ^0.7.2
+  path_drawing: ^1.0.1
+  provider: ^6.0.0
+  flame: ^1.7.3
+  syncfusion_flutter_charts: ^20.2.48
+  sensors: ^2.0.0
+  animated_text_kit: ^4.2.1
+  http: ^0.13.3
+  flutter_secure_storage: ^5.0.0
+  shimmer: ^2.0.0
+  confetti: ^0.6.0
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.6
+  sensors_plus: ^5.0.1
+  dio: ^5.5.0+1
+  jwt_decoder: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^3.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  
+  fonts:
+    - family: SourceSansPro
+      fonts: 
+        - asset: fonts/SourceSansPro-Semibold.ttf
+        - asset: fonts/SourceSansPro-Bold.ttf
+
+    - family: handwriting
+      fonts:
+        - asset: fonts/handwriting.ttf
+
+    - family: Source
+      fonts:
+        - asset: fonts/SourceSansPro-Black.otf
+          weight: 400
+    
+    - family: Serif
+      fonts: 
+        - asset: fonts/SourceSerifPro-Bold.otf
+
+    - family: Marker
+      fonts: 
+        - asset: fonts/PermanentMarker-Regular.ttf
+      
+  
+  assets:
+    - assets/logo.png
+    - assets/logo2.png
+    - assets/LogoText.png
+    - assets/coin.png
+    - assets/Already.png
+    - assets/get_started.png
+    - assets/confetti.png
+    - assets/coin_blue.png
+    - assets/coin_red.png
+    - assets/coin_green.png
+    - assets/coin_purple.png
+    - assets/coin_sky.png
+    - assets/coin_yellow.png
+    - assets/coin_purple.png
+    - assets/half_piggy.png
+    - assets/LogoText2.png
+    - assets/coinwalogo.png
+    - assets/gold-dollar-coin-icon-isometric-style-vector.jpg
+    - assets/coinwaarrow.png
+    - assets/16 (1).png
+    - assets/17.png
+    - assets/coin_level.png
+    - assets/stacked_pig.png
+    - assets/pigcoin2.png
+    - assets/flatcoin.png
+    - assets/coinstack.png
+    - assets/scene1.png
+    - assets/smallpig.png
+    - assets/smalldollar.png
+    - assets/wacoin.png
+    - assets/pigdollarfly.png
+    - assets/pigdollarsave.png
+    - assets/pigwalletthink.png
+    - assets/halfpig_green.png
+    - assets/wallet_coin.png
+    - assets/green_wa.png
+    - assets/red_wa.png
+    - assets/yellow_wa.png
+    - assets/orange_wa.png
+    - assets/pigspeech.png
+    - assets/expaper.png
+    - assets/bike coinwa.png
+    - assets/grave.png
+    - assets/coin1mask.png
+    - assets/wawaghost.png
+    - assets/suprisedwawa.png
+    - assets/hexagon.png
+    - assets/greenbut.png
+    - assets/big green.png
+    - assets/alarmb.png
+    - assets/gradb.png
+    - assets/hammerb.png
+    - assets/calendarb.png
+    - assets/peaceb.png
+    - assets/cartb.png
+    - assets/wawacalendar.png
+    - assets/grad.png
+    - assets/hammer.png
+    - assets/calendar.png
+    - assets/peace.png
+    - assets/cart.png
+    - assets/alarm.png
+    - assets/scenario_alarm.png
+    - assets/scenario_cart.png
+    - assets/scenario_peace.png
+    - assets/scenario_hammer.png
+    - assets/scenario_grad.png
+    - assets/scenario_calendar.png
+    - assets/wawacoin2intro.png
+    - assets/hammer.png
+    - assets/savinggoal.png
+    - assets/toothbrush.png
+    - assets/notebook.png
+    - assets/smartphone.png
+    - assets/wawaphone.png
+    - assets/bank.png
+    - assets/applewatch.png
+    - assets/eggs.png
+    - assets/purse.png
+    - assets/savingjar.png
+    - assets/milk.png
+    - assets/openhands.png
+    - assets/water.png
+    - assets/game.png
+    - assets/debtrock.png
+    - assets/coin2phone.png
+    - assets/wawaTalk.png
+    - assets/triangle.png
+    - assets/wawaConfused.png
+    - assets/wawaCoach.png
+    - assets/Shopping_Icons/apple.png
+    - assets/Shopping_Icons/banana.png
+    - assets/Shopping_Icons/bigcart.png
+    - assets/Shopping_Icons/chocolate.png
+    - assets/Shopping_Icons/egg1.png
+    - assets/Shopping_Icons/egg2.png
+    - assets/Shopping_Icons/egg3.png
+    - assets/Shopping_Icons/milk1.png
+    - assets/Shopping_Icons/milk2.png
+    - assets/Shopping_Icons/milk3.png
+    - assets/Shopping_Icons/milk4.png
+    - assets/Shopping_Icons/water1.png
+    - assets/Shopping_Icons/water2.png
+    - assets/Shopping_Icons/water3.png
+    - assets/Shopping_Icons/paper.png
+    - assets/trianglecut2.png
+    - assets/supercarwawa.png
+    - assets/check.png
+    - assets/x.png
+    - assets/Shopping_Icons/shoppingsave.png
+    - assets/Coin-3/tape.png
+    - assets/Coin-3/wawaCalendar.png
+    - assets/Coin-3/piechart1.png
+    - assets/Coin-3/piechart2.png
+    - assets/Coin-3/wawaGirl1.png
+    - assets/Coin-3/wawaGirl2.png
+    - assets/Tapcoin.png
+    - assets/Coin-4/bookshelf_pig.png
+    - assets/Coin-4/bookshelf_family.png
+    - assets/Coin-4/bookshelf_phone.png
+    - assets/Coin-4/bookshelf_laptop.png
+    - assets/Coin-4/wawaBack.png
+    - assets/Coin-4/desk_open.png
+    - assets/Coin-4/desk_closed.png
+    - assets/Coin-4/lego1.png
+    - assets/Coin-4/lego2.png
+    - assets/Coin-4/lego3.png
+    - assets/Coin-4/money_jar.png
+    - assets/Coin-4/money_arrow.png
+    - assets/Coin-4/wawaCash.png
+    - assets/Coin-4/wawaJar1.png
+    - assets/Coin-4/wawaJar2.png
+    - assets/Coin-4/cash.png
+    - assets/wheresave.png
+    - assets/shakecoin.png
+    - assets/phonenoglow.png
+    - assets/phoneglow.png
+    - assets/phonedata.png
+    - assets/parentglow.png
+    - assets/parentintro.png
+    - assets/wawaparent.png
+    - assets/bebe.png
+    - assets/young.png
+    - assets/old.png
+    - assets/lowmoney.png
+    - assets/mediummoney.png
+    - assets/mostmoney.png
+    - assets/defaultguy.png
+    - assets/buzman.png
+    - assets/defaultwoman.png
+    - assets/ogwawa.png
+    - assets/userdollar.png
+    - assets/openwallet.png
+    - assets/exbadges.png
+    - assets/circleframe.png
+    - assets/leaderboard/goldbar.png
+    - assets/leaderboard/trophy.png
+    - assets/wawaRelax.png
+    - assets/wawaBag.png
+    - assets/partyhatcircle.png
+    - assets/paintcircle.png
+    - assets/gradient.png
+    - assets/3dcoin.png
+    - assets/america_flag.png
+    - assets/canada_flag.png
+    - assets/Badges/baby.png
+    - assets/Badges/early.png
+    - assets/Badges/finwhiz.png
+    - assets/Badges/piggybank.png
+    - assets/Badges/pretty.png
+    - assets/Badges/welcome.png
+    - assets/smallpiggrey.png
+    - assets/greenpiggy.png
+    - assets/pigshelf.png
+    - assets/wawaholding.png
+    - assets/Unit 2/boxstuff.png
+    - assets/Unit 2/dragonegg.png
+    - assets/Unit 2/house_asset.png
+    - assets/Unit 2/money_bag.png
+    - assets/Unit 2/stocks.png
+    - assets/Unit 2/wawaBook.png
+    - assets/Unit 2/wawaPlant.png
+    - assets/Unit 2/wawaValue.png
+    - assets/Unit 2/scenario_money.png
+    - assets/Unit 2/scenario_boxstuff.png
+    - assets/Unit 2/baba_old.png
+    - assets/Unit 2/baba_young.png
+    - assets/Unit 2/liability.png
+    - assets/Unit 2/pencil_case.png
+    - assets/Unit 2/red_marker.png
+    - assets/Unit 2/red_marker_faded.png
+    - assets/Unit 2/fancypig.png
+    - assets/Unit 2/Icon.png
+    - assets/Unit 2/daboss.png
+    - assets/Unit 2/namecard.png
+    - assets/blackhouse.png
+    - assets/blackhouse2.png
+    - assets/badmilk.png
+    - assets/dragonegghatch.png
+    - assets/assetchart.png
+    - assets/cartonmilk.png
+    - assets/spillmilk.png
+    - assets/yplant.png
+    - assets/smallcar.png
+    - assets/icecream.png
+    - assets/tradingcard.png
+    - assets/painting.png
+    - assets/rarecoin.png
+    - assets/apple.png
+    - assets/Unit 3/empty_wallet.png
+    - assets/Unit 3/grad_cap.png
+    - assets/Unit 3/medschool.png
+    - assets/Unit 3/plan.png
+    - assets/Unit 3/student_loan.png
+    - assets/Unit 3/wawaBus.png
+    - assets/Unit 3/wawaCar.png
+    - assets/Unit 3/wawaDoctor.png
+    - assets/Unit 3/white_pig.png
+    - assets/apple.png 
+    - assets/creditcardintro.png
+    - assets/wawaup.png
+    - assets/evilcard.png
+    - assets/cutecard.png
+    - assets/creditscore.png
+    - assets/cardexplain.png
+    - assets/pause.png
+    - assets/whatisinterest.png
+    - assets/yellingwawa.png
+    - assets/blank.png
+    - assets/creditscore.png
+    - assets/blankcreditscore.png
+    - assets/Unit 3/cash_register.png
+    - assets/Unit 3/cashier.png
+    - assets/Unit 3/credit_card.png
+    - assets/Unit 3/credit_score_600.png
+    - assets/Unit 3/debit_machine.png
+    - assets/Unit 3/movie_seat.png
+    - assets/Unit 3/wawaMovie.png
+    - assets/busbob.png
+    - assets/regrob.png
+    - assets/studsam.png
+    - assets/magichat.png
+    - assets/buscard.png
+    - assets/stucard.png
+    - assets/magicwawa.png
+    - assets/magichat.png
+    - assets/wawasign.png
+    
+
+
+    
+    
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

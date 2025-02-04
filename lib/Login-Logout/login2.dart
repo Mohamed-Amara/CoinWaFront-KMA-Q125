@@ -1,0 +1,218 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Providers/profile_provider.dart';
+import 'package:provider/provider.dart';
+import '../Backend-Service/auth_service.dart';
+import '../lobby.dart';
+
+void main() {
+  runApp(const Login2App());
+}
+
+// Main app widget
+class Login2App extends StatelessWidget {
+  const Login2App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Login Page',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const LoginPage(),
+    );
+  }
+}
+
+// Login page widget
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final AuthService _authService = AuthService();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _errorMessage;
+
+  // Method to handle login
+  void _login() async {
+    try {
+      final response = await _authService.login(
+        _emailController.text,
+        _passwordController.text,
+      );
+      print('Login successful: $response');
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.toString();
+      });
+    }
+    try {
+      TimeOfDay now = TimeOfDay.now();
+      final response = await _authService.updateStreak(context);
+      if (!(Provider.of<ProfileProvider>(context, listen: false).badges.contains("assets/Badges/early.png")) && now.hour == 6) {
+        Provider.of<ProfileProvider>(context, listen: false).updateUserBadge(context, "early");
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LobbyPage()),
+      );
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.toString();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 205, 202, 255),
+      body: Container(
+        height: 3260,
+        width: 2450,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 62, 47, 196), // Dark purple
+              Color.fromARGB(255, 175, 175, 252), // Lavender
+            ],
+            stops: [0.0, 0.7],
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 80),
+                  const Text(
+                    'Welcome Back!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'SourceSans',
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 60),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0, top: 40),
+                    child: Container(
+                      height: 85,
+                      width: 420,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 255, 241, 219),
+                        border: Border.all(
+                          color: Color.fromARGB(255, 94, 24, 235),
+                          width: 4.0,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: TextFormField(
+                        controller: _emailController,
+                        style: const TextStyle(
+                          fontFamily: 'Source',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: const InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                            fontFamily: 'Source',
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 120, 112, 222),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0, top: 40),
+                    child: Container(
+                      height: 85,
+                      width: 420,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 255, 241, 219),
+                        border: Border.all(
+                          color: Color.fromARGB(255, 94, 24, 235),
+                          width: 4.0,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        style: const TextStyle(
+                          fontFamily: 'Source',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          hintStyle: TextStyle(
+                            fontFamily: 'Source',
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 120, 112, 222),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        obscureText: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 60.0),
+                  SizedBox(
+                    height: 60,
+                    width: 220,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 94, 24, 235),
+                        ),
+                      ),
+                      child: const Text(
+                        'Ready To Learn!',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Source',
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_errorMessage != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        _errorMessage!,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,298 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Login-Logout/signup.dart';
+
+class DateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final RegExp regExp = RegExp(r'^\d{0,4}-?\d{0,2}-?\d{0,2}$');
+    if (!regExp.hasMatch(newValue.text)) {
+      return oldValue;
+    }
+
+    String formattedText = newValue.text;
+    if (newValue.text.length > 4 && newValue.text[4] != '-') {
+      formattedText =
+          newValue.text.substring(0, 4) + '-' + newValue.text.substring(4);
+    }
+    if (newValue.text.length > 7 && newValue.text[7] != '-') {
+      formattedText =
+          newValue.text.substring(0, 7) + '-' + newValue.text.substring(7);
+    }
+
+    return newValue.copyWith(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
+
+void main() {
+  runApp(hello());
+}
+
+class hello extends StatelessWidget {
+  hello({Key? key}) : super(key: key);
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
+
+   @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 62, 47, 196), // Dark purple
+                Color.fromARGB(255, 175, 175, 252), // Lavender
+              ],
+              stops: [0.0, 0.7],
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 16.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(height: 50),
+                    const Text(
+                      'We want to get to know \n You!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'SourceSans',
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+                    Container(
+                      height: 260,
+                      width: 450,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 94, 24, 235),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'HELLO\n',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSans',
+                                    fontSize: 55,
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '     MY NAME IS',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSans',
+                                    fontSize: 20,
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Container(
+                            height: 75,
+                            width: 400,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 241, 219),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                controller: _nameController,
+                                style: const TextStyle(
+                                  fontFamily: 'Source',
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                ),
+                                textAlignVertical: TextAlignVertical.center,
+                                decoration: const InputDecoration(
+                                  hintText: 'Full Name',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'Source',
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 120, 112, 222),
+                                  ),
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 85,
+                          width: 400,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0,
+                            vertical: 10.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 241, 219),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 94, 24, 235),
+                              width: 4.0,
+                            ),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: TextFormField(
+                            controller: _birthdayController,
+                            inputFormatters: [DateInputFormatter()],
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(
+                              fontFamily: 'Source',
+                              fontSize: 19,
+                              color: Colors.black,
+                            ),
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: const InputDecoration(
+                              hintText: 'Your Birthday? (YYYY-MM-DD)',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Source',
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 120, 112, 222),
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: -30,
+                          top: 0,
+                          bottom: 0,
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Image.asset('assets/partyhatcircle.png'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 60),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 85,
+                          width: 400,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0,
+                            vertical: 10.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 241, 219),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 94, 24, 235),
+                              width: 4.0,
+                            ),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(
+                              fontFamily: 'Source',
+                              fontSize: 19,
+                              color: Colors.black,
+                            ),
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: InputDecoration(
+                              hintText: 'Favorite Colour?',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Source',
+                                fontSize: 19,
+                                color: Color.fromARGB(255, 120, 112, 222),
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: -33,
+                          top: 0,
+                          bottom: 0,
+                          child: SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Image.asset('assets/paintcircle.png'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 60),
+                    SizedBox(
+                      height: 60,
+                      width: 220,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          (_nameController.text != '' &&
+                              _birthdayController.text != '')
+                              ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(
+                                name: _nameController.text,
+                                birthday: _birthdayController.text,
+                              ),
+                            ),
+                          )
+                              : print('Need to enter name and birthday!');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 94, 24, 235),
+                          ),
+                        ),
+                        child: const Text(
+                          'What\'s Next?',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 21,
+                            fontFamily: 'Source',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
