@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cea4186b-361d-45d1-8651-b36b96e86d01" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/controllers/auth.controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/controllers/leaderboard.controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/controllers/user.controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/middleware/auth.middleware.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/models/user.model.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/redisClient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/routes/auth.route.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/routes/leaderboard.route.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaBackEnd-main/routes/user.route.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CoinWaNew-main" beforeDir="false" afterPath="$PROJECT_DIR$/../CoinWaNew-main" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Mohamed-Amara"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/arian-gif/CoinWa.git",
+    "accountId": "b4a620e5-f4fc-46bf-85e1-4dbedd3cd8ce"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2saqD6No2d2sok7vsLuE15Vc02f" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/amara/Flutter/CoinWa/frontend&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cea4186b-361d-45d1-8651-b36b96e86d01" name="Changes" comment="" />
+      <created>1738703910611</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738703910611</updated>
+    </task>
+    <servers />
+  </component>
+</project>
