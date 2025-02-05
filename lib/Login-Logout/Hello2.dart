@@ -33,6 +33,29 @@ void main() {
 }
 
 class hello extends StatelessWidget {
+  bool _isValidDate(String dateString) {
+    try {
+      final parts = dateString.split('-');
+      if (parts.length != 3) return false;
+
+      int year = int.parse(parts[0]);
+      int month = int.parse(parts[1]);
+      int day = int.parse(parts[2]);
+
+      if (month < 1 || month > 12) return false;
+      if (day < 1 || day > _daysInMonth(month, year)) return false;
+
+      DateTime birthday = DateTime(year, month, day);
+      return birthday.isBefore(DateTime.now()); // Ensure it's not in the future
+    } catch (e) {
+      return false;
+    }
+  }
+
+  int _daysInMonth(int month, int year) {
+    return DateTime(year, month + 1, 0).day;
+  }
+
   hello({Key? key}) : super(key: key);
 
   final TextEditingController _nameController = TextEditingController();
@@ -258,19 +281,31 @@ class hello extends StatelessWidget {
                       width: 220,
                       child: ElevatedButton(
                         onPressed: () {
-                          (_nameController.text != '' &&
-                              _birthdayController.text != '')
-                              ? Navigator.push(
+                          String name = _nameController.text.trim();
+                          String birthday = _birthdayController.text.trim();
+
+                          if (name.isEmpty || birthday.isEmpty) {
+                            print('Need to enter name and birthday!');
+                            return;
+                          }
+
+                          if (!_isValidDate(birthday)) {
+                            print('Invalid birthday! Please enter a valid date.');
+                            return;
+                          }
+
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => LoginPage(
-                                name: _nameController.text,
-                                birthday: _birthdayController.text,
+                                name: name,
+                                birthday: birthday,
                               ),
                             ),
-                          )
-                              : print('Need to enter name and birthday!');
+                          );
                         },
+
+
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 94, 24, 235),
