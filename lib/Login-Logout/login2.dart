@@ -47,17 +47,19 @@ class _LoginPageState extends State<LoginPage> {
         _passwordController.text,
       );
       print('Login successful: $response');
-    } catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-      });
-    }
-    try {
+
+      // Update streak and check for early bird badge
       TimeOfDay now = TimeOfDay.now();
-      final response = await _authService.updateStreak(context);
-      if (!(Provider.of<ProfileProvider>(context, listen: false).badges.contains("assets/Badges/early.png")) && now.hour == 6) {
-        Provider.of<ProfileProvider>(context, listen: false).updateUserBadge(context, "early");
+      await _authService.updateStreak(context);
+      if (!(Provider.of<ProfileProvider>(context, listen: false)
+              .badges
+              .contains("assets/Badges/early.png")) &&
+          now.hour == 6) {
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateUserBadge(context, "early");
       }
+
+      // Navigate to the lobby page
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LobbyPage()),
@@ -66,7 +68,29 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _errorMessage = e.toString();
       });
+
+      // Show the error dialog
+      _showErrorDialog();
     }
+  }
+
+  // Method to show error dialog
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Try Again:'),
+        content: Text('Username and/or Password is Incorrect!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -199,14 +223,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  if (_errorMessage != null)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        _errorMessage!,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
                 ],
               ),
             ),

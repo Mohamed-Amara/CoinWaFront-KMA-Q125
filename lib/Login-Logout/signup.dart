@@ -42,17 +42,46 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _rePasswordController = TextEditingController();
   String? _errorMessage;
 
+  bool _isValidEmail(String email) {
+    // check email format: _____@_____.____
+    RegExp emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+    return emailRegExp.hasMatch(email);
+  }
+
   void _register() async {
+    String email = _emailController.text.trim();
+
+    if (!_isValidEmail(email)) {
+      // Show the error dialog for invalid email format
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Invalid Email'),
+          content: Text('Please enter a valid email address.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return; // Don't proceed if email is invalid
+    }
+
     if (_passwordController.text == _rePasswordController.text) {
       try {
         final response = await _authService.register(
           widget.name,
           widget.birthday,
           _usernameController.text,
-          _emailController.text,
+          email, // Pass email as a string
           _passwordController.text,
         );
-        Provider.of<ProfileProvider>(context, listen: false).updateUserBadge(context, "welcome");
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateUserBadge(context, "welcome");
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const LobbyPage()),
@@ -63,7 +92,21 @@ class _LoginPageState extends State<LoginPage> {
         });
       }
     } else {
-      _errorMessage = "Passwords Do Not Match!";
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Try Again:'),
+          content: Text('Passwords do not Match!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -114,10 +157,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       height: 85,
                       width: 420,
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
-                        border: Border.all(color: Color.fromARGB(255, 94, 24, 235), width: 4.0),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 94, 24, 235),
+                            width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: TextFormField(
@@ -146,10 +192,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       height: 85,
                       width: 420,
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
-                        border: Border.all(color: Color.fromARGB(255, 94, 24, 235), width: 4.0),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 94, 24, 235),
+                            width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: TextFormField(
@@ -178,10 +227,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       height: 85,
                       width: 420,
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
-                        border: Border.all(color: Color.fromARGB(255, 94, 24, 235), width: 4.0),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 94, 24, 235),
+                            width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: TextFormField(
@@ -210,10 +262,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       height: 85,
                       width: 420,
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
-                        border: Border.all(color: Color.fromARGB(255, 94, 24, 235), width: 4.0),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 94, 24, 235),
+                            width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: TextFormField(
@@ -242,7 +297,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 60,
                     width: 220,
                     child: ElevatedButton(
-                      onPressed:  _register,
+                      onPressed: _register,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Color.fromARGB(255, 94, 24, 235),
