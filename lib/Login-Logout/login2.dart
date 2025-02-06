@@ -3,6 +3,7 @@ import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 import '../Backend-Service/auth_service.dart';
 import '../lobby.dart';
+import 'Forgot-password.dart'; // Import the ForgotPasswordPage
 
 void main() {
   runApp(const Login2App());
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Try Again:'),
+        title: const Text('Error'),
         content: Text('Username and/or Password is Incorrect!'),
         actions: [
           TextButton(
@@ -89,6 +90,17 @@ class _LoginPageState extends State<LoginPage> {
             child: const Text('OK'),
           ),
         ],
+      ),
+    );
+  }
+
+  // Navigate to ForgotPasswordPage
+  void _forgotPassword() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            ForgotPasswordPage(), // Navigate to ForgotPasswordPage
       ),
     );
   }
@@ -219,6 +231,31 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                           fontSize: 20.0,
                           fontFamily: 'Source',
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_errorMessage != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        _errorMessage!,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  // Forgot password button
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20), // Adjust the margin as needed
+                    child: TextButton(
+                      onPressed:
+                          _forgotPassword, // Call _forgotPassword to navigate
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Color(0xFF5D2F8E), // Dark purple color
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
