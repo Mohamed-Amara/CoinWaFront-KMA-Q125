@@ -28,6 +28,13 @@ class DateInputFormatter extends TextInputFormatter {
   }
 }
 
+void synchronousDelay(int milliseconds) {
+  var endTime = DateTime.now().millisecondsSinceEpoch + milliseconds;
+  while (DateTime.now().millisecondsSinceEpoch < endTime) {
+    // Keep the CPU busy while waiting
+  }
+}
+
 void main() {
   runApp(hello());
 }
@@ -61,7 +68,7 @@ class hello extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -69,7 +76,7 @@ class hello extends StatelessWidget {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -110,13 +117,13 @@ class hello extends StatelessWidget {
                         vertical: 16.0,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 94, 24, 235),
+                        color: const Color.fromARGB(255, 94, 24, 235),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text.rich(
+                          const Text.rich(
                             TextSpan(
                               children: [
                                 TextSpan(
@@ -124,8 +131,7 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 55,
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
+                                    color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                                 TextSpan(
@@ -133,8 +139,7 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 20,
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
+                                    color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                               ],
@@ -189,7 +194,7 @@ class hello extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 255, 241, 219),
                             border: Border.all(
-                              color: Color.fromARGB(255, 94, 24, 235),
+                              color: const Color.fromARGB(255, 94, 24, 235),
                               width: 4.0,
                             ),
                             borderRadius: BorderRadius.circular(40),
@@ -240,19 +245,19 @@ class hello extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 255, 241, 219),
                             border: Border.all(
-                              color: Color.fromARGB(255, 94, 24, 235),
+                              color: const Color.fromARGB(255, 94, 24, 235),
                               width: 4.0,
                             ),
                             borderRadius: BorderRadius.circular(40),
                           ),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Source',
                               fontSize: 19,
                               color: Colors.black,
                             ),
                             textAlignVertical: TextAlignVertical.center,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Favorite Colour?',
                               hintStyle: TextStyle(
                                 fontFamily: 'Source',
@@ -284,16 +289,29 @@ class hello extends StatelessWidget {
                           String name = _nameController.text.trim();
                           String birthday = _birthdayController.text.trim();
 
-                          if (name.isEmpty || birthday.isEmpty) {
-                            print('Need to enter name and birthday!');
-                            return;
-                          }
-
+                          // Check if the date is valid
                           if (!_isValidDate(birthday)) {
-                            print('Invalid birthday! Please enter a valid date.');
-                            return;
+                            // Show the error dialog if the date is invalid
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Invalid Date'),
+                                content: Text('Please enter a valid date.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(
+                                          context); // Close the dialog
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            return; // Don't proceed if the date is invalid
                           }
 
+                          // Proceed with navigation if the date is valid
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -304,11 +322,9 @@ class hello extends StatelessWidget {
                             ),
                           );
                         },
-
-
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 94, 24, 235),
+                            const Color.fromARGB(255, 94, 24, 235),
                           ),
                         ),
                         child: const Text(
