@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Login-Logout/forgot_password.dart';
 import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 import '../Backend-Service/auth_service.dart';
@@ -178,6 +179,26 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+TextButton(
+  onPressed: () {
+    // Navigator.pushNamed(context, '/forgot-password');
+    Navigator.of(context).push(
+    MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+  );
+  },
+  child: const Text(
+    "Forgot Password?",
+    style: TextStyle(
+      fontFamily: 'Source',
+      fontSize: 18,
+      color: Color.fromARGB(255, 94, 24, 235),
+      fontWeight: FontWeight.bold,
+      decoration: TextDecoration.underline,
+    ),
+  ),
+),
+
                   const SizedBox(height: 60.0),
                   SizedBox(
                     height: 60,

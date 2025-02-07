@@ -16,6 +16,8 @@ import 'package:flutter_application_1/Login-Logout/splash_screen.dart';
 import 'package:flutter_application_1/Login-Logout/home_screen.dart'; // Ensure you have a home screen
 import 'package:provider/provider.dart';
 import 'Providers/lives_provider.dart'; // Import the LivesProvider
+import 'package:flutter_application_1/Login-Logout/forgot_password.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const Login2App(),
         '/home': (context) => const HomeScreen(),
         // Add other routes here
+        '/forgot-password': (context) => ForgotPasswordPage(),
       },
     );
   }

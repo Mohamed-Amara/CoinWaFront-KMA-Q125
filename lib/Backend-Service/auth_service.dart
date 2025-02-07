@@ -314,4 +314,38 @@ class AuthService {
     }
   }
 
+  Future<void> forgotPassword(String email) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/password/forgot-password'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'email': email}),
+  );
+  if (response.statusCode != 200) {
+    throw Exception('Failed to send verification code: ${response.body}');
+  }
+}
+
+Future<void> verifyResetCode(String email, String code) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/password/verify-code'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'email': email, 'code': code}),
+  );
+  if (response.statusCode != 200) {
+    throw Exception('Invalid verification code: ${response.body}');
+  }
+}
+
+Future<void> resetPassword(String email, String code, String newPassword) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/password/reset-password'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'email': email, 'code': code, 'newPassword': newPassword}),
+  );
+  if (response.statusCode != 200) {
+    throw Exception('Failed to reset password: ${response.body}');
+  }
+}
+
+
 }
