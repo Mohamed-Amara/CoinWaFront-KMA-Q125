@@ -1,40 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
-import 'verification_code_page.dart';
+import 'reset_password_page.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
+class VerificationCodePage extends StatefulWidget {
+  final String email;
+
+  VerificationCodePage({required this.email});
+
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  _VerificationCodePageState createState() => _VerificationCodePageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final TextEditingController _emailController = TextEditingController();
+class _VerificationCodePageState extends State<VerificationCodePage> {
+  final TextEditingController _codeController = TextEditingController();
   String? _message;
   bool _isLoading = false;
 
   final AuthService _authService = AuthService();
 
-  Future<void> _sendResetLink() async {
+  Future<void> _verifyCode() async {
     setState(() {
       _isLoading = true;
     });
 
-    final email = _emailController.text.trim();
+    final code = _codeController.text.trim();
 
-    if (email.isEmpty) {
+    if (code.isEmpty) {
       setState(() {
-        _message = "Please enter a valid email address!";
+        _message = "Please enter the verification code!";
         _isLoading = false;
       });
       return;
     }
 
     try {
-      await _authService.forgotPassword(email);
+      await _authService.verifyResetCode(widget.email, code);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VerificationCodePage(email: email),
+          builder: (context) => ResetPasswordPage(email: widget.email, code: code),
         ),
       );
     } catch (e) {
@@ -70,7 +74,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Forgot Password',
+                  'Enter Verification Code',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'SourceSans',
@@ -83,14 +87,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Container(
                   width: 300,
                   child: TextField(
-                    controller: _emailController,
+                    controller: _codeController,
                     style: TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Enter verification code',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -119,7 +123,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
-                      onPressed: _sendResetLink,
+                      onPressed: _verifyCode,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
@@ -128,7 +132,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                       child: const Text(
-                        'Send Reset Link',
+                        'Verify Code',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0,

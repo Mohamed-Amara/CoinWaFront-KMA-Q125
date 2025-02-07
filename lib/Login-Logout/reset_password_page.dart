@@ -1,41 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
-import 'verification_code_page.dart';
+import 'login2.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
+class ResetPasswordPage extends StatefulWidget {
+  final String email;
+  final String code;
+
+  ResetPasswordPage({required this.email, required this.code});
+
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  _ResetPasswordPageState createState() => _ResetPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final TextEditingController _emailController = TextEditingController();
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   String? _message;
   bool _isLoading = false;
 
   final AuthService _authService = AuthService();
 
-  Future<void> _sendResetLink() async {
+  Future<void> _resetPassword() async {
     setState(() {
       _isLoading = true;
     });
 
-    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
 
-    if (email.isEmpty) {
+    if (password.isEmpty || confirmPassword.isEmpty) {
       setState(() {
-        _message = "Please enter a valid email address!";
+        _message = "Please enter and confirm your new password!";
+        _isLoading = false;
+      });
+      return;
+    }
+
+    if (password != confirmPassword) {
+      setState(() {
+        _message = "Passwords do not match!";
         _isLoading = false;
       });
       return;
     }
 
     try {
-      await _authService.forgotPassword(email);
-      Navigator.push(
+      await _authService.resetPassword(widget.email, widget.code, password);
+      setState(() {
+        _message = "Password successfully reset. You can now log in.";
+      });
+
+      // Navigate to login2.dart after resetting the password
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => VerificationCodePage(email: email),
-        ),
+        MaterialPageRoute(builder: (context) => Login2App()), // Replace with your login2.dart class name
       );
     } catch (e) {
       setState(() {
@@ -70,7 +88,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Forgot Password',
+                  'Reset Password',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'SourceSans',
@@ -83,14 +101,44 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Container(
                   width: 300,
                   child: TextField(
-                    controller: _emailController,
+                    controller: _passwordController,
+                    obscureText: true,
                     style: TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Enter new password',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      hintStyle: TextStyle(
+                        fontFamily: 'Source',
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 120, 112, 222),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  width: 300,
+                  child: TextField(
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    style: TextStyle(
+                      fontFamily: 'Source',
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Confirm new password',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -119,7 +167,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
-                      onPressed: _sendResetLink,
+                      onPressed: _resetPassword,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
@@ -128,7 +176,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                       child: const Text(
-                        'Send Reset Link',
+                        'Reset Password',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0,
