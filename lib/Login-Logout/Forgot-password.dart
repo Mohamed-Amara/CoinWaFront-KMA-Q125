@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/Backend-Service/auth_service.dart';
+import 'verification_code_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -9,30 +10,40 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
   String? _message;
+  bool _isLoading = false;
+
+  final AuthService _authService = AuthService();
 
   Future<void> _sendResetLink() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     final email = _emailController.text.trim();
 
     if (email.isEmpty) {
       setState(() {
         _message = "Please enter a valid email address!";
+        _isLoading = false;
       });
       return;
     }
 
-    // Make POST request to the backend to send the reset link
-    final response = await http.post(
-      Uri.parse('http://localhost:3000/forgot-password'),
-      body: {'email': email},
-    );
-
-    if (response.statusCode == 200) {
+    try {
+      await _authService.forgotPassword(email);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerificationCodePage(email: email),
+        ),
+      );
+    } catch (e) {
       setState(() {
-        _message = "Password reset link sent to your email!";
+        _message = "Error: $e";
       });
-    } else {
+    } finally {
       setState(() {
-        _message = "Error sending password reset link.";
+        _isLoading = false;
       });
     }
   }
@@ -74,12 +85,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: TextField(
                     controller: _emailController,
                     style: TextStyle(
-                      fontFamily: 'Source', // Font for the input text
+                      fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Enter your email', // Set placeholder text
+                      hintText: 'Enter your email',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -87,44 +98,45 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         borderSide: BorderSide.none,
                       ),
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       hintStyle: TextStyle(
-                        fontFamily: 'Source', // Font for the hint text
+                        fontFamily: 'Source',
                         fontSize: 20,
-                        color: Color.fromARGB(
-                            255, 120, 112, 222), // Hint text color
+                        color: Color.fromARGB(255, 120, 112, 222),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                Container(
-                  width: 300,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color:
-                        Color.fromARGB(255, 62, 47, 196), // Dark purple button
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: _sendResetLink,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                if (_isLoading)
+                  CircularProgressIndicator()
+                else
+                  Container(
+                    width: 300,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 62, 47, 196),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: _sendResetLink,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Send Reset Link',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Source',
+                        ),
                       ),
                     ),
-                    child: const Text(
-                      'Ready To Learn!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontFamily: 'Source',
-                      ),
-                    ),
                   ),
-                ),
                 if (_message != null) ...[
                   SizedBox(height: 20),
                   Text(
@@ -132,7 +144,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     style: TextStyle(
                       color: Colors.red,
                       fontSize: 14,
-                      fontFamily: 'Source', // Font for the error message
+                      fontFamily: 'Source',
                     ),
                   ),
                 ]
