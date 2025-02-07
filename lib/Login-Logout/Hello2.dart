@@ -67,6 +67,8 @@ class hello extends StatelessWidget {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
+  final ValueNotifier<String?> _selectedColorNotifier =
+      ValueNotifier<String?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +207,7 @@ class hello extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             style: const TextStyle(
                               fontFamily: 'Source',
-                              fontSize: 19,
+                              fontSize: 20,
                               color: Colors.black,
                             ),
                             textAlignVertical: TextAlignVertical.center,
@@ -213,7 +215,7 @@ class hello extends StatelessWidget {
                               hintText: 'Your Birthday? (YYYY-MM-DD)',
                               hintStyle: TextStyle(
                                 fontFamily: 'Source',
-                                fontSize: 18,
+                                fontSize: 19,
                                 color: Color.fromARGB(255, 120, 112, 222),
                               ),
                               border: InputBorder.none,
@@ -250,21 +252,83 @@ class hello extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(40),
                           ),
-                          child: TextFormField(
-                            style: const TextStyle(
-                              fontFamily: 'Source',
-                              fontSize: 19,
-                              color: Colors.black,
-                            ),
-                            textAlignVertical: TextAlignVertical.center,
-                            decoration: const InputDecoration(
-                              hintText: 'Favorite Colour?',
-                              hintStyle: TextStyle(
-                                fontFamily: 'Source',
-                                fontSize: 19,
-                                color: Color.fromARGB(255, 120, 112, 222),
-                              ),
-                              border: InputBorder.none,
+                          child: Center(
+                            child: ValueListenableBuilder<String?>(
+                              valueListenable: _selectedColorNotifier,
+                              builder: (context, selectedColor, child) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 255, 241, 219),
+                                    borderRadius: BorderRadius.circular(
+                                        40), // Rounded edges
+                                  ),
+                                  child: DropdownButton<String>(
+                                    value: selectedColor,
+                                    hint: const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: Text(
+                                        'Favorite Colour?',
+                                        style: TextStyle(
+                                          fontFamily: 'Source',
+                                          fontSize: 19,
+                                          color: Color.fromARGB(
+                                              255, 120, 112, 222),
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      _selectedColorNotifier.value = newValue;
+                                    },
+                                    items: <String>[
+                                      'Red',
+                                      'Blue',
+                                      'Green',
+                                      'Yellow',
+                                      'Purple',
+                                      'Orange',
+                                      'Pink'
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          child: Text(
+                                            value,
+                                            style: const TextStyle(
+                                              fontFamily: 'Source',
+                                              fontSize: 19,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    underline:
+                                        Container(), // Remove the default underline
+                                    isExpanded: true,
+                                    dropdownColor: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        241,
+                                        219), // Background color of dropdown
+                                    borderRadius: BorderRadius.circular(
+                                        20), // Rounded edges for dropdown
+                                    icon: const Padding(
+                                      padding: EdgeInsets.only(right: 16.0),
+                                      child: Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color.fromARGB(255, 94, 24, 235),
+                                      ),
+                                    ),
+                                    iconSize: 30,
+                                    elevation: 2,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
