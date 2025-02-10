@@ -16,6 +16,7 @@ import 'package:flutter_application_1/Login-Logout/splash_screen.dart';
 import 'package:flutter_application_1/Login-Logout/home_screen.dart'; // Ensure you have a home screen
 import 'package:provider/provider.dart';
 import 'Providers/lives_provider.dart'; // Import the LivesProvider
+import 'welcome_page.dart';  // Import the WelcomePage
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,8 +48,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      initialRoute: '/',
+      initialRoute: '/welcome',
       routes: {
+        '/welcome': (context) => WelcomePage(),
         '/': (context) => const AppWithOverlay(),
         '/login': (context) => const Login2App(),
         '/home': (context) => const HomeScreen(),
