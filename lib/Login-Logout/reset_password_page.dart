@@ -6,7 +6,7 @@ class ResetPasswordPage extends StatefulWidget {
   final String email;
   final String code;
 
-  ResetPasswordPage({required this.email, required this.code});
+  const ResetPasswordPage({super.key, required this.email, required this.code});
 
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
@@ -14,7 +14,8 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   String? _message;
   bool _isLoading = false;
 
@@ -30,7 +31,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     if (password.isEmpty || confirmPassword.isEmpty) {
       setState(() {
-        _message = "Please enter and confirm your new password!";
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Empty Password!'),
+            content: const Text('Please enter and confrim your password.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
         _isLoading = false;
       });
       return;
@@ -38,7 +53,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     if (password != confirmPassword) {
       setState(() {
-        _message = "Passwords do not match!";
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Passwords do not Match!'),
+            content: const Text('Please try again.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
         _isLoading = false;
       });
       return;
@@ -53,7 +82,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       // Navigate to login2.dart after resetting the password
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Login2App()), // Replace with your login2.dart class name
+        MaterialPageRoute(
+            builder: (context) =>
+                const Login2App()), // Replace with your login2.dart class name
       );
     } catch (e) {
       setState(() {
@@ -71,7 +102,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -97,13 +128,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _passwordController,
                     obscureText: true,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
@@ -116,9 +147,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      hintStyle: TextStyle(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      hintStyle: const TextStyle(
                         fontFamily: 'Source',
                         fontSize: 20,
                         color: Color.fromARGB(255, 120, 112, 222),
@@ -126,13 +157,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _confirmPasswordController,
                     obscureText: true,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
@@ -145,9 +176,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      hintStyle: TextStyle(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      hintStyle: const TextStyle(
                         fontFamily: 'Source',
                         fontSize: 20,
                         color: Color.fromARGB(255, 120, 112, 222),
@@ -155,15 +186,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   Container(
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 62, 47, 196),
+                      color: const Color.fromARGB(255, 62, 47, 196),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
@@ -186,10 +217,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                   ),
                 if (_message != null) ...[
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     _message!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14,
                       fontFamily: 'Source',
