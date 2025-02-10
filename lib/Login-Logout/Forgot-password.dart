@@ -3,6 +3,8 @@ import 'package:flutter_application_1/Backend-Service/auth_service.dart';
 import 'verification_code_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
+
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
@@ -23,8 +25,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     if (email.isEmpty) {
       setState(() {
-        _message = "Please enter a valid email address!";
-        _isLoading = false;
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Empty Email!'),
+            content: const Text('Please enter your email address.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
       });
       return;
     }
@@ -39,7 +54,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       );
     } catch (e) {
       setState(() {
-        _message = "Error: $e";
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Invalid Email!'),
+            content: const Text('Please enter a valid email address.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
       });
     } finally {
       setState(() {
@@ -53,7 +82,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -79,12 +108,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _emailController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
@@ -97,9 +126,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      hintStyle: TextStyle(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      hintStyle: const TextStyle(
                         fontFamily: 'Source',
                         fontSize: 20,
                         color: Color.fromARGB(255, 120, 112, 222),
@@ -107,15 +136,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   Container(
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 62, 47, 196),
+                      color: const Color.fromARGB(255, 62, 47, 196),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
@@ -138,10 +167,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
                 if (_message != null) ...[
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     _message!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14,
                       fontFamily: 'Source',

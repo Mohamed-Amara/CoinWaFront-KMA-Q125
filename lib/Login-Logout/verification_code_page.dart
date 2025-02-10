@@ -5,7 +5,7 @@ import 'reset_password_page.dart';
 class VerificationCodePage extends StatefulWidget {
   final String email;
 
-  VerificationCodePage({required this.email});
+  const VerificationCodePage({super.key, required this.email});
 
   @override
   _VerificationCodePageState createState() => _VerificationCodePageState();
@@ -27,7 +27,21 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
     if (code.isEmpty) {
       setState(() {
-        _message = "Please enter the verification code!";
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Verification Error!'),
+            content: const Text('Verification Codes do not Match.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
         _isLoading = false;
       });
       return;
@@ -38,7 +52,8 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ResetPasswordPage(email: widget.email, code: code),
+          builder: (context) =>
+              ResetPasswordPage(email: widget.email, code: code),
         ),
       );
     } catch (e) {
@@ -57,7 +72,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -83,12 +98,12 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _codeController,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Source',
                       fontSize: 20,
                       color: Colors.black,
@@ -101,9 +116,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                         borderRadius: BorderRadius.circular(20.0),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      hintStyle: TextStyle(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      hintStyle: const TextStyle(
                         fontFamily: 'Source',
                         fontSize: 20,
                         color: Color.fromARGB(255, 120, 112, 222),
@@ -111,15 +126,15 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   Container(
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 62, 47, 196),
+                      color: const Color.fromARGB(255, 62, 47, 196),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
@@ -142,10 +157,10 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     ),
                   ),
                 if (_message != null) ...[
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     _message!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14,
                       fontFamily: 'Source',
