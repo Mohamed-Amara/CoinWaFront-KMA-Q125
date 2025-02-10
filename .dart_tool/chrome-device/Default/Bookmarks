@@ -1,5 +1,5 @@
 {
-   "checksum": "44e0519480f3269ff45f0c808a0979f3",
+   "checksum": "b9b43911921959b523ee57574bb660c0",
    "roots": {
       "bookmark_bar": {
          "children": [ {
@@ -8,30 +8,23 @@
             "guid": "8f748b79-fec1-4a04-99d7-111b21f6f4e6",
             "id": "8",
             "name": "screen sharing live stream party",
-            "show_icon": false,
-            "source": "sync",
             "type": "url",
-            "url": "https://www.reddit.com/r/software/comments/n0z4bs/1080p_60fps_share_screen_software/",
-            "visit_count": 0
+            "url": "https://www.reddit.com/r/software/comments/n0z4bs/1080p_60fps_share_screen_software/"
          }, {
             "date_added": "13346689990798272",
             "date_last_used": "0",
             "guid": "01ab4693-65c4-4c37-b83d-982f0cc752ef",
             "id": "9",
             "name": "Adobe Acrobat",
-            "show_icon": false,
-            "source": "sync",
             "type": "url",
-            "url": "https://acrobat.adobe.com/?x_api_client_id=bookmark&x_api_client_location=Reader",
-            "visit_count": 0
+            "url": "https://acrobat.adobe.com/?x_api_client_id=bookmark&x_api_client_location=Reader"
          } ],
          "date_added": "13383087789132811",
          "date_last_used": "0",
          "date_modified": "13346689990798272",
          "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
          "id": "1",
-         "name": "Favorites bar",
-         "source": "unknown",
+         "name": "Bookmarks bar",
          "type": "folder"
       },
       "other": {
@@ -41,30 +34,23 @@
             "guid": "c2925186-0b14-43be-92db-95b550b44301",
             "id": "6",
             "name": "Welcome",
-            "show_icon": false,
-            "source": "sync",
             "type": "url",
-            "url": "https://emit.fa.ca3.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome?_adf.ctrl-state=uci0zkv66_1&_adf.no-new-window-redirect=true&_afrLoop=48272714853699576&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1280&_afrMFH=593&_afrMFDW=1280&_afrMFDH=720&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=144&_afrMFG=0&_afrMFS=0&_afrMFO=0",
-            "visit_count": 0
+            "url": "https://emit.fa.ca3.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome?_adf.ctrl-state=uci0zkv66_1&_adf.no-new-window-redirect=true&_afrLoop=48272714853699576&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1280&_afrMFH=593&_afrMFDW=1280&_afrMFDH=720&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=144&_afrMFG=0&_afrMFS=0&_afrMFO=0"
          }, {
             "date_added": "13374538629050616",
             "date_last_used": "0",
             "guid": "30d4eeb6-4719-4da6-b78e-ce090b848a8e",
             "id": "7",
             "name": "Payment | Official U.S. Department of State Visa Appointment Service | Canada | English",
-            "show_icon": false,
-            "source": "sync",
             "type": "url",
-            "url": "https://ais.usvisa-info.com/en-ca/niv/schedule/59997869/payment",
-            "visit_count": 0
+            "url": "https://ais.usvisa-info.com/en-ca/niv/schedule/59997869/payment"
          } ],
          "date_added": "13383087789132813",
          "date_last_used": "0",
          "date_modified": "13374538629050616",
          "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
          "id": "2",
-         "name": "Other favorites",
-         "source": "unknown",
+         "name": "Other bookmarks",
          "type": "folder"
       },
       "synced": {
@@ -74,11 +60,9 @@
          "date_modified": "0",
          "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
          "id": "3",
-         "name": "Mobile favorites",
-         "source": "unknown",
+         "name": "Mobile bookmarks",
          "type": "folder"
       }
    },
-   "sync_metadata": "CkEKHgiIgQISCO+ods2UAQAAKg4QABgBIAAoBjAAOABAABIAKhhMbEUwQ082L3dPdFhQUmpzTzZ3RTFnPT1IA6AGDBKsAQgJEqcBChxoS0E0SUxPZXhVcDEyVEc3U3BBWGZLbGdiQ0U9EiQwMWFiNDY5My02NWM0LTRjMzctYjgzZC05ODJmMGNjNzUyZWYYACAAKAAwlN7Dj7oyOJ7nw4+6MkCe58OPujJKHHVqTGZobkNOaXZtcjFYc0FhQUh3ekJ4ZTVwaz1aHiIcbDQrWDhVYmh5Tk5pSkxpNWxUU294K2NNdDQ0PWUAAAAAwj4CYAUSjgEIARKJAQoceXhKLzZmdmtlY3I3a3A1RVF6QjR0V0xwZGJFPRIkOTRkMGIyM2ItYmYzYS01NDVhLTkxM2EtMGU1YjU4Y2JhYTllGAAgACgAMOjCg7C0Mjj5xoOwtDJA+caDsLQyShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9WgBlAAAAAMI+AmAAEqwBCAYSpwEKHDFGUU14Wkg2cWRTR21OZXdVQzgxMHp5eXZaWT0SJGMyOTI1MTg2LTBiMTQtNDNiZS05MmRiLTk1YjU1MGI0NDMwMRgAIAAoADDL68OPujI46e3Dj7oyQOntw4+6MkocWWErMVN2TnYrM3lCZEdTTUV6aVdlSUVPbFQ0PVoeIhxUL295ZkJUYm1pWUx5YW13N1R3R1dJbVdQUGc9ZTdwzRXCPgJgBRKOAQgCEokBChxZY1NUb252RVNQd3FDczRMMmNyVmh2NjhMOTg9EiQ4MjNiMDIzZi00ZTA5LTViMTQtODdlMS00MzY4OGE0YTIwMGEYACAAKAAw6cKDsLQyOJPHg7C0MkCTx4OwtDJKHG9QVmtod0JSYlY2NUtDV1IyK0lPTkhXb091OD1aAGUAAAAAwj4CYAASrQEIBxKoAQoccmVmM21DbG8vMGRpZ1pFYkFLejg4K0lVaGhJPRIkMzBkNGVlYjYtNDcxOS00ZGE2LWI3OGUtY2UwOTBiODQ4YThlGAAgACgAMMrrw4+6MjjP7cOPujJAz+3Dj7oyShxyZWg2aVFEUzNvMkxWSnE4Wlp1UEh1RW5YaTg9Wh8iHao4dHhrVWxESU4xaWJyZVRLSCtzUVZNaVFzcU09Zan3mPbCPgJgBRKsAQgIEqcBChx0bGhCNFZNdWJPK3l0VHNGTGp1WFNmaUFVcDg9EiQ4Zjc0OGI3OS1mZWMxLTRhMDQtOTlkNy0xMTFiMjFmNmY0ZTYYACAAKAAwld7Dj7oyOLTnw4+6MkC058OPujJKHEZrU3VHVzFaVWwxMGRDbmRlaUxuUndJS3Y2UT1aHiIcRFdnL2F4UFFXZ0dPVnFsUS9XN3BJejdqbGZNPWUckzZAwj4CYAUSjgEIAxKJAQocbmpnRHU4OGVDcnZYcDg2cEQ3ZkhHY3FGcDg4PRIkYTZkMThjZTQtNmE0Ni01ODYxLThhMTMtZGFjMzFkZTM5NGNkGAAgACgAMO7Cg7C0MjjIx4OwtDJAyMeDsLQyShx5ek5CMDFjbjU0QTdjUlUwdVQrL1BnbVR0VW89WgBlAAAAAMI+AmAAMAA4AA==",
    "version": 1
 }
