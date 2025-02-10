@@ -6,7 +6,8 @@ class WelcomePage extends StatefulWidget {
   _WelcomePageState createState() => _WelcomePageState();
 }
 
-class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStateMixin {
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeInText;
   late Animation<double> _coinFallAnimation;
@@ -17,11 +18,12 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 4),
     );
 
     _fadeInText = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Interval(0.2, 0.6, curve: Curves.easeIn)),
+      CurvedAnimation(
+          parent: _controller, curve: Interval(0.2, 0.6, curve: Curves.easeIn)),
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -29,7 +31,7 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
     });
 
     // Navigate to home after animation completes
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(Duration(seconds: 6), () {
       Navigator.pushReplacementNamed(context, '/');
     });
   }
@@ -40,8 +42,13 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
     double screenHeight = MediaQuery.of(context).size.height;
 
     // Move coin fall animation here to use screenHeight correctly
-    _coinFallAnimation = Tween<double>(begin: screenHeight*-.115, end: screenHeight*0.86).animate(
-      CurvedAnimation(parent: _controller, curve: Interval(0.4, 1.0, curve: Curves.easeOutBack)), // Coin falls with bounce
+    _coinFallAnimation =
+        Tween<double>(begin: screenHeight * -.115, end: screenHeight * 0.86)
+            .animate(
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.2, 0.8,
+              curve: Curves.easeOutBack)), // Coin falls with bounce
     );
 
     return Scaffold(
@@ -49,8 +56,9 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
         alignment: Alignment.center,
         children: [
           // Background layers
-           Positioned.fill(
-            child: Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
+          Positioned.fill(
+            child:
+                Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
           ),
           // Positioned.fill(
           //   child: Image.asset('assets/Ellipse_64.png', fit: BoxFit.cover),
@@ -69,7 +77,8 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
               opacity: _fadeInText,
               child: Column(
                 children: [
-                  Image.asset('assets/welcome_to.png', width: screenWidth * 0.9),
+                  Image.asset('assets/welcome_to.png',
+                      width: screenWidth * 0.9),
                   // SizedBox(height: 10),
                 ],
               ),
@@ -91,7 +100,8 @@ class _WelcomePageState extends State<WelcomePage> with SingleTickerProviderStat
             builder: (context, child) {
               return Positioned(
                 top: _coinFallAnimation.value,
-                child: Image.asset('assets/dropCoin.png', width: 0.18*screenWidth),
+                child: Image.asset('assets/dropCoin.png',
+                    width: 0.18 * screenWidth),
               );
             },
           ),
