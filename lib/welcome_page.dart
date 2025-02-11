@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
@@ -18,12 +20,13 @@ class _WelcomePageState extends State<WelcomePage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4),
+      duration: const Duration(seconds: 4),
     );
 
     _fadeInText = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-          parent: _controller, curve: Interval(0.2, 0.6, curve: Curves.easeIn)),
+          parent: _controller,
+          curve: const Interval(0.2, 0.6, curve: Curves.easeIn)),
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -31,7 +34,7 @@ class _WelcomePageState extends State<WelcomePage>
     });
 
     // Navigate to home after animation completes
-    Future.delayed(Duration(seconds: 6), () {
+    Future.delayed(const Duration(seconds: 6), () {
       Navigator.pushReplacementNamed(context, '/');
     });
   }
@@ -43,7 +46,7 @@ class _WelcomePageState extends State<WelcomePage>
 
     // Move coin fall animation here to use screenHeight correctly
     _coinFallAnimation =
-        Tween<double>(begin: screenHeight * -.115, end: screenHeight * 0.86)
+        Tween<double>(begin: screenHeight * -.115, end: screenHeight * 0.82)
             .animate(
       CurvedAnimation(
           parent: _controller,
@@ -101,7 +104,7 @@ class _WelcomePageState extends State<WelcomePage>
               return Positioned(
                 top: _coinFallAnimation.value,
                 child: Image.asset('assets/dropCoin.png',
-                    width: 0.18 * screenWidth),
+                    width: 0.23 * screenWidth),
               );
             },
           ),

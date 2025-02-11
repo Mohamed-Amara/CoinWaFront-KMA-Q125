@@ -16,7 +16,7 @@ import 'package:flutter_application_1/Login-Logout/splash_screen.dart';
 import 'package:flutter_application_1/Login-Logout/home_screen.dart'; // Ensure you have a home screen
 import 'package:provider/provider.dart';
 import 'Providers/lives_provider.dart'; // Import the LivesProvider
-import 'welcome_page.dart';  // Import the WelcomePage
+import 'welcome_page.dart'; // Import the WelcomePage
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,13 +25,22 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LivesProvider(context)),
-        ChangeNotifierProvider(create: (context) => CoinProvider(context),),
-        ChangeNotifierProvider(create: (context) => ProgressProvider(context),),
-        ChangeNotifierProvider(create: (context) => LeaderProvider(),),
-        ChangeNotifierProvider(create: (context) => ProfileProvider(context),),
-        ChangeNotifierProvider(create: (context) => FriendProvider(context),),
+        ChangeNotifierProvider(
+          create: (context) => CoinProvider(context),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProgressProvider(context),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeaderProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileProvider(context),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FriendProvider(context),
+        ),
       ],
-      
       child: const MyApp(),
     ),
   );
@@ -65,12 +74,8 @@ class AppWithOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [ 
-       const HomeScreen()  
-    
-      ],
+    return const Stack(
+      children: [HomeScreen()],
     );
   }
 }
-
