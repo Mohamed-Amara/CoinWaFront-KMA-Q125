@@ -14,11 +14,11 @@ class DateInputFormatter extends TextInputFormatter {
     String formattedText = newValue.text;
     if (newValue.text.length > 4 && newValue.text[4] != '-') {
       formattedText =
-          newValue.text.substring(0, 4) + '-' + newValue.text.substring(4);
+          '${newValue.text.substring(0, 4)}-${newValue.text.substring(4)}';
     }
     if (newValue.text.length > 7 && newValue.text[7] != '-') {
       formattedText =
-          newValue.text.substring(0, 7) + '-' + newValue.text.substring(7);
+          '${newValue.text.substring(0, 7)}-${newValue.text.substring(7)}';
     }
 
     return newValue.copyWith(
@@ -63,7 +63,7 @@ class hello extends StatelessWidget {
     return DateTime(year, month + 1, 0).day;
   }
 
-  hello({Key? key}) : super(key: key);
+  hello({super.key});
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
@@ -75,6 +75,16 @@ class hello extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 62, 47, 196),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Container(
           height: double.infinity,
           width: double.infinity,
@@ -359,15 +369,16 @@ class hello extends StatelessWidget {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: Text('Invalid Date'),
-                                content: Text('Please enter a valid date.'),
+                                title: const Text('Invalid Date'),
+                                content:
+                                    const Text('Please enter a valid date.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pop(
                                           context); // Close the dialog
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               ),
@@ -387,7 +398,7 @@ class hello extends StatelessWidget {
                           );
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
+                          backgroundColor: WidgetStateProperty.all<Color>(
                             const Color.fromARGB(255, 94, 24, 235),
                           ),
                         ),

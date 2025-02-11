@@ -21,7 +21,7 @@ class LogoutButton extends StatelessWidget {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => const HomeScreen(),
         ),
         (Route<dynamic> route) => false,
       );
@@ -29,7 +29,7 @@ class LogoutButton extends StatelessWidget {
       print('logout failed');
       // Optionally, show an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Logout failed, please try again.')),
+        const SnackBar(content: Text('Logout failed, please try again.')),
       );
     }
   }

@@ -1,11 +1,11 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Unit1/Coin2/coin2-shopping_intro.dart';
 import 'package:flutter_application_1/Providers/progress_provider.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(const FallingCoins1());
@@ -17,16 +17,17 @@ class FallingCoins1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GameModel(),
-      child: const MaterialApp(
-        home: FallingCoinsGamePage(),
-      ),
-    );
+        create: (context) => GameModel(),
+        child: const MaterialApp(
+          home: FallingCoinsGamePage(targetAmount: 5), // Default target amount
+        ));
   }
 }
 
 class FallingCoinsGamePage extends StatefulWidget {
-  const FallingCoinsGamePage({super.key});
+  final int targetAmount; // Target amount to save
+
+  const FallingCoinsGamePage({super.key, required this.targetAmount});
 
   @override
   _FallingCoinsGamePageState createState() => _FallingCoinsGamePageState();
@@ -35,56 +36,81 @@ class FallingCoinsGamePage extends StatefulWidget {
 class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
-  double _coinLeftPosition = 0.0;
-  String _currentCoinImage = 'assets/flatcoin.png'; // Default value
-
-  List<String> coinImages = [
+  List<FallingItem> _fallingItems = []; // List to hold multiple falling items
+  final List<String> coinImages = [
     'assets/flatcoin.png',
     'assets/hammer.png',
   ];
+  bool _gameOver = false; // Track if the game is over
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _animation = Tween<double>(begin: -50.0, end: 0.0).animate(_controller)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          if (isCoinCaught()) {
-            Provider.of<GameModel>(context, listen: false)
-                .adjustScore(_currentCoinImage);
-          }
-          resetCoin();
-        }
-      });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      resetCoin();
-    });
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
+          ..addListener(() {
+            setState(() {
+              // Update the position of all falling items
+              for (var item in _fallingItems) {
+                item.fallDistance += 5; // Adjust fall speed here
+                if (item.fallDistance > MediaQuery.of(context).size.height) {
+                  if (isCoinCaught(item)) {
+                    Provider.of<GameModel>(context, listen: false)
+                        .adjustScore(item.imagePath);
+                  }
+                  resetItem(item);
+                }
+              }
+
+              // Check if the target amount is reached
+              if (Provider.of<GameModel>(context, listen: false).score >=
+                  widget.targetAmount) {
+                _gameOver = true;
+                _controller.stop(); // Stop the animation
+              }
+            });
+          });
+
+    // Start the game loop
+    startGame();
   }
 
-  void resetCoin() {
+  void startGame() {
+    // Add a new item every 1 second
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!_gameOver && _fallingItems.length < 5) {
+        // Limit to 5 items at a time
+        setState(() {
+          _fallingItems.add(FallingItem(
+            leftPosition:
+                Random().nextDouble() * MediaQuery.of(context).size.width,
+            imagePath: coinImages[Random().nextInt(coinImages.length)],
+          ));
+        });
+      }
+    });
+
+    _controller.repeat();
+  }
+
+  void resetItem(FallingItem item) {
     setState(() {
-      _currentCoinImage = coinImages[Random().nextInt(coinImages.length)];
-      _coinLeftPosition = Random().nextDouble() * MediaQuery.of(context).size.width;
-      _animation = Tween<double>(begin: -50.0, end: MediaQuery.of(context).size.height).animate(_controller);
+      item.leftPosition =
+          Random().nextDouble() * MediaQuery.of(context).size.width;
+      item.imagePath = coinImages[Random().nextInt(coinImages.length)];
+      item.fallDistance = 0.0;
     });
-    _controller.reset();
-    _controller.forward();
   }
 
-  bool isCoinCaught() {
+  bool isCoinCaught(FallingItem item) {
     double piggyBankPosition =
         Provider.of<GameModel>(context, listen: false).piggyBankPosition;
     double piggyBankLeft = (MediaQuery.of(context).size.width / 2) +
         (piggyBankPosition * (MediaQuery.of(context).size.width / 2)) -
-        50;
-    double piggyBankRight = piggyBankLeft + 100;
-    return (_coinLeftPosition >= piggyBankLeft &&
-        _coinLeftPosition <= piggyBankRight);
+        50; // Adjusted hitbox
+    double piggyBankRight = piggyBankLeft + 150; // Adjusted hitbox
+    return (item.leftPosition >= piggyBankLeft &&
+        item.leftPosition <= piggyBankRight);
   }
 
   @override
@@ -95,10 +121,6 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
 
   @override
   Widget build(BuildContext context) {
-    if (_currentCoinImage.isEmpty) {
-      return Container();
-    }
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 241, 219),
       body: SafeArea(
@@ -110,10 +132,11 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
               right: 0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 45.0),
-                child: Container(  // Fixed container widget usage
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
-                  decoration:  BoxDecoration(
-                    color: Color(0xff8483E4),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff8483E4),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Text(
@@ -127,7 +150,7 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
                 ),
               ),
             ),
-            Row(
+            const Row(
               children: [
                 Expanded(
                   child: Align(
@@ -140,11 +163,21 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
                 ),
               ],
             ),
-            Positioned(
-              top: _animation.value,
-              left: _coinLeftPosition,
-              child: Coin(imagePath: _currentCoinImage),
-            ),
+            for (var item in _fallingItems)
+              Positioned(
+                top: item.fallDistance,
+                left: item.leftPosition,
+                child: GestureDetector(
+                  onTap: () {
+                    if (!_gameOver && isCoinCaught(item)) {
+                      Provider.of<GameModel>(context, listen: false)
+                          .adjustScore(item.imagePath);
+                      resetItem(item);
+                    }
+                  },
+                  child: Coin(imagePath: item.imagePath),
+                ),
+              ),
             const Align(
               alignment: Alignment.bottomCenter,
               child: PiggyBank(),
@@ -155,7 +188,8 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
               child: Consumer<GameModel>(
                 builder: (context, model, child) {
                   return Text('Amount: ${model.score}',
-                      style: const TextStyle(fontSize: 30, fontFamily: 'Source'));
+                      style:
+                          const TextStyle(fontSize: 30, fontFamily: 'Source'));
                 },
               ),
             ),
@@ -163,7 +197,8 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
               top: 60,
               right: 20,
               child: IconButton(
-                icon: const Icon(Icons.arrow_forward, color: Colors.white, size: 30),
+                icon: const Icon(Icons.arrow_forward,
+                    color: Colors.white, size: 30),
                 onPressed: () {
                   int score =
                       Provider.of<GameModel>(context, listen: false).score;
@@ -178,12 +213,42 @@ class _FallingCoinsGamePageState extends State<FallingCoinsGamePage>
             Positioned(
               top: 90,
               child: ExitButton(),
-            )
+            ),
+            if (_gameOver)
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'You saved enough!',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
+}
+
+class FallingItem {
+  double leftPosition;
+  String imagePath;
+  double fallDistance;
+
+  FallingItem({
+    required this.leftPosition,
+    required this.imagePath,
+    this.fallDistance = 0.0,
+  });
 }
 
 class Coin extends StatelessWidget {
@@ -195,13 +260,13 @@ class Coin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       imagePath,
-      width: 70,
-      height: 70,
+      width: 100, // Increased size
+      height: 100, // Increased size
       errorBuilder:
           (BuildContext context, Object exception, StackTrace? stackTrace) {
         return Container(
-          width: 50,
-          height: 50,
+          width: 100,
+          height: 100,
           color: Colors.red,
           child: Center(
             child: Text(
@@ -228,11 +293,11 @@ class PiggyBank extends StatelessWidget {
       child: Consumer<GameModel>(
         builder: (context, model, child) {
           return Container(
-            alignment: Alignment(model.piggyBankPosition, 1.09),
+            alignment: Alignment(model.piggyBankPosition, 1),
             child: Image.asset(
               'assets/half_piggy.png',
-              width: 140,
-              height: 100,
+              width: 200, // Increased size
+              height: 150, // Increased size
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return Container(
@@ -322,28 +387,17 @@ class SecondPage extends StatelessWidget {
                     imagePath,
                     width: 200,
                     height: 200,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.red,
-                        child: Center(
-                          child: Text(
-                            'Error: $exception',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      );
-                    },
                   )
                 : Container(),
             const SizedBox(height: 20),
             if (imagePath.isNotEmpty)
               ElevatedButton(
                 onPressed: () {
-                  if (Provider.of<ProgressProvider>(context, listen: false).level == 2) {
-                    Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 6);
+                  if (Provider.of<ProgressProvider>(context, listen: false)
+                          .level ==
+                      2) {
+                    Provider.of<ProgressProvider>(context, listen: false)
+                        .setSublevel(context, 6);
                   }
                   Navigator.push(
                     context,
@@ -352,17 +406,7 @@ class SecondPage extends StatelessWidget {
                     ),
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromARGB(255, 255, 241, 219), // Text color
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Source', // Use the custom font here if needed
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                ),
-                child: const Text('Continue',
-                    style: TextStyle(fontFamily: 'Source', color: Colors.purple)),
+                child: const Text('Continue'),
               ),
           ],
         ),

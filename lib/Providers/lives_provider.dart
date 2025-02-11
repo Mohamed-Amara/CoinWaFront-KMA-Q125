@@ -28,10 +28,11 @@ class LivesProvider with ChangeNotifier {
           _lives = responseData['lives'];
         }
         if (responseData['nextLifeRegeneration'] != null) {
-          _nextLifeRegeneration = DateTime.parse(responseData['nextLifeRegeneration']);
+          _nextLifeRegeneration =
+              DateTime.parse(responseData['nextLifeRegeneration']);
         }
         notifyListeners();
-        _startTimer();
+        _startTimer(context); // Pass context to _startTimer
       } else {
         print('Error fetching lives: ${response.statusCode}');
       }
@@ -52,10 +53,11 @@ class LivesProvider with ChangeNotifier {
           _lives = responseData['lives'];
         }
         if (responseData['nextLifeRegeneration'] != null) {
-          _nextLifeRegeneration = DateTime.parse(responseData['nextLifeRegeneration']);
+          _nextLifeRegeneration =
+              DateTime.parse(responseData['nextLifeRegeneration']);
         }
         notifyListeners();
-        _startTimer();
+        _startTimer(context); // Pass context to _startTimer
       } else {
         print('Error updating lives: ${response.statusCode}');
       }
@@ -67,26 +69,29 @@ class LivesProvider with ChangeNotifier {
   void loseLife(BuildContext context) async {
     if (_lives > 0) {
       _lives--;
-    
-      _nextLifeRegeneration = DateTime.now().add(Duration(seconds: 30)); // Set next life regeneration in 30 seconds
+
+      _nextLifeRegeneration = DateTime.now().add(const Duration(
+          seconds: 30)); // Set next life regeneration in 30 seconds
 
       notifyListeners();
       await _updateLives(context, _lives);
       if (_lives < 4) {
-        _startTimer();
+        _startTimer(context); // Pass context to _startTimer
       }
     }
   }
 
-  void _startTimer() {
+  void _startTimer(BuildContext context) {
     _stopTimer();
     if (_lives < 4 && _nextLifeRegeneration != null) {
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
         if (_nextLifeRegeneration!.isBefore(DateTime.now())) {
-          // Fetch latest lives once regeneration time is reached
-          // _fetchLives should be called with context
+          // Fetch the latest lives and regeneration time
+          await _fetchLives(context); // Pass context to _fetchLives
+          _stopTimer(); // Stop the current timer
+          _startTimer(context); // Restart the timer with context
         }
-        notifyListeners();
+        notifyListeners(); // Update the UI
       });
     }
   }

@@ -43,7 +43,8 @@ class HomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Login2App()),
+                        MaterialPageRoute(
+                            builder: (context) => const Login2App()),
                       );
                     },
                     child: Image.asset(
