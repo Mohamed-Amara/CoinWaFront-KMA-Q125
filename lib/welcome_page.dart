@@ -44,13 +44,33 @@ class _WelcomePageState extends State<WelcomePage>
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double maxWidth = screenWidth > 600 ? 600 : screenWidth; // Limit max width for larger screens
+    double maxWidth = screenWidth > 600
+        ? 600
+        : screenWidth; // Limit max width for larger screens
 
     // Bounce effect: Less bounce on smaller screens
-    double bounceBackFactor = screenHeight > 800 ? screenHeight * 0.07 : screenHeight * 0.005;
+    double bounceBackFactor;
+
+    if (screenWidth <= 400) {
+      // Small phones (e.g., old iPhones, compact Android devices)
+      bounceBackFactor = screenHeight * 0.002;
+    } else if (screenWidth > 400 && screenWidth <= 600) {
+      // Regular smartphones (most modern phones)
+      bounceBackFactor = screenHeight * 0.005;
+    } else if (screenWidth > 600 && screenWidth <= 900) {
+      // Small tablets or foldable devices
+      bounceBackFactor = screenHeight * 0.045;
+    } else if (screenWidth > 900 && screenWidth <= 1200) {
+      // Large tablets or small laptops
+      bounceBackFactor = screenHeight * 0.05;
+    } else {
+      // Desktops or ultra-wide screens
+      bounceBackFactor = screenHeight * 0.085;
+    }
 
     // Coin fall position: Falls lower on all screens, especially on smaller ones
-    double fallEndPosition = screenHeight > 800 ? screenHeight * 0.88 : screenHeight * 0.93;
+    double fallEndPosition =
+        screenHeight > 800 ? screenHeight * 0.88 : screenHeight * 0.93;
 
     // Coin Fall Animation
     _coinFallAnimation = TweenSequence<double>([
@@ -76,7 +96,8 @@ class _WelcomePageState extends State<WelcomePage>
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
+            child:
+                Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
           ),
 
           // Welcome Text Animation
@@ -108,7 +129,8 @@ class _WelcomePageState extends State<WelcomePage>
             builder: (context, child) {
               return Positioned(
                 top: _coinFallAnimation.value,
-                child: Image.asset('assets/dropCoin.png', width: 0.23 * maxWidth),
+                child:
+                    Image.asset('assets/dropCoin.png', width: 0.23 * maxWidth),
               );
             },
           ),
