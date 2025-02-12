@@ -25,8 +25,9 @@ class _WelcomePageState extends State<WelcomePage>
 
     _fadeInText = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-          parent: _controller,
-          curve: const Interval(0.2, 0.6, curve: Curves.easeIn)),
+        parent: _controller,
+        curve: const Interval(0.2, 0.6, curve: Curves.easeIn),
+      ),
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -43,56 +44,60 @@ class _WelcomePageState extends State<WelcomePage>
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    double maxWidth = screenWidth > 600 ? 600 : screenWidth; // Limit max width for larger screens
 
-    // Move coin fall animation here to use screenHeight correctly
-    _coinFallAnimation =
-        Tween<double>(begin: screenHeight * -.115, end: screenHeight * 0.82)
-            .animate(
-      CurvedAnimation(
-          parent: _controller,
-          curve: const Interval(0.2, 0.8,
-              curve: Curves.easeOutBack)), // Coin falls with bounce
-    );
+    // Bounce effect: Less bounce on smaller screens
+    double bounceBackFactor = screenHeight > 800 ? screenHeight * 0.07 : screenHeight * 0.005;
+
+    // Coin fall position: Falls lower on all screens, especially on smaller ones
+    double fallEndPosition = screenHeight > 800 ? screenHeight * 0.88 : screenHeight * 0.93;
+
+    // Coin Fall Animation
+    _coinFallAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: screenHeight * -0.14, // Start from above the screen
+          end: fallEndPosition, // Falls down to adjusted position
+        ).chain(CurveTween(curve: Curves.easeOutBack)),
+        weight: 80, // Falling weight
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: fallEndPosition,
+          end: fallEndPosition - bounceBackFactor, // Slight bounce
+        ).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 20, // Bounce weight
+      ),
+    ]).animate(_controller);
 
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: [
-          // Background layers
+          // Background Image
           Positioned.fill(
-            child:
-                Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
+            child: Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
           ),
-          // Positioned.fill(
-          //   child: Image.asset('assets/Ellipse_64.png', fit: BoxFit.cover),
-          // ),
-          // Positioned.fill(
-          //   child: Image.asset('assets/Ellipse_64_1.png', fit: BoxFit.cover),
-          // ),
-          // Positioned.fill(
-          //   child: Image.asset('assets/Ellipse_65.png', fit: BoxFit.cover),
-          // ),
 
           // Welcome Text Animation
           Positioned(
-            top: 200,
+            top: screenHeight * 0.25,
             child: FadeTransition(
               opacity: _fadeInText,
               child: Column(
                 children: [
-                  Image.asset('assets/welcome_to.png',
-                      width: screenWidth * 0.9),
-                  // SizedBox(height: 10),
+                  Image.asset('assets/welcome_to.png', width: maxWidth * 0.9),
                 ],
               ),
             ),
           ),
 
+          // Piggy Bank Image at Bottom
           Positioned(
             bottom: 0,
             child: Image.asset(
               'assets/banky.png',
-              width: screenWidth, // Full width
+              width: maxWidth, // Full width but limited for larger screens
               fit: BoxFit.fitWidth,
             ),
           ),
@@ -103,19 +108,17 @@ class _WelcomePageState extends State<WelcomePage>
             builder: (context, child) {
               return Positioned(
                 top: _coinFallAnimation.value,
-                child: Image.asset('assets/dropCoin.png',
-                    width: 0.23 * screenWidth),
+                child: Image.asset('assets/dropCoin.png', width: 0.23 * maxWidth),
               );
             },
           ),
 
           // Piggy Bank Stretched Across Bottom
           Positioned(
-            // height: screenHeight,
             bottom: 0,
             child: Image.asset(
               'assets/banky2.png',
-              width: screenWidth, // Full width
+              width: maxWidth, // Full width but limited for larger screens
               fit: BoxFit.fitWidth,
             ),
           ),
