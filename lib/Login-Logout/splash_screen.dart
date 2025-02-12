@@ -4,25 +4,27 @@ import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:flutter_application_1/lobby.dart';
 import 'package:provider/provider.dart';
 import 'dart:async'; //for Timer
-import 'home_screen.dart'; //To go to the home_screen after animation is done
+//To go to the home_screen after animation is done
 
-class SplashScreen extends StatefulWidget { //Stateful Widget because animation state must be managed
+class SplashScreen extends StatefulWidget {
+  //Stateful Widget because animation state must be managed
   const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
   final List<String> coinImages = [
     'assets/coin_yellow.png', // Yellow coin
-    'assets/coin_red.png',    // Red coin
-    'assets/coin_green.png',  // Green coin
-    'assets/coin_blue.png',   // Blue coin
-    'assets/coin_sky.png',    // Sky coin
-    'assets/coin_purple.png'  // Purple coin (should stop)
+    'assets/coin_red.png', // Red coin
+    'assets/coin_green.png', // Green coin
+    'assets/coin_blue.png', // Blue coin
+    'assets/coin_sky.png', // Sky coin
+    'assets/coin_purple.png' // Purple coin (should stop)
   ];
   late List<double> leftPositions;
   late List<double> sizes;
@@ -42,12 +44,18 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   void _initializeAnimations() {
     _controllers = [
-      AnimationController(duration: const Duration(seconds: 8), vsync: this)..repeat(), // Yellow
-      AnimationController(duration: const Duration(seconds: 6), vsync: this)..repeat(), // Red
-      AnimationController(duration: const Duration(seconds: 4), vsync: this)..repeat(), // Green
-      AnimationController(duration: const Duration(seconds: 7), vsync: this)..repeat(), // Blue
-      AnimationController(duration: const Duration(seconds: 5), vsync: this)..repeat(), // Sky
-      AnimationController(duration: const Duration(seconds: 1), vsync: this), // Purple
+      AnimationController(duration: const Duration(seconds: 8), vsync: this)
+        ..repeat(), // Yellow
+      AnimationController(duration: const Duration(seconds: 6), vsync: this)
+        ..repeat(), // Red
+      AnimationController(duration: const Duration(seconds: 4), vsync: this)
+        ..repeat(), // Green
+      AnimationController(duration: const Duration(seconds: 7), vsync: this)
+        ..repeat(), // Blue
+      AnimationController(duration: const Duration(seconds: 5), vsync: this)
+        ..repeat(), // Sky
+      AnimationController(
+          duration: const Duration(seconds: 1), vsync: this), // Purple
     ];
 
     double endPosition = MediaQuery.of(context).size.height;
@@ -65,7 +73,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     }).toList();
 
     for (int i = 0; i < _controllers.length; i++) {
-      if (i != 5) { // All coins except the purple coin
+      if (i != 5) {
+        // All coins except the purple coin
         _controllers[i].addStatusListener((status) {
           if (status == AnimationStatus.completed) {
             _controllers[i].reset();
@@ -73,7 +82,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           }
         });
         _controllers[i].forward();
-      } else { // Purple only forward, no repeat
+      } else {
+        // Purple only forward, no repeat
         _controllers[i].forward();
       }
     }
@@ -81,20 +91,27 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     // Fixed left positions
     leftPositions = [
       MediaQuery.of(context).size.width * 0.05, // Yellow coin farthest left
-      MediaQuery.of(context).size.width * 0.2,  // Red coin right of the yellow coin
-      MediaQuery.of(context).size.width * 0.2,  // Green coin same horizontal position as red coin
-      MediaQuery.of(context).size.width * 0.8,  // Blue coin farthest right (partially off-screen)
-      MediaQuery.of(context).size.width * 0.7,  // Sky coin a little left of the blue coin
-      (MediaQuery.of(context).size.width - (min(MediaQuery.of(context).size.width * 0.95, 500))*0.2)/2,  // Purple coin in the middle
+      MediaQuery.of(context).size.width *
+          0.2, // Red coin right of the yellow coin
+      MediaQuery.of(context).size.width *
+          0.2, // Green coin same horizontal position as red coin
+      MediaQuery.of(context).size.width *
+          0.8, // Blue coin farthest right (partially off-screen)
+      MediaQuery.of(context).size.width *
+          0.7, // Sky coin a little left of the blue coin
+      (MediaQuery.of(context).size.width -
+              (min(MediaQuery.of(context).size.width * 0.95, 500)) * 0.2) /
+          2, // Purple coin in the middle
     ];
 
     sizes = [
       MediaQuery.of(context).size.width * 0.12, // Yellow
-      MediaQuery.of(context).size.width * 0.2,  // Red
+      MediaQuery.of(context).size.width * 0.2, // Red
       MediaQuery.of(context).size.width * 0.22, // Green
       MediaQuery.of(context).size.width * 0.45, // Blue
       MediaQuery.of(context).size.width * 0.12, // Sky
-      MediaQuery.of(context).size.width * 0.2   // Purple (will be adjusted dynamically)
+      MediaQuery.of(context).size.width *
+          0.2 // Purple (will be adjusted dynamically)
     ];
   }
 
@@ -102,16 +119,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Timer(const Duration(seconds: 3), _navigateToHome);
   }
 
- void _navigateToHome() async {
-  try {
-    await Provider.of<ProfileProvider>(context, listen: false).fetchUserData(context);
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LobbyApp()));
-  } catch (error) {
-    print('Error fetching user data: $error');
-    Navigator.pushReplacementNamed(context, '/home');
+  void _navigateToHome() async {
+    try {
+      await Provider.of<ProfileProvider>(context, listen: false)
+          .fetchUserData(context);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LobbyApp()));
+    } catch (error) {
+      print('Error fetching user data: $error');
+      Navigator.pushReplacementNamed(context, '/home');
+    }
   }
-}
-
 
   @override
   void dispose() {
@@ -150,7 +168,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               builder: (context, child) {
                 double coinSize = sizes[index];
                 if (index == 5) {
-                  coinSize = min(screenWidth * 0.95, 500) * 0.2; // Make the purple coin size relative to the half_piggy image height
+                  coinSize = min(screenWidth * 0.95, 500) *
+                      0.2; // Make the purple coin size relative to the half_piggy image height
                 }
                 return Positioned(
                   top: _animations[index].value,
@@ -167,7 +186,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           Center(
             child: Image.asset(
               'assets/LogoText2.png', // Path to your logo image
-              width: MediaQuery.of(context).size.width * 0.8, // Adjust the size as needed
+              width: MediaQuery.of(context).size.width *
+                  0.8, // Adjust the size as needed
             ),
           ),
         ],

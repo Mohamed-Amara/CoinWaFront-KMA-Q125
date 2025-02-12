@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
   String? _errorMessage;
 
   bool _isValidEmail(String email) {
-    // check email format: _____@_____.____
+    // Check email format: _____@_____.____
     RegExp emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
     return emailRegExp.hasMatch(email);
   }
@@ -56,14 +56,14 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Invalid Email'),
-          content: Text('Please enter a valid email address.'),
+          title: const Text('Invalid Email'),
+          content: const Text('Please enter a valid email address.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -71,53 +71,86 @@ class _LoginPageState extends State<LoginPage> {
       return; // Don't proceed if email is invalid
     }
 
-    if (_passwordController.text == _rePasswordController.text) {
-      try {
-        final response = await _authService.register(
-          widget.name,
-          widget.birthday,
-          _usernameController.text,
-          email, // Pass email as a string
-          _passwordController.text,
-        );
-        Provider.of<ProfileProvider>(context, listen: false)
-            .updateUserBadge(context, "welcome");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LobbyPage()),
-        );
-      } catch (e) {
-        setState(() {
-          _errorMessage = e.toString();
-        });
-      }
-    } else {
+    if (_passwordController.text != _rePasswordController.text) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Try Again:'),
-          content: Text('Passwords do not Match!'),
+          title: const Text('Try Again:'),
+          content: const Text('Passwords do not Match!'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
       );
+      return; // Don't proceed if passwords don't match
+    }
+
+    try {
+      final response = await _authService.register(
+        widget.name,
+        widget.birthday,
+        _usernameController.text,
+        email,
+        _passwordController.text,
+      );
+
+      // If registration is successful, update user badge and navigate to lobby
+      Provider.of<ProfileProvider>(context, listen: false)
+          .updateUserBadge(context, "welcome");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LobbyPage()),
+      );
+    } catch (e) {
+      // Handle specific error for username already existing
+      if (e.toString().contains("Username already exists")) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Username Taken'),
+            content: const Text('Please choose a different username.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        // Handle other errors
+        setState(() {
+          _errorMessage = e.toString();
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 62, 47, 196),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
         height: 3260,
         width: 2450,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -162,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                            color: Color.fromARGB(255, 94, 24, 235),
+                            color: const Color.fromARGB(255, 94, 24, 235),
                             width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
@@ -197,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                            color: Color.fromARGB(255, 94, 24, 235),
+                            color: const Color.fromARGB(255, 94, 24, 235),
                             width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
@@ -232,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                            color: Color.fromARGB(255, 94, 24, 235),
+                            color: const Color.fromARGB(255, 94, 24, 235),
                             width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
@@ -267,7 +300,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                            color: Color.fromARGB(255, 94, 24, 235),
+                            color: const Color.fromARGB(255, 94, 24, 235),
                             width: 4.0),
                         borderRadius: BorderRadius.circular(40),
                       ),
@@ -299,8 +332,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: _register,
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 94, 24, 235),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          const Color.fromARGB(255, 94, 24, 235),
                         ),
                       ),
                       child: const Text(
@@ -318,7 +351,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         _errorMessage!,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                 ],
