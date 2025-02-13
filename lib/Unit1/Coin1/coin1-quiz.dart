@@ -172,7 +172,7 @@ class _QuizPageState extends State<QuizPage> {
                       const SizedBox(height: 20),
                       const Center(
                         child: Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
+                          padding: EdgeInsets.only(bottom: 60),
                           child: Text(
                             'Easy! Saving Means:',
                             style: TextStyle(

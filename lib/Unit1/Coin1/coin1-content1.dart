@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Unit1/Coin1/coin1-content2.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
@@ -9,8 +8,32 @@ void main() {
   runApp(const Coin1Cont1());
 }
 
-class Coin1Cont1 extends StatelessWidget {
+class Coin1Cont1 extends StatefulWidget {
   const Coin1Cont1({super.key});
+
+  @override
+  _Coin1Cont1State createState() => _Coin1Cont1State();
+}
+
+class _Coin1Cont1State extends State<Coin1Cont1> {
+  int slideIndex = 0;
+  final List<String> slides = [
+    "Saving means setting aside money to use later, instead of spending it right away. (1/6)",
+    "Let's think of another example... (2/6)",
+  ];
+
+  void _nextSlide() {
+    setState(() {
+      if (slideIndex < slides.length - 1) {
+        slideIndex++;
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin1Cont2()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,60 +41,37 @@ class Coin1Cont1 extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 241, 219),
-        body: SafeArea(
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              ExitButton(),
-              const Row(
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: TopBar(
-                        currentPage: 2,
-                        totalPages: 3,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-               SingleChildScrollView(
-                 child: Column(
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque, // Ensures entire screen is tappable
+          onTap: _nextSlide,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                ExitButton(),
+                const Align(
+                  alignment: Alignment.topRight,
+                  child: TopBar(currentPage: 2, totalPages: 3),
+                ),
+                Column(
                   children: [
-                    const Positioned.fill(
-                      child: Align(
-                        alignment: Alignment
-                            .topLeft, // Align the speech bubble to the top left
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left:
-                                  56), // Add left padding to move it slightly left
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 85), // Add space at the top
-                              SpeechBubble(),
-                            ],
-                          ),
-                        ),
-                      ),
+                    const SizedBox(height: 85),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 56),
+                      child: SpeechBubble(text: slides[slideIndex]),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 40.0),
-                          child: Image.asset('assets/wawaTalk.png', width: 150,),
-                        ),
-                      ],
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40.0),
+                      child: Image.asset('assets/wawaTalk.png', width: 150),
                     ),
-                    Image.asset('assets/expaper.png', width: min(MediaQuery.of(context).size.width, 450)),
+                    Image.asset(
+                      'assets/expaper.png',
+                      width: min(MediaQuery.of(context).size.width, 450),
+                    ),
                   ],
-                             ),
-               ),
-              
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -79,84 +79,33 @@ class Coin1Cont1 extends StatelessWidget {
   }
 }
 
-class SpeechBubble extends StatefulWidget {
-  const SpeechBubble({super.key});
-
-  @override
-  _SpeechBubbleState createState() => _SpeechBubbleState();
-}
-
-class _SpeechBubbleState extends State<SpeechBubble> {
-  bool tapped = false;
-  int tapCount = 0;
-
-  void _toggleTapped() {
-    setState(() {
-      tapCount++;
-      if (tapCount == 2) {
-        // Navigate to the next page
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Coin1Cont2()),
-        );
-      }
-      if (tapped) {
-        // If already tapped, toggle back to original state
-        tapped = false;
-      } else {
-        // Toggle to the second state
-        tapped = true;
-      }
-    });
-  }
+class SpeechBubble extends StatelessWidget {
+  final String text;
+  const SpeechBubble({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _toggleTapped,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        margin: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: tapped
-              ? const Color.fromARGB(255, 120, 112, 222)
-              : const Color.fromARGB(255, 120, 112, 222),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: tapped
-              ? TypingText(
-                  key: UniqueKey(),
-                  text: "Let's think of another example... (2/6)",
-                  style: const TextStyle(
-                      fontSize: 20, fontFamily: 'Source', color: Colors.white),
-                )
-              : TypingText(
-                  key: UniqueKey(),
-                  text:
-                      "Saving means setting aside money to use later, instead of spending it right away. (1/6)",
-                  style: const TextStyle(
-                      fontSize: 18, fontFamily: 'Source', color: Colors.white),
-                ),
-        ),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 120, 112, 222),
+        borderRadius: BorderRadius.circular(20),
       ),
+      child: TypingText(text: text),
     );
   }
 }
 
 class TypingText extends StatefulWidget {
   final String text;
-  final TextStyle style;
-
-  const TypingText({super.key, required this.text, required this.style});
+  const TypingText({super.key, required this.text});
 
   @override
   _TypingTextState createState() => _TypingTextState();
 }
 
-class _TypingTextState extends State<TypingText>
-    with SingleTickerProviderStateMixin {
+class _TypingTextState extends State<TypingText> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<int> _animation;
 
@@ -173,6 +122,17 @@ class _TypingTextState extends State<TypingText>
   }
 
   @override
+  void didUpdateWidget(TypingText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text != widget.text) {
+      _controller.reset();
+      _animation = IntTween(begin: 0, end: widget.text.length)
+          .animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+      _controller.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
@@ -180,7 +140,7 @@ class _TypingTextState extends State<TypingText>
         String typedText = widget.text.substring(0, _animation.value);
         return Text(
           typedText,
-          style: widget.style,
+          style: const TextStyle(fontSize: 18, fontFamily: 'Source', color: Colors.white),
         );
       },
     );
@@ -190,21 +150,5 @@ class _TypingTextState extends State<TypingText>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-}
-
-class NextPage extends StatelessWidget {
-  const NextPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Next Page'),
-      ),
-      body: const Center(
-        child: Text('This is the next page.'),
-      ),
-    );
   }
 }
