@@ -7,70 +7,82 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/welcome_background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Image.asset(
-              'assets/Welcome_to_1.png',
-              width: screenWidth * 0.5,
-            ),
-            const SizedBox(height: 20),
-            Image.asset(
-              'assets/logo2.png',
-              width: screenWidth * 0.6,
-              height: screenHeight * 0.25,
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Login2App()),
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/login-removebg-preview.png',
-                      width: screenWidth * 0.7,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => hello()),
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/create_account-removebg-preview.png',
-                      width: screenWidth * 0.7,
-                    ),
-                  ),
-                ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double screenWidth = constraints.maxWidth;
+          double screenHeight = constraints.maxHeight;
+
+          // Define breakpoints for responsiveness
+          double maxWidth = screenWidth > 1200
+              ? 800 // Desktop max width
+              : screenWidth > 600
+              ? 500 // Tablet max width
+              : screenWidth; // Default for phones
+
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/welcome_background.png"),
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 50),
-          ],
-        ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                Image.asset(
+                  'assets/Welcome_to_1.png',
+                  width: maxWidth * 0.5,
+                ),
+                const SizedBox(height: 20),
+                Image.asset(
+                  'assets/coinwa_big_pig.png',
+                  width: maxWidth, // Make it full width but limited for large screens
+                  height: screenHeight * 0.45, // Adjust height proportionally
+                  fit: BoxFit.contain,
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login2App()),
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/login-removebg-preview.png',
+                          width: maxWidth * 0.7,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => hello()),
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/Frame_34276-removebg-preview.png',
+                          width: maxWidth * 0.7,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
