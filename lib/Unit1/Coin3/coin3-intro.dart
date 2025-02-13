@@ -55,40 +55,43 @@ Widget WawaTalking(String description, String imageName) {
 class Coin3Intro extends StatelessWidget {
   const Coin3Intro({super.key});
 
+  void _navigateToNext(BuildContext context) {
+    if (Provider.of<ProgressProvider>(context, listen: false).level == 3) {
+      Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Smart(isRepeat: false)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 241, 219),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            ExitButton(),
-            Column(
-              children: [
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: TopBar(
-                          currentPage: 1,
-                          totalPages: 10,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere on the screen
+      onTap: () => _navigateToNext(context),
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 241, 219),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              ExitButton(),
+              Column(
+                children: [
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: TopBar(
+                            currentPage: 1,
+                            totalPages: 10,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      if (Provider.of<ProgressProvider>(context, listen: false).level == 3){
-                  Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
-                }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Smart(isRepeat: false,)),
-                      );
-                    },
+                    ],
+                  ),
+                  Expanded(
                     child: Center(
                       child: WawaTalking(
                         "Setting SMART saving goals is important to save money effectively!",
@@ -96,10 +99,10 @@ class Coin3Intro extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
