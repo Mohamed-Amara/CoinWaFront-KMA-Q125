@@ -43,15 +43,15 @@ class _Coin6Quiz1State extends State<Coin6Quiz1> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Container(
-          width: min(MediaQuery.of(context).size.width, 600),
+          width: MediaQuery.of(context).size.width * 0.8,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5), // Shadow color
-                offset: const Offset(0, 2), // Shadow offset
-                blurRadius: 4, // Shadow blur radius
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 4,
               ),
             ],
             color: const Color(0xff7870de),
@@ -83,18 +83,12 @@ class _Coin6Quiz1State extends State<Coin6Quiz1> {
       body: SafeArea(
         child: Stack(
           children: [
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 4,
-                      totalPages: 5,
-                    ),
-                  ),
-                ),
-              ],
+            const Align(
+              alignment: Alignment.topRight,
+              child: TopBar(
+                currentPage: 4,
+                totalPages: 5,
+              ),
             ),
             Positioned(child: ExitButton()),
             Column(
@@ -102,106 +96,85 @@ class _Coin6Quiz1State extends State<Coin6Quiz1> {
                 const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: SizedBox(
-                    width: 350,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SpeechBubble(
-                                "Recall: What does value refer to?", true)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset('assets/wawaConfused.png', width: 100)
-                          ],
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      SpeechBubble("Recall: What does value refer to?", true),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Image.asset('assets/wawaConfused.png', width: 200),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    color: background,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              const SizedBox(height: 20),
-                              option("How much it costs to make something", false),
-                              option("How important something is to you", false),
-                              option("How much something is worth", true),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                feedbackMessage,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  color: feedbackColor,
-                                ),
-                              ),
-                              Visibility(
-                                visible: showContinue,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (Provider.of<ProgressProvider>(context,
-                                                listen: false)
-                                            .sublevel ==
-                                        4) {
-                                      Provider.of<ProgressProvider>(context,
-                                              listen: false)
-                                          .setSublevel(context, 5);
-                                    }
-                                    if (widget.isRepeat) {
-                                      navigateToNextQuestion(
-                                          context, 6, "What are Assets?");
-                                    } else {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Coin6Quiz2(isRepeat: false),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/big green.png', // Path to the correct image asset
-                                        height:
-                                            70, // Adjust the height to make the image larger
-                                        fit: BoxFit.contain,
-                                      ),
-                                      const Center(
-                                        child: Text(
-                                          'Continue',
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                  child: Center(
+                    child: Container(
+                      color: background,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          option("How much it costs to make something", false),
+                          option("How important something is to you", false),
+                          option("How much something is worth", true),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  feedbackMessage,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                    color: feedbackColor,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Visibility(
+                                  visible: showContinue,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (Provider.of<ProgressProvider>(context, listen: false).sublevel == 4) {
+                                        Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 5);
+                                      }
+                                      if (widget.isRepeat) {
+                                        navigateToNextQuestion(context, 6, "What are Assets?");
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const Coin6Quiz2(isRepeat: false),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/big green.png',
+                                          height: 90,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        const Center(
+                                          child: Text(
+                                            'Continue',
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -216,8 +189,7 @@ class _Coin6Quiz1State extends State<Coin6Quiz1> {
   void _onWrongAnswer(BuildContext context) {
     Provider.of<LivesProvider>(context, listen: false).loseLife(context);
     if (Provider.of<ProgressProvider>(context, listen: false).level == 6) {
-      Provider.of<ProgressProvider>(context, listen: false)
-          .addIncorrectQuestion(context);
+      Provider.of<ProgressProvider>(context, listen: false).addIncorrectQuestion(context);
     }
     showLifeLossAnimation(context);
   }
