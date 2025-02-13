@@ -44,15 +44,15 @@ class _Coin6Quiz2State extends State<Coin6Quiz2> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Container(
-          width: min(MediaQuery.of(context).size.width, 600),
+          width: MediaQuery.of(context).size.width * 0.8,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5), // Shadow color
-                offset: const Offset(0, 2), // Shadow offset
-                blurRadius: 4, // Shadow blur radius
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 4,
               ),
             ],
             color: const Color(0xff7870de),
@@ -77,25 +77,21 @@ class _Coin6Quiz2State extends State<Coin6Quiz2> {
     );
   }
 
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfffff1db),
       body: SafeArea(
         child: Stack(
           children: [
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 5,
-                      totalPages: 5,
-                    ),
-                  ),
-                ),
-              ],
+            const Align(
+              alignment: Alignment.topRight,
+              child: TopBar(
+                currentPage: 4,
+                totalPages: 5,
+              ),
             ),
             Positioned(child: ExitButton()),
             Column(
@@ -103,95 +99,86 @@ class _Coin6Quiz2State extends State<Coin6Quiz2> {
                 const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: SizedBox(
-                    width: 350,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SpeechBubble(
-                                "Now, what is an asset?", true)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset('assets/wawaConfused.png', width: 100)
-                          ],
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      SpeechBubble("Now, what is an asset?", true),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Image.asset('assets/wawaConfused.png', width: 200),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    color: background,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              const SizedBox(height: 20),
-                              option("Something that has value and may increase in value", true),
-                              option("Something that is very expensive and useful to you", false),
-                              option("Something that has value because it is cool", false),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                feedbackMessage,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  color: feedbackColor,
-                                ),
-                              ),
-                              Visibility(
-                                visible: showContinue,
-                                child: GestureDetector(
-                                  onTap: () {
-                                  
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CoinAnimationScreen(coinNumber: 6, description: "What are Assets?")
-                                        ),
-                                      );
-                                    
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/big green.png', // Path to the correct image asset
-                                        height:
-                                            70, // Adjust the height to make the image larger
-                                        fit: BoxFit.contain,
-                                      ),
-                                      const Center(
-                                        child: Text(
-                                          'Continue',
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                  child: Center(
+                    child: Container(
+                      color: background,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          option("Something that has value and may increase in value", true),
+                          option("Something that is very expensive and useful to you", false),
+                          option("Something that has value because it is cool", false),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  feedbackMessage,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                    color: feedbackColor,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Visibility(
+                                  visible: showContinue,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (Provider.of<ProgressProvider>(context, listen: false).sublevel == 4) {
+                                        Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 5);
+                                      }
+                                      if (widget.isRepeat) {
+                                        navigateToNextQuestion(context, 6, "What are Assets?");
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const CoinAnimationScreen(coinNumber: 6, description: "What are Assets?")
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/big green.png',
+                                          height: 90,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        const Center(
+                                          child: Text(
+                                            'Continue',
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -206,9 +193,9 @@ class _Coin6Quiz2State extends State<Coin6Quiz2> {
   void _onWrongAnswer(BuildContext context) {
     Provider.of<LivesProvider>(context, listen: false).loseLife(context);
     if (Provider.of<ProgressProvider>(context, listen: false).level == 6) {
-      Provider.of<ProgressProvider>(context, listen: false)
-          .addIncorrectQuestion(context);
+      Provider.of<ProgressProvider>(context, listen: false).addIncorrectQuestion(context);
     }
     showLifeLossAnimation(context);
   }
 }
+
