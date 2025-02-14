@@ -9,46 +9,44 @@ import 'package:provider/provider.dart';
 
 import 'coin12-cardexplain.dart';
 
+
 class Coin12card2 extends StatelessWidget {
   const Coin12card2({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures the entire screen is tappable
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).sublevel == 1 &&
+            Provider.of<ProgressProvider>(context, listen: false).level == 12) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
+        }
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Coin12explain(),
+          ),
+        );
+      },
+      child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
         body: SafeArea(
           child: Stack(
             children: [
-              
-              GestureDetector(
-                onTap: () {
-
-                  if (Provider.of<ProgressProvider>(context, listen: false).sublevel == 1 && Provider.of<ProgressProvider>(context, listen: false).level == 12) {
-            Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
-          }
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Coin12explain(),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/cutecard.png', width: 370),
+                    const SizedBox(height: 50),
+                    WawaTalking(
+                      'They’re not all that scary, and I’ll help you see that!',
+                      "assets/wawaTalk.png",
                     ),
-                  );
-                },
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/cutecard.png', width: 370),
-                        const SizedBox(height: 50),
-                      
-                      WawaTalking(
-                          'They’re not all that scary, and I’ll help you see that!',
-                          "assets/wawaTalk.png"),
-                   
-                      
-                    ],
-                  ),
+                  ],
                 ),
               ),
               ExitButton(),
@@ -67,6 +65,8 @@ class Coin12card2 extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
