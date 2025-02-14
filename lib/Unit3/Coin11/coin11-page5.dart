@@ -14,20 +14,20 @@ class Coin11Page5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: GestureDetector(
-                onTap: () {
-                 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Coin11Page6()),
-                  );
-                },
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page6()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 40.0),
@@ -46,10 +46,8 @@ class Coin11Page5 extends StatelessWidget {
                             clipBehavior: Clip.none,
                             children: [
                               Positioned(
-                                right:
-                                    -70, // Adjust this value to control how much it cuts off
-                                top:
-                                    130, // Adjust this value to control vertical positioning
+                                right: -70, // Adjust this value to control how much it cuts off
+                                top: 130, // Adjust this value to control vertical positioning
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   children: [
@@ -59,8 +57,7 @@ class Coin11Page5 extends StatelessWidget {
                                         width: 250,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
+                                          borderRadius: BorderRadius.circular(50),
                                           color: const Color(0xff5e17eb),
                                         ),
                                       ),
@@ -98,24 +95,25 @@ class Coin11Page5 extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 6,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

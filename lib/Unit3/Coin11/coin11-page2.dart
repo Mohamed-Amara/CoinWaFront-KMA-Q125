@@ -17,31 +17,31 @@ class Coin11Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: GestureDetector(
-                onTap: () {
-                   if (Provider.of<ProgressProvider>(context, listen: false).level == 11) {
-                     Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
-                   }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Coin11Page3()),
-                  );
-                },
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).level == 11) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page3()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 55),
                       purpleTextBubbleYellow(
-                          "So, how can someone borrow this money? Well ...", ["borrow"],
-                          ),
+                        "So, how can someone borrow this money? Well ...", ["borrow"],
+                      ),
                       const SizedBox(height: 40),
                       Stack(
                         clipBehavior: Clip.none,
@@ -50,24 +50,14 @@ class Coin11Page2 extends StatelessWidget {
                             width: 350,
                             height: 200,
                             decoration: const BoxDecoration(
-                                color: Colors.white,
-                                border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.black,
-                                      width: 8,
-                                    ),
-                                    top: BorderSide(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ),
-                                    right: BorderSide(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ),
-                                    left: BorderSide(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ))),
+                              color: Colors.white,
+                              border: Border(
+                                bottom: BorderSide(color: Colors.black, width: 8),
+                                top: BorderSide(color: Colors.black, width: 1),
+                                right: BorderSide(color: Colors.black, width: 1),
+                                left: BorderSide(color: Colors.black, width: 1),
+                              ),
+                            ),
                           ),
                           Positioned(
                             top: 15,
@@ -78,8 +68,7 @@ class Coin11Page2 extends StatelessWidget {
                                 softWrap: true,
                                 textAlign: TextAlign.center,
                                 text: const TextSpan(
-                                  style: TextStyle(
-                                      fontFamily: 'Marker', fontSize: 22),
+                                  style: TextStyle(fontFamily: 'Marker', fontSize: 22),
                                   children: [
                                     TextSpan(
                                       text: 'YOU CAN BORROW MONEY TO BUY THINGS YOU CANNOT AFFORD YET THROUGH ',
@@ -99,41 +88,10 @@ class Coin11Page2 extends StatelessWidget {
                             right: 10,
                             child: Row(
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Container(
-                                  width: 30,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Container(
-                                  width: 15,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
+                                _colorBox(Colors.red),
+                                _colorBox(Colors.green),
+                                _colorBox(Colors.blue, width: 10),
+                                _colorBox(Colors.grey, width: 15),
                               ],
                             ),
                           ),
@@ -143,42 +101,61 @@ class Coin11Page2 extends StatelessWidget {
                             child: Stack(
                               clipBehavior: Clip.none,
                               children: [
-                                Image.asset('assets/wawaTalk.png', width: 150,),
+                                Image.asset('assets/wawaTalk.png', width: 150),
                                 Positioned(
                                   right: -10,
                                   top: 5,
                                   child: Transform.rotate(
-                                    angle: math.pi/5,
-                                    child: Container(color: const Color(0xfffc9538), width: 5, height: 75,)
+                                    angle: math.pi / 5,
+                                    child: Container(
+                                      color: const Color(0xfffc9538),
+                                      width: 5,
+                                      height: 75,
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 1,
-                      totalPages: 6,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 1,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget _colorBox(Color color, {double width = 30, double height = 10}) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 5),
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+    );
+  }
+
 }
