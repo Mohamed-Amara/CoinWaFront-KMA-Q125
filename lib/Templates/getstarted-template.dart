@@ -69,6 +69,21 @@ import 'package:flutter_application_1/Unit3/Coin12/coin12-folder.dart';
 import 'package:flutter_application_1/Unit3/Coin12/coin12-intro.dart';
 import 'package:flutter_application_1/Unit3/Coin12/coin12-newinterest.dart';
 import 'package:flutter_application_1/Unit3/Coin12/coin12-quiz1scredit.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-limit.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-magic.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-shuff.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-buscard.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-stucard.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-stancard.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-busquiz.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-studquiz.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-stanquiz.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-busquiz2.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-studquiz2.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-stanquiz2.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-scene1.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-scene2.dart';
+import 'package:flutter_application_1/Unit3/Coin13/coin13-scene3.dart';
 import 'package:flutter_application_1/Unit3/Coin14/coin14-creditscore2.dart';
 import 'package:flutter_application_1/Unit3/Coin14/coin14-intro.dart';
 import 'package:flutter_application_1/Unit3/Coin14/coin14-page2.dart';
@@ -180,7 +195,9 @@ List redirect = [
     6: const Coin9Page6(isRepeat: true,),
     7: const Coin9Quiz1(isRepeat: true),
   },
-  {},
+  {
+    1: const Coin13intro(),
+  },
   {
     1: const Coin11Intro(),
     2: const Coin11Page2(),
@@ -304,7 +321,9 @@ List redirect2 = [
     6: const Coin12creditright(),
     7: const Coin12folder()
   },
-  {},
+  {
+    1: const Coin13intro(), // limit.dart
+  },
   {
     1: const Coin14Intro(),
     2: const Coin14Page2(),
