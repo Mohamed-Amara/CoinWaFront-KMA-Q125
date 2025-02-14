@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../Backend-Service/auth_service.dart';
 import '../lobby.dart';
 import 'Forgot-password.dart'; // Import the ForgotPasswordPage
+import 'home_screen.dart';
 
 void main() {
   runApp(const Login2App());
@@ -81,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Error'),
-        content: Text('Username and/or Password is Incorrect!'),
+        content: const Text('Username and/or Password is Incorrect!'),
         actions: [
           TextButton(
             onPressed: () {
@@ -100,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            ForgotPasswordPage(), // Navigate to ForgotPasswordPage
+            const ForgotPasswordPage(), // Navigate to ForgotPasswordPage
       ),
     );
   }
@@ -108,11 +109,25 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 62, 47, 196),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+    (Route<dynamic> route) => false,
+  );
+            }
+          ),
+        ),
       backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
         height: 3260,
         width: 2450,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -152,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                          color: Color.fromARGB(255, 94, 24, 235),
+                          color: const Color.fromARGB(255, 94, 24, 235),
                           width: 4.0,
                         ),
                         borderRadius: BorderRadius.circular(40),
@@ -188,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 255, 241, 219),
                         border: Border.all(
-                          color: Color.fromARGB(255, 94, 24, 235),
+                          color: const Color.fromARGB(255, 94, 24, 235),
                           width: 4.0,
                         ),
                         borderRadius: BorderRadius.circular(40),
@@ -221,8 +236,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: _login,
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 94, 24, 235),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          const Color.fromARGB(255, 94, 24, 235),
                         ),
                       ),
                       child: const Text(
@@ -240,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         _errorMessage!,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                   // Forgot password button
