@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Unit1/Coin3/coin3-intro.dart';
 import 'package:flutter_application_1/Unit1/Coin3/coin3-smart_game.dart';
 import 'package:flutter_application_1/Providers/lives_provider.dart';
 import 'package:flutter_application_1/Providers/progress_provider.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin1/coin6-intro.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-page3-part2.dart';
 import 'package:flutter_application_1/Templates/animation_util.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
-import 'dart:math' as math;
 
 import 'package:provider/provider.dart';
 
