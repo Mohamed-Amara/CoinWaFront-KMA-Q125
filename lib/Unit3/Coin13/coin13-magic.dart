@@ -15,26 +15,27 @@ import 'dart:math' as math;
 
 import 'package:provider/provider.dart';
 
-
 class Coin13magic extends StatelessWidget {
   const Coin13magic({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Coin13shuffle()),
-                  );
-                },
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Makes the whole screen tappable
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Coin13shuffle(),
+          ),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -46,15 +47,10 @@ class Coin13magic extends StatelessWidget {
                         width: 350,
                         child: Column(
                           children: [
-                            Column(
-                              children: [
-                           Image.asset(
-                          'assets/magicwawa.png',
-                          width: 445,
-                        ),
-                              ],
+                            Image.asset(
+                              'assets/magicwawa.png',
+                              width: 445,
                             ),
-                        
                           ],
                         ),
                       )
@@ -62,22 +58,22 @@ class Coin13magic extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 6,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

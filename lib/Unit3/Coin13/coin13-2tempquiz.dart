@@ -22,7 +22,6 @@ void onWrongAnswer(BuildContext context, int level) {
 }
 
 Widget purpleTextBubbleYellow(String description) {
-  // Split the description into words
   List<TextSpan> textSpans = [];
   List<String> words = description.split(' ');
 
@@ -124,7 +123,7 @@ class _Coin13Quiz2TemplateState extends State<Coin13Quiz2Template> {
                     const SizedBox(height: 20),
                     ConstrainedBox(
                       constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height - 200, // Adjust the subtraction based on the height of other widgets
+                        minHeight: MediaQuery.of(context).size.height - 200,
                       ),
                       child: Container(
                         color: const Color(0xffeae9ff),
@@ -140,64 +139,58 @@ class _Coin13Quiz2TemplateState extends State<Coin13Quiz2Template> {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 0.95,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        bottomLeft: Radius.circular(30)),
-                                    color: Color(0xff5e17eb),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 15),
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          (MediaQuery.of(context).size.width <= 400)
-                                              ? Container(
-                                                  width: 180,
-                                                  child: Text(
-                                                    widget.option1[0],
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 24,
-                                                        fontWeight: FontWeight.bold),
-                                                    softWrap: true,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  widget.option1[0],
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 24,
-                                                      fontWeight: FontWeight.bold),
-                                                  softWrap: true,
-                                                ),
-                                          const SizedBox(width: 10),
-                                          IconButton(
-                                            onPressed: () {
-                                              _checkAnswer(true);
-                                            },
-                                            icon: Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                Image.asset(widget.image1Path, width: 80),
-                                               
-                                              ],
+                            GestureDetector(
+                              onTap: () {
+                                _checkAnswer(true);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.95,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30)),
+                                      color: Color(0xff5e17eb),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 15),
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            (MediaQuery.of(context).size.width <= 400)
+                                                ? Container(
+                                              width: 180,
+                                              child: Text(
+                                                widget.option1[0],
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold),
+                                                softWrap: true,
+                                              ),
+                                            )
+                                                : Text(
+                                              widget.option1[0],
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                              softWrap: true,
                                             ),
-                                          )
-                                        ],
+                                            const SizedBox(width: 10),
+                                            Image.asset(widget.image1Path, width: 80),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 20),
                             const Text(
@@ -209,111 +202,105 @@ class _Coin13Quiz2TemplateState extends State<Coin13Quiz2Template> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 0.95,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(30),
-                                        bottomRight: Radius.circular(30)),
-                                    color: Color(0xff5e17eb),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 25),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            _checkAnswer(false);
-                                          },
-                                          icon: Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Image.asset(widget.image2Path, width: 80),
-                                             
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        (MediaQuery.of(context).size.width <= 400)
-                                            ? Container(
-                                                width: 180,
-                                                child: Text(
-                                                  widget.option2[0],
-                                                  softWrap: true,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 24,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              )
-                                            : Text(
-                                                widget.option2[0],
-                                                softWrap: true,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                      ],
+                            GestureDetector(
+                              onTap: () {
+                                _checkAnswer(false);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.95,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(30),
+                                          bottomRight: Radius.circular(30)),
+                                      color: Color(0xff5e17eb),
                                     ),
-                                  ),
-                                )
-                              ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 25),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(widget.image2Path, width: 80),
+                                          const SizedBox(width: 20),
+                                          (MediaQuery.of(context).size.width <= 400)
+                                              ? Container(
+                                            width: 180,
+                                            child: Text(
+                                              widget.option2[0],
+                                              softWrap: true,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                              : Text(
+                                            widget.option2[0],
+                                            softWrap: true,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 20),
                             Visibility(
                               visible: isVisible,
                               child: isCorrect
                                   ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                          "Correct!",
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
-                                            if (progressProvider.level == 7 && progressProvider.sublevel >= 6 && progressProvider.sublevel <= 8){
-                                               progressProvider.setSublevel(context, progressProvider.sublevel+1);
-                                            }
-                                           
-                                            if (widget.isRepeat) {
-                                              navigateToNextQuestion(context, 7, "Appreciating/Depreciating Assets");
-                                            } else {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => widget.route,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            foregroundColor: Colors.green[800],
-                                            backgroundColor: const Color.fromARGB(255, 177, 255, 180),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Correct!",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
+                                      if (progressProvider.level == 7 && progressProvider.sublevel >= 6 && progressProvider.sublevel <= 8){
+                                        progressProvider.setSublevel(context, progressProvider.sublevel+1);
+                                      }
+
+                                      if (widget.isRepeat) {
+                                        navigateToNextQuestion(context, 7, "Appreciating/Depreciating Assets");
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => widget.route,
                                           ),
-                                          child: const Text("Continue"),
-                                        ),
-                                      ],
-                                    )
-                                  : const Text(
-                                      "Incorrect!",
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
+                                        );
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.green[800],
+                                      backgroundColor: const Color.fromARGB(255, 177, 255, 180),
                                     ),
+                                    child: const Text("Continue"),
+                                  ),
+                                ],
+                              )
+                                  : const Text(
+                                "Incorrect!",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ],
                         ),
