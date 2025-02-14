@@ -16,19 +16,20 @@ class Coin12explain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Coin12pause1()),
-                );
-              },
-              child: SingleChildScrollView(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Makes the whole screen tappable
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin12pause1()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 40.0),
@@ -88,22 +89,22 @@ class Coin12explain extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 7,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 7,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -13,49 +13,43 @@ class Coin12bad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Makes the whole screen tappable
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).sublevel == 3 &&
+            Provider.of<ProgressProvider>(context, listen: false).level == 12) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 4);
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin12Quiz1(isRepeat: false)),
+        );
+      },
+      child: Scaffold(
         backgroundColor: Color.fromARGB(255, 247, 36, 36),
         body: SafeArea(
           child: Stack(
             children: [
-              GestureDetector(
-                onTap: () {
-                  if (Provider.of<ProgressProvider>(context, listen: false)
-                              .sublevel ==
-                          3 &&
-                      Provider.of<ProgressProvider>(context, listen: false)
-                              .level ==
-                          12) {
-                    Provider.of<ProgressProvider>(context, listen: false)
-                        .setSublevel(context, 4);
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Coin12Quiz1(isRepeat: false,)),
-                  );
-                },
-                child: Center(
-  child: SizedBox(
-    height: 800, // Increase the height to ensure the image isn't cut off
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        WawaTalking(
-          'REMINDER: THIS IS BAD! Avoid paying larger amounts back by paying back on time!\n\n Your credit score can also DECREASE if you do not pay back your credit card on time!',
-          "assets/blank.png",
-        ),
-        Positioned(
-          top: 400.0, // Adjust this value to move the image down
-          child: Image.asset(
-            'assets/yellingwawa.png',
-            width: 240,
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
+              Center(
+                child: SizedBox(
+                  height: 800, // Increase the height to ensure the image isn't cut off
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      WawaTalking(
+                        'REMINDER: THIS IS BAD! Avoid paying larger amounts back by paying back on time!\n\n Your credit score can also DECREASE if you do not pay back your credit card on time!',
+                        "assets/blank.png",
+                      ),
+                      Positioned(
+                        top: 400.0, // Adjust this value to move the image down
+                        child: Image.asset(
+                          'assets/yellingwawa.png',
+                          width: 240,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               ExitButton(),
               const Row(
@@ -73,6 +67,8 @@ class Coin12bad extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
