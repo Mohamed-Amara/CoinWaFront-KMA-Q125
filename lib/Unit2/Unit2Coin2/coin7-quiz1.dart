@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-networth-template.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-page4-explain.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-page5-explain.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-quiz-template.dart';
-import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-quiz2.dart';
 import 'package:flutter_application_1/Unit2/Unit2Coin2/coin7-quiz2.dart';
 import 'package:flutter_application_1/Unit2/Unit2Coin2/coin7-quiztemp.dart';
 
