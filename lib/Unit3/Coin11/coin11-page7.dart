@@ -6,28 +6,28 @@ import 'package:flutter_application_1/Unit3/Coin11/coin11-page8.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:provider/provider.dart';
-
 class Coin11Page7 extends StatelessWidget {
   const Coin11Page7({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (Provider.of<ProgressProvider>(context, listen: false).level == 11) {
-                  Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 3);
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Coin11Page8(isRepeat: false)),
-                );
-              },
-              child: Center(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).level == 11) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 3);
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page8(isRepeat: false)),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,26 +37,25 @@ class Coin11Page7 extends StatelessWidget {
                     SpeechBubbleYellow("Well actually, it is an example of Good Debt, which is debt that helps put you in a better position in the long run!", false, ["Good", "Debt,"]),
                     const SizedBox(height: 20),
                     Image.asset('assets/wawaTalk.png', width: 150),
-                            
                   ],
                 ),
-              )
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 6,
+              ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

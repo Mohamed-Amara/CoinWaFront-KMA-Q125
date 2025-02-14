@@ -17,38 +17,41 @@ class Coin11Page3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Coin11Page4()),
-                );
-              },
-              child: Center(
-                child: WawaTalking("Let’s go through an example of the types of debt", "assets/wawaTalk.png")
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page4()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Center(
+                child: WawaTalking(
+                  "Let’s go through an example of the types of debt",
+                  "assets/wawaTalk.png",
+                ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 6,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -8,26 +8,25 @@ import 'dart:math' as math;
 
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:provider/provider.dart';
-
 class Coin11Page6 extends StatelessWidget {
   const Coin11Page6({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Coin11Page7()),
-                  );
-                },
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque, // Ensures taps are detected anywhere
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page7()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 40.0),
@@ -44,25 +43,20 @@ class Coin11Page6 extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Stack(
                                     clipBehavior: Clip.none,
                                     children: [
-                                      Image.asset('assets/wawaTalk.png',
-                                          width: 100),
+                                      Image.asset('assets/wawaTalk.png', width: 100),
                                       Positioned(
                                         top: 0,
                                         right: -40,
-                                        child: Image.asset(
-                                            'assets/Unit 3/student_loan.png',
-                                            width: 60),
+                                        child: Image.asset('assets/Unit 3/student_loan.png', width: 60),
                                       ),
                                     ],
                                   ),
                                   const SizedBox(width: 40),
-                                  // Use Expanded to allow the Text to take up available space and wrap
                                   const Expanded(
                                     child: Text(
                                       textAlign: TextAlign.center,
@@ -77,10 +71,8 @@ class Coin11Page6 extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Expanded(
                                     child: Text(
@@ -98,24 +90,18 @@ class Coin11Page6 extends StatelessWidget {
                                   Stack(
                                     clipBehavior: Clip.none,
                                     children: [
-                                      
-                                      Image.asset(
-                                          'assets/Unit 3/plan.png',
-                                          width: 60),
+                                      Image.asset('assets/Unit 3/plan.png', width: 60),
                                       Positioned(
                                         bottom: -40,
                                         left: -80,
-                                        child: Image.asset('assets/wawaConfused.png',
-                                            width: 100),
+                                        child: Image.asset('assets/wawaConfused.png', width: 100),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
-                              
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Stack(
                                     clipBehavior: Clip.none,
@@ -123,29 +109,25 @@ class Coin11Page6 extends StatelessWidget {
                                       Stack(
                                         clipBehavior: Clip.none,
                                         children: [
-                                          Image.asset('assets/wawaTalk.png',width: 100),
+                                          Image.asset('assets/wawaTalk.png', width: 100),
                                           Positioned(
                                             top: -22,
-                                            child: Image.asset('assets/Unit 3/grad_cap.png', width: 80)
+                                            child: Image.asset('assets/Unit 3/grad_cap.png', width: 80),
                                           ),
-
                                         ],
                                       ),
                                       Positioned(
                                         top: 0,
                                         right: -40,
-                                        child: Image.asset(
-                                            'assets/Unit 3/student_loan.png',
-                                            width: 60),
+                                        child: Image.asset('assets/Unit 3/student_loan.png', width: 60),
                                       ),
                                     ],
                                   ),
                                   const SizedBox(width: 40),
-                                  // Use Expanded to allow the Text to take up available space and wrap
                                   const Expanded(
                                     child: Text(
                                       textAlign: TextAlign.center,
-                                      'And knows that the loan can be payed back in the long run',
+                                      'And knows that the loan can be paid back in the long run',
                                       softWrap: true,
                                       style: TextStyle(
                                         color: Color(0xff5e17eb),
@@ -156,7 +138,6 @@ class Coin11Page6 extends StatelessWidget {
                                   ),
                                 ],
                               ),
-
                             ],
                           ),
                         ),
@@ -165,24 +146,25 @@ class Coin11Page6 extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 2,
-                      totalPages: 6,
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 2,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

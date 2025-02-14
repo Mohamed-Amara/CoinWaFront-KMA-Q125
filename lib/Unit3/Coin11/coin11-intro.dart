@@ -48,23 +48,19 @@ class Coin11Intro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                // if (Provider.of<ProgressProvider>(context, listen: false).level == 11) {
-                //   Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
-                // }
-               
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Coin11Page2()),
-                );
-              },
-              child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin11Page2()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -77,7 +73,7 @@ class Coin11Intro extends StatelessWidget {
                         color: Color(0xff5e17eb),
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                      )
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),
@@ -86,27 +82,27 @@ class Coin11Intro extends StatelessWidget {
                   SpeechBubble('It is money that is borrowed for a certain period of time and has to be returned', false),
                   const SizedBox(height: 20),
                   Image.asset('assets/wawaTalk.png', width: 150),
-            
                 ],
-              )
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 1,
-                      totalPages: 6,
+              ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 1,
+                        totalPages: 6,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
