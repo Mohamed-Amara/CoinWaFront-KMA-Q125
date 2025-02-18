@@ -24,6 +24,7 @@ dependencies:
   super_drag_and_drop: ^0.7.2
   path_drawing: ^1.0.1
   dotted_border: ^2.1.0
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:
