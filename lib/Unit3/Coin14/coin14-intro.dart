@@ -47,75 +47,74 @@ Widget SpeechBubble(String description, bool isLeft) {
 
 class Coin14Intro extends StatelessWidget {
   const Coin14Intro({super.key});
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (Provider.of<ProgressProvider>(context, listen: false).level == 14) {
-                  Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
-                }
-               
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Coin14Page2()),
-                );
-              },
-              child: Column(
+    return GestureDetector(
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).level == 14) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 2);
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin14Page2()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                      "Looks like Wawa is buying some movie tickets",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff5e17eb),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      )
-                    ),
-                    const SizedBox(height: 100),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Image.asset('assets/Unit 3/cashier.png', width: 350),
-                        Positioned(
-                          top: -70,
-                          right: 0,
-                          child: SpeechBubble("That will be \$24.99", true)
-                        ),
-                        Positioned(
-                          bottom: -40,
-                          left: 40,
-                          child: Image.asset('assets/Unit 3/wawaMovie.png', width: 200)
-                        )
-                      ],
-                    )                   
-                ],
-              )
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 1,
-                      totalPages: 7,
+                    "Looks like Wawa is buying some movie tickets",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xff5e17eb),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(height: 100),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Image.asset('assets/Unit 3/cashier.png', width: 350),
+                      Positioned(
+                        top: -70,
+                        right: 0,
+                        child: SpeechBubble("That will be \$24.99", true),
+                      ),
+                      Positioned(
+                        bottom: -40,
+                        left: 40,
+                        child: Image.asset('assets/Unit 3/wawaMovie.png', width: 200),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 1,
+                        totalPages: 7,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
+

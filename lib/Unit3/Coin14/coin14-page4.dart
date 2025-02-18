@@ -11,29 +11,37 @@ class Coin14Page4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffff1db),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (Provider.of<ProgressProvider>(context, listen: false).level == 14) {
-                  Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 5);
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Coin14CreditScore2()),
-                );
-              },
-              child: Center(
+    return GestureDetector(
+      onTap: () {
+        if (Provider.of<ProgressProvider>(context, listen: false).level == 14) {
+          Provider.of<ProgressProvider>(context, listen: false).setSublevel(context, 5);
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin14CreditScore2()),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xfffff1db),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SpeechBubbleYellow("Now you might be wondering, shouldn't I only use a credit card to pay for items I can't afford?", true, ["afford?"]),
+                    SpeechBubbleYellow(
+                      "Now you might be wondering, shouldn't I only use a credit card to pay for items I can't afford?",
+                      true,
+                      ["afford?"],
+                    ),
                     const SizedBox(height: 20),
-                    SpeechBubbleYellow("Why would I borrow money from the bank if I already have the money?", false, ["already", "have"]),
+                    SpeechBubbleYellow(
+                      "Why would I borrow money from the bank if I already have the money?",
+                      false,
+                      ["already", "have"],
+                    ),
                     const SizedBox(height: 20),
                     Stack(
                       clipBehavior: Clip.none,
@@ -42,29 +50,29 @@ class Coin14Page4 extends StatelessWidget {
                         Positioned(
                           right: -30,
                           top: 35,
-                          child: Image.asset('assets/Unit 3/credit_card.png', width: 50))
+                          child: Image.asset('assets/Unit 3/credit_card.png', width: 50),
+                        ),
                       ],
                     ),
-                            
                   ],
                 ),
-              )
-            ),
-            ExitButton(),
-            const Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: TopBar(
-                      currentPage: 4,
-                      totalPages: 7,
+              ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 4,
+                        totalPages: 7,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
