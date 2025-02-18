@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
 import 'reset_password_page.dart';
+
 
 class VerificationCodePage extends StatefulWidget {
   final String email;
@@ -25,7 +27,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
     final code = _codeController.text.trim();
 
-    if (code.isEmpty) {
+    if (code.isEmpty || code.length < 6) {
       setState(() {
         showDialog(
           context: context,
@@ -35,7 +37,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Close the dialog
+                  Navigator.pop(context);
                 },
                 child: const Text('OK'),
               ),
@@ -80,7 +82,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           },
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 205, 202, 255),
+      backgroundColor: const Color(0xFFE3F2FD),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -109,34 +111,38 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
+
+                // OTP Input Bubbles
                 SizedBox(
                   width: 300,
-                  child: TextField(
+                  child: PinCodeTextField(
+                    appContext: context,
+                    length: 6,
+                    obscureText: false,
+                    animationType: AnimationType.fade,
+                    cursorColor: Colors.black,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(10),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      inactiveColor: Colors.white,
+                      activeColor: Colors.white,
+                      selectedColor: Colors.blueAccent,
+                      inactiveFillColor: Colors.white,
+                      activeFillColor: Colors.white,
+                      selectedFillColor: Colors.white,
+                    ),
+                    animationDuration: const Duration(milliseconds: 300),
+                    backgroundColor: Colors.transparent,
+                    enableActiveFill: true,
                     controller: _codeController,
-                    style: const TextStyle(
-                      fontFamily: 'Source',
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Enter verification code',
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      hintStyle: const TextStyle(
-                        fontFamily: 'Source',
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 120, 112, 222),
-                      ),
-                    ),
+                    keyboardType: TextInputType.number,
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
                 if (_isLoading)
                   const CircularProgressIndicator()
                 else
@@ -144,7 +150,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     width: 300,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 62, 47, 196),
+                      color: Color.fromARGB(255, 62, 47, 196),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ElevatedButton(
@@ -160,12 +166,14 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                         'Verify Code',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20.0,
+                          fontSize: 20,
                           fontFamily: 'Source',
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
+
                 if (_message != null) ...[
                   const SizedBox(height: 20),
                   Text(
@@ -173,10 +181,10 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     style: const TextStyle(
                       color: Colors.red,
                       fontSize: 14,
-                      fontFamily: 'Source',
+                      fontFamily: 'SourceSans',
                     ),
                   ),
-                ]
+                ],
               ],
             ),
           ),
