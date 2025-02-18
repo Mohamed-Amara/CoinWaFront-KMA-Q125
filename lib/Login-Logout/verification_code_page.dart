@@ -112,9 +112,8 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                 ),
                 const SizedBox(height: 20),
 
-                // OTP Input Bubbles
                 SizedBox(
-                  width: 300,
+                  width: 350,
                   child: PinCodeTextField(
                     appContext: context,
                     length: 6,
@@ -122,15 +121,15 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     animationType: AnimationType.fade,
                     cursorColor: Colors.black,
                     pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(10),
+                      shape: PinCodeFieldShape.circle,
                       fieldHeight: 50,
-                      fieldWidth: 40,
-                      inactiveColor: Colors.white,
-                      activeColor: Colors.white,
-                      selectedColor: Colors.blueAccent,
-                      inactiveFillColor: Colors.white,
-                      activeFillColor: Colors.white,
+                      fieldWidth: 55, // Keep spacing
+                      borderWidth: 0.8, // Make it thinner
+                      inactiveColor: Color.fromARGB(255, 85, 54, 175), // Lighter gray for a softer look
+                      activeColor: Color.fromARGB(255, 85, 54, 175),
+                      selectedColor: Color.fromARGB(255, 85, 54, 175),
+                      inactiveFillColor: Colors.white, // Slightly transparent white
+                      activeFillColor:Colors.white,
                       selectedFillColor: Colors.white,
                     ),
                     animationDuration: const Duration(milliseconds: 300),
@@ -140,6 +139,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     keyboardType: TextInputType.number,
                   ),
                 ),
+
+
+
 
                 const SizedBox(height: 20),
 
