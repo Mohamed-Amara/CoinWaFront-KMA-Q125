@@ -106,10 +106,19 @@ class _BookshelfPageState extends State<BookshelfPage> {
 
             int completedLevels = Provider.of<ProgressProvider>(context, listen: false).level;
             if (pigIndex == 0 && completedLevels > 5) {
+              print(pigIndex);
+              print(completedLevels);
               pigColor = Colors.green; // Turn the first piggy bank green
             } else if (pigIndex == 1 && completedLevels > 10) {
+              print(pigIndex);
+              print(completedLevels);
               pigColor = const Color(0xff6327DB); // Turn the second piggy bank purple
+            }else if (pigIndex == 2 && completedLevels >= 15) {
+              print(pigIndex);
+              print(completedLevels);
+              pigColor = const Color(0xFF2596BE); // Turn the third piggy bank blue
             }
+
 
             return ColorFiltered(
               colorFilter: ColorFilter.mode(pigColor, BlendMode.srcIn),
