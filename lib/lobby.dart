@@ -25,8 +25,10 @@ import 'package:flutter_application_1/Bottom-Navigation-Bar/profile.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:provider/provider.dart';
 import 'Providers/lives_provider.dart';
+import 'Providers/profile_provider.dart';
 import 'Templates/lives_widget.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 class LobbyApp extends StatelessWidget {
   const LobbyApp({super.key});
@@ -57,13 +59,15 @@ class _LobbyPageState extends State<LobbyPage> {
 
 
 //This allows the lobby page to fetch the MongoDB database for the user's data
-Future<void> fetchData() async {
-  await Future.wait([
-    context.read<LivesProvider>().fetchUserData(context),
-    context.read<CoinProvider>().fetchUserData(context),
-    context.read<ProgressProvider>().fetchUserData(context),
-  ]);
-}
+  Future<void> fetchData() async {
+    await Future.wait([
+      context.read<LivesProvider>().fetchUserData(context),
+      context.read<CoinProvider>().fetchUserData(context),
+      context.read<ProgressProvider>().fetchUserData(context),
+      context.read<ProfileProvider>().fetchUserData(context), // Add this line
+    ]);
+  }
+
 
 //This is used for changing the color of the piggy bank and title when you scroll
   final List<Color> _colors = [
@@ -222,15 +226,14 @@ void initState() {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Image.asset(
-                            'assets/wacoin.png', //This is the amount of coins the user has
+                            'assets/wacoin.png', // This is the amount of coins the user has
                             width: 40,
                             height: 40,
                           ),
                           Consumer<CoinProvider>(
-                            builder:
-                                (BuildContext context, coinProvider, child) {
+                            builder: (BuildContext context, coinProvider, child) {
                               return Text(
-                                '${coinProvider.coin}', //Uses provider to fetch the database for the amount of coins the user has and displays it
+                                '${coinProvider.coin}', // Uses provider to fetch the database for the amount of coins the user has and displays it
                                 style: const TextStyle(
                                   color: Color(0xFFEFEBEB),
                                   fontSize: 20,
@@ -240,13 +243,66 @@ void initState() {
                             },
                           ),
                           const SizedBox(width: 10),
+                          Consumer<ProfileProvider>(
+                            builder: (context, profileProvider, child) {
+                              String imageAsset;
+
+                              // Default to ice_wawa.png if no streak or any other condition is met
+                              if (profileProvider.streak >= 30) {
+                                imageAsset = 'assets/very_fire_wawa.png'; // 1 month streak
+                              } else if (profileProvider.streak >= 7) {
+                                imageAsset = 'assets/fire_wawa.png'; // 1 week streak
+                              } else if (profileProvider.streak >= 5) {
+                                imageAsset = 'assets/slight_fire_wawa.png'; // 5 day streak
+                              } else if (profileProvider.streak >= 3) {
+                                imageAsset = 'assets/wawa.png'; // 3 day streak
+                              } else if (profileProvider.streak >= 1) {
+                                imageAsset = 'assets/ice_wawa.png'; // 1 day streak
+                              } else {
+                                imageAsset = 'assets/ice_wawa.png'; // Default to ice_wawa for no streak
+                              }
+
+                              return Row(
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 150.0), // Move image slightly downward
+                                        child: Image.asset(
+                                          imageAsset,
+                                          width: 70,
+                                          height: 70,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 170.0), // Keep text aligned relative to the image
+                                        child: Text(
+                                          '${profileProvider.streak}',
+                                          style: const TextStyle(
+                                            color: Color(0xFFEFEBEB),
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+
+
+                            },
+                          ),
+
+                          const SizedBox(width: 10),
                           Consumer<LivesProvider>(
                             builder: (context, livesProvider, child) {
                               return Row(
                                 children: [
                                   LivesWidget(
-                                    lives: livesProvider
-                                        .lives, 
+                                    lives: livesProvider.lives,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
@@ -304,7 +360,7 @@ void initState() {
                           MaterialPageRoute(
                               builder: (context) => const Profile()),
                         );
-                        
+
                       }
                       if (index == 1) {
                         Navigator.push(
@@ -312,7 +368,7 @@ void initState() {
                           MaterialPageRoute(
                               builder: (context) => PigShelf()),
                         );
-                        
+
                       }
                     },
                   ),
@@ -325,7 +381,7 @@ void initState() {
     );
   }
 
-  BottomNavigationBarItem _buildBottomNavigationBarItem( 
+  BottomNavigationBarItem _buildBottomNavigationBarItem(
       {required dynamic icon, required int index}) {
     return BottomNavigationBarItem(
       icon: Container(
@@ -569,7 +625,7 @@ void initState() {
                                 width: 110,
                                 height: 110,
                               ):
-                              
+
                               ColorFiltered(
                                 colorFilter: ColorFilter.mode((index < 10)?const Color(0xff6327DB): const Color.fromARGB(255, 61, 121, 231), BlendMode.srcIn),
                                 child: Image.asset(
@@ -597,7 +653,7 @@ void initState() {
                                       context: context,
                                       builder: (context) => DismissibleDialog(),
                                     );
-                                   
+
                                   }
                                 } else {
                                   Navigator.push(
@@ -677,7 +733,7 @@ void initState() {
                                       context: context,
                                       builder: (context) => DismissibleDialog(),
                                     );
-                                   
+
                                   }
                                 } else {
                                   Navigator.push(
