@@ -405,7 +405,7 @@ class _BookshelfState extends State<Bookshelf> {
                             .sublevel >=
                         5)
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(vertical: 50.0),
                         child:
                             ElevatedButton(onPressed: () {
                               Navigator.push(
