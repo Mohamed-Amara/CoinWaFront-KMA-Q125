@@ -136,8 +136,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // Allows background image behind AppBar
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 62, 47, 196),
+        backgroundColor: Colors.transparent, // Makes AppBar transparent
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -146,19 +147,13 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
-        height: 3260,
-        width: 2450,
+        height: double.infinity,
+        width: double.infinity,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 62, 47, 196),
-              Color.fromARGB(255, 175, 175, 252),
-            ],
-            stops: [0.0, 0.7],
+          image: DecorationImage(
+            image: AssetImage('assets/Im_Not_New.png'), // Updated background image
+            fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(

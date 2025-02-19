@@ -72,8 +72,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // Allows content behind AppBar
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 62, 47, 196),
+        backgroundColor: Colors.transparent, // Transparent AppBar
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -82,16 +83,12 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           },
         ),
       ),
-      backgroundColor: const Color(0xFFE3F2FD),
+      backgroundColor: Colors.transparent, // Make background transparent to show the image
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 62, 47, 196), // Dark purple
-              Color.fromARGB(255, 175, 175, 252), // Lavender
-            ],
+          image: DecorationImage(
+            image: AssetImage('assets/Im_Not_New.png'), // Set your background image here
+            fit: BoxFit.cover,
           ),
         ),
         child: Center(

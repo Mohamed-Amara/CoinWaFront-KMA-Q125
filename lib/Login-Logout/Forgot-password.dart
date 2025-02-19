@@ -80,8 +80,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // Allows content behind AppBar
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 62, 47, 196),
+        backgroundColor: Colors.transparent, // Transparent AppBar
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -90,16 +91,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           },
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 205, 202, 255),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 62, 47, 196), // Dark purple
-              Color.fromARGB(255, 175, 175, 252), // Lavender
-            ],
+          image: DecorationImage(
+            image: AssetImage('assets/Im_Not_New.png'), // Background image
+            fit: BoxFit.cover,
           ),
         ),
         child: Center(
