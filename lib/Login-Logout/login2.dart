@@ -109,35 +109,30 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true, // Allows content behind AppBar
       appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 62, 47, 196),
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
-    (Route<dynamic> route) => false,
-  );
-            }
-          ),
+        backgroundColor: Colors.transparent, // Makes AppBar transparent
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+                  (Route<dynamic> route) => false,
+            );
+          },
         ),
-      backgroundColor: const Color.fromARGB(255, 205, 202, 255),
+      ),
       body: Container(
-        height: 3260,
-        width: 2450,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 62, 47, 196), // Dark purple
-              Color.fromARGB(255, 175, 175, 252), // Lavender
-            ],
-            stops: [0.0, 0.7],
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/Im_Not_New.png'), // Updated image
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
         child: SingleChildScrollView(
           child: Center(
             child: Padding(

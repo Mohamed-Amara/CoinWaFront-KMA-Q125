@@ -75,8 +75,9 @@ class hello extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        extendBodyBehindAppBar: true, // Enables the background image behind the AppBar
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 62, 47, 196),
+          backgroundColor: Colors.transparent, // Makes AppBar transparent
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -89,14 +90,9 @@ class hello extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 62, 47, 196), // Dark purple
-                Color.fromARGB(255, 175, 175, 252), // Lavender
-              ],
-              stops: [0.0, 0.7],
+            image: DecorationImage(
+              image: AssetImage('assets/Im_Not_New.png'),
+              fit: BoxFit.cover,
             ),
           ),
           child: SingleChildScrollView(
