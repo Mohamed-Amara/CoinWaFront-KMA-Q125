@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Backend-Service/auth_service.dart';
 import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:flutter_application_1/lobby.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/Questionaire/question_1.dart';
 
 void main() {
   runApp(const LoginApp());
@@ -100,11 +101,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       // If registration is successful, update user badge and navigate to lobby
-      Provider.of<ProfileProvider>(context, listen: false)
-          .updateUserBadge(context, "welcome");
+      // Provider.of<ProfileProvider>(context, listen: false)
+      //     .updateUserBadge(context, "welcome");
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LobbyPage()),
+        MaterialPageRoute(builder: (context) => Question1Page()),
       );
     } catch (e) {
       // Handle specific error for username already existing
