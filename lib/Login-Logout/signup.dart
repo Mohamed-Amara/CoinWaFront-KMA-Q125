@@ -1,11 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Unit1/Coin4/coin4-WHERE.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
-import 'package:flutter_application_1/Providers/profile_provider.dart';
-import 'package:flutter_application_1/lobby.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Questionaire/question_1.dart';
+import 'package:flutter_application_1/Questionaire/answer_model.dart';
 
 void main() {
   runApp(const LoginApp());
@@ -105,7 +101,9 @@ class _LoginPageState extends State<LoginPage> {
       //     .updateUserBadge(context, "welcome");
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Question1Page()),
+        MaterialPageRoute(
+          builder: (context) => Question1Page(answerModel: AnswerModel()),
+        ),
       );
     } catch (e) {
       // Handle specific error for username already existing

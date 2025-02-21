@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Questionaire/question_2.dart';
+import 'answer_model.dart';
 
 class Question1Page extends StatefulWidget {
+  final AnswerModel answerModel;
+
+  Question1Page({Key? key, required this.answerModel}) : super(key: key);
+
   @override
   _Question1PageState createState() => _Question1PageState();
 }
@@ -11,37 +16,20 @@ class _Question1PageState extends State<Question1Page> {
 
   void _navigateToQuestion2(BuildContext context) {
     if (selectedValue != null) {
+      widget.answerModel.question1Answer = selectedValue;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Question2Page()),
+        MaterialPageRoute(
+          builder: (context) => Question2Page(answerModel: widget.answerModel),
+        ),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), // Back arrow
-          onPressed: () {
-            Navigator.pop(context); // Handle back navigation
-          },
-        ),
-        title: Text(
-          "Question 1",
-          style: TextStyle(
-            color: Colors.black, // Set the text color to match the arrow color
-            fontSize: 15,
-          ),
-        ),
-        centerTitle: false, // Ensures the title is left-aligned next to the back arrow
-      ),
-      extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -53,13 +41,22 @@ class _Question1PageState extends State<Question1Page> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Center aligned the content
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: AppBar().preferredSize.height + 40), // Adjusted for lower app bar
+              SizedBox(height: 40), // Adjusted for top padding
+              Text(
+                "Question 1",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
               Text(
                 'How comfortable are you with managing money?',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
-                textAlign: TextAlign.center, // Center aligned the text
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
               Expanded(
@@ -100,16 +97,16 @@ class _Question1PageState extends State<Question1Page> {
                         ),
                       ],
                     ),
-                    Spacer(), // Pushes the image towards the bottom
+                    Spacer(),
                     Image.asset(
                       "assets/wawaTalk.png",
-                      width: screenWidth * 0.5, // Responsive image size
+                      width: screenWidth * 0.5,
                     ),
                     SizedBox(height: 20),
                   ],
                 ),
               ),
-              if (selectedValue != null) // Show button only after selection
+              if (selectedValue != null)
                 Column(
                   children: [
                     ElevatedButton(

@@ -1,20 +1,28 @@
+// question2.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Questionaire/question_3.dart';
+import 'answer_model.dart';
 
 class Question2Page extends StatefulWidget {
+  final AnswerModel answerModel;
+
+  Question2Page({Key? key, required this.answerModel}) : super(key: key);
+
   @override
   _Question2PageState createState() => _Question2PageState();
 }
 
 class _Question2PageState extends State<Question2Page> {
-  // Track multiple selected values
   List<String> selectedValues = [];
 
   void _navigateToQuestion3(BuildContext context) {
     if (selectedValues.isNotEmpty) {
+      widget.answerModel.question2Answers = selectedValues;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Question3Page()),
+        MaterialPageRoute(
+          builder: (context) => Question3Page(answerModel: widget.answerModel),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -76,10 +84,10 @@ class _Question2PageState extends State<Question2Page> {
                     crossAxisSpacing: 10,
                     shrinkWrap: true,
                     children: [
-                      OptionCard(value: 'sleeping', label: 'Budgeting & saving', color: Colors.blue[200]!),
-                      OptionCard(value: 'stress', label: 'Earning & investing', color: Colors.purple[200]!),
-                      OptionCard(value: 'calm', label: 'Credit cards & loans', color: Colors.teal[200]!),
-                      OptionCard(value: 'focus', label: 'Smart spending & shopping hacks', color: Colors.pink[200]!),
+                      OptionCard(value: 'Budget', label: 'Budgeting & saving', color: Colors.blue[200]!),
+                      OptionCard(value: 'invest', label: 'Earning & investing', color: Colors.purple[200]!),
+                      OptionCard(value: 'Credit Card', label: 'Credit cards & loans', color: Colors.teal[200]!),
+                      OptionCard(value: 'Spending', label: 'Smart spending & shopping hacks', color: Colors.pink[200]!),
                     ].map((card) => GestureDetector(
                       onTap: () {
                         setState(() {

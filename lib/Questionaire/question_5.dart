@@ -1,27 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/lobby.dart';
+import 'answer_model.dart';  // Ensure this is correctly defined and imported
 import 'package:flutter_application_1/Providers/profile_provider.dart';
+import 'package:flutter_application_1/lobby.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/Backend-Service/auth_service.dart';
 
 class Question5Page extends StatefulWidget {
+  final AnswerModel answerModel;
+
+  Question5Page({Key? key, required this.answerModel}) : super(key: key);
+
   @override
   _Question5PageState createState() => _Question5PageState();
 }
 
 class _Question5PageState extends State<Question5Page> {
-  List<String> selectedValues = [];
+  // Use a single value for the selected answer
+  String? selectedValue;
 
-  void _navigateToLobbyPage(BuildContext context) {
-    if (selectedValues.isNotEmpty) {
-      Provider.of<ProfileProvider>(context, listen: false)
-          .updateUserBadge(context, "welcome");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LobbyPage()),
-      );
+  // Create an instance of the AuthService
+  final AuthService authService = AuthService();
+
+  // Function to handle the submission of answers
+  void _submitAnswers(BuildContext context) async {
+    if (selectedValue != null) {
+      // Map the selected option to an AnswerModel
+      widget.answerModel.question5Answer = selectedValue;
+      print("Current answerModel: ${widget.answerModel.toJson()}");
+
+      // Submit the answers to the server
+      bool success = await authService.submitAnswers(context,widget.answerModel);// this line has error
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Answers submitted successfully!')),
+        );
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateUserBadge(context, "welcome");
+
+        // Navigate to the next page (for example, LobbyPage)
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LobbyPage()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to submit answers. Please try again later.')),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select at least one option before submitting.')),
+        SnackBar(content: Text('Please select an option before submitting.')),
       );
     }
   }
@@ -53,12 +82,11 @@ class _Question5PageState extends State<Question5Page> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0), // Reduced top padding
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
           child: Column(
             children: [
-              // Question Title
               Padding(
-                padding: const EdgeInsets.only(top: 40.0), // Less padding
+                padding: const EdgeInsets.only(top: 40.0),
                 child: Text(
                   'What’s your financial goal right now?',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
@@ -68,7 +96,6 @@ class _Question5PageState extends State<Question5Page> {
 
               SizedBox(height: 15),
 
-              // GridView with Options
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -77,25 +104,22 @@ class _Question5PageState extends State<Question5Page> {
                   crossAxisSpacing: 10,
                   shrinkWrap: true,
                   children: [
-                    OptionCard(value: 'option1', label: 'Learning how to manage money better', color: Colors.blue[200]!),
-                    OptionCard(value: 'option2', label: 'Saving up for something big', color: Colors.purple[200]!),
-                    OptionCard(value: 'option3', label: 'Making my money work for me (investing, earning more)', color: Colors.teal[200]!),
-                    OptionCard(value: 'option4', label: 'Building financial independence early', color: Colors.pink[200]!),
+                    OptionCard(value: 'money', label: 'Learning how to manage money better', color: Colors.blue[200]!),
+                    OptionCard(value: 'saving', label: 'Saving up for something big', color: Colors.purple[200]!),
+                    OptionCard(value: 'investing', label: 'Making my money work for me (investing, earning more)', color: Colors.teal[200]!),
+                    OptionCard(value: 'financial-idependence', label: 'Building financial independence early', color: Colors.pink[200]!),
                   ].map((card) => GestureDetector(
                     onTap: () {
                       setState(() {
-                        if (selectedValues.contains(card.value)) {
-                          selectedValues.remove(card.value);
-                        } else {
-                          selectedValues.add(card.value);
-                        }
+                        // Set the selected value to the one tapped
+                        selectedValue = card.value;
                       });
                     },
                     child: OptionCard(
                       value: card.value,
                       label: card.label,
                       color: card.color,
-                      isSelected: selectedValues.contains(card.value),
+                      isSelected: selectedValue == card.value, // Highlight the selected option
                     ),
                   )).toList(),
                 ),
@@ -103,19 +127,18 @@ class _Question5PageState extends State<Question5Page> {
 
               SizedBox(height: 15),
 
-              // Image (Fixed Size & Centered)
               Image.asset(
                 "assets/pigdollarsave.png",
-                height: MediaQuery.of(context).size.height * 0.25, // Adjusted height
+                height: MediaQuery.of(context).size.height * 0.25,
                 fit: BoxFit.contain,
               ),
 
               SizedBox(height: 20),
 
-              // Submit Button (Only if an option is selected)
-              if (selectedValues.isNotEmpty)
+              // Show submit button if a value is selected
+              if (selectedValue != null)
                 ElevatedButton(
-                  onPressed: () => _navigateToLobbyPage(context),
+                  onPressed: () => _submitAnswers(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     minimumSize: Size(double.infinity, 50),
@@ -148,7 +171,7 @@ class OptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10), // Reduced padding
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),

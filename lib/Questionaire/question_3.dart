@@ -1,7 +1,13 @@
+// question1.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Questionaire/question_4.dart';
+import 'answer_model.dart';
 
 class Question3Page extends StatefulWidget {
+  final AnswerModel answerModel;
+
+  Question3Page({Key? key, required this.answerModel}) : super(key: key);
+
   @override
   _Question3PageState createState() => _Question3PageState();
 }
@@ -11,18 +17,18 @@ class _Question3PageState extends State<Question3Page> {
 
   void _navigateToQuestion4(BuildContext context) {
     if (selectedValue != null) {
+      widget.answerModel.question3Answer = selectedValue;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Question4Page()),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select an option before continuing.')),
+        MaterialPageRoute(
+          builder: (context) => Question4Page(answerModel: widget.answerModel),
+        ),
       );
     }
   }
 
-  @override
+
+@override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -76,7 +82,7 @@ class _Question3PageState extends State<Question3Page> {
                       alignment: WrapAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'option1'),
+                          onTap: () => setState(() => selectedValue = 'Beginner'),
                           child: OptionCard(
                             value: 'option1',
                             label: "I don’t track my spending at all",
@@ -85,7 +91,7 @@ class _Question3PageState extends State<Question3Page> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'option2'),
+                          onTap: () => setState(() => selectedValue = 'medium'),
                           child: OptionCard(
                             value: 'option2',
                             label: "I try to save but don’t have a system",
@@ -94,7 +100,7 @@ class _Question3PageState extends State<Question3Page> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'option3'),
+                          onTap: () => setState(() => selectedValue = 'expert'),
                           child: OptionCard(
                             value: 'option3',
                             label: "I use an app, budget, or track my finances regularly",

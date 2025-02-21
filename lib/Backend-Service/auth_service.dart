@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import '../Questionaire/answer_model.dart';
 
 class AuthService {
   final _storage = const FlutterSecureStorage();
@@ -346,4 +347,39 @@ class AuthService {
     }
   }
 
+  Future<bool> submitAnswers(BuildContext context, AnswerModel answers) async {
+    final token = await getToken();
+    print("Token: $token");
+    print("Answers to submit: ${json.encode(answers.toJson())}");
+
+    if (token == null) {
+      throw Exception('No token available');
+    }
+
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/users/questionnaire'),  // Using PUT instead of POST
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token,
+        },
+        body: json.encode({"responses":answers.toJson()}),  // Send the answers as JSON
+      );
+
+      print("Response Status: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Failed to submit answers. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print("Error submitting answers: $e");
+      return false;
+    }
+  }
+
 }
+
