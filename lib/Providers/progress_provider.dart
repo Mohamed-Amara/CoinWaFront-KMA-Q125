@@ -21,6 +21,10 @@ class ProgressProvider extends ChangeNotifier {
     _fetchProgress(context);
   }
 
+  int get currentLevelInt {
+    return _level;
+  }
+
   Future<void> _fetchProgress(BuildContext context) async {
     try {
       final response = await _authService.getUserProfile(context);
@@ -106,22 +110,20 @@ class ProgressProvider extends ChangeNotifier {
   }
 
   void addIncorrectQuestion(BuildContext context) {
-  // Ensure _incorrectQuestions has at least _level elements
-  while (_incorrectQuestions.length < _level) {
-    _incorrectQuestions.add([]);
+    // Ensure _incorrectQuestions has at least _level elements
+    while (_incorrectQuestions.length < _level) {
+      _incorrectQuestions.add([]);
+    }
+
+    // Check if _sublevel is already present in the sublist for the current level
+    bool found = _incorrectQuestions[_level - 1].contains(_sublevel);
+
+    // If _sublevel is not found, add it to the appropriate sublist
+    if (!found) {
+      _incorrectQuestions[_level - 1].add(_sublevel);
+      notifyListeners(); // Notify listeners of the change
+      _updateProgress(
+          context); // Call method to update progress or perform other actions
+    }
   }
-
-  // Check if _sublevel is already present in the sublist for the current level
-  bool found = _incorrectQuestions[_level - 1].contains(_sublevel);
-
-  // If _sublevel is not found, add it to the appropriate sublist
-  if (!found) {
-    _incorrectQuestions[_level - 1].add(_sublevel);
-    notifyListeners(); // Notify listeners of the change
-    _updateProgress(context); // Call method to update progress or perform other actions
-  }
-}
-
-
-  
 }
