@@ -65,7 +65,8 @@ class _CoinEndState extends State<CoinEnd> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 28),
+                  icon: const Icon(Icons.arrow_back_ios,
+                      color: Colors.white, size: 28),
                   onPressed: () {
                     Navigator.pop(context); // Goes back to the previous page
                   },
@@ -82,7 +83,8 @@ class _CoinEndState extends State<CoinEnd> {
                 children: [
                   // **Title Box - Now White & Transparent**
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(30),
@@ -114,7 +116,8 @@ class _CoinEndState extends State<CoinEnd> {
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.25),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.35), width: 1.5),
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.35), width: 1.5),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.12),
@@ -159,7 +162,8 @@ class _CoinEndState extends State<CoinEnd> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF7B73DF), // Deep Purple
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
