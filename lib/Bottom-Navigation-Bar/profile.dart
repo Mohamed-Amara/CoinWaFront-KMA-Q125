@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Bottom-Navigation-Bar/Friends/friends.dart';
+import 'package:flutter_application_1/Bottom-Navigation-Bar/usercreate.dart';
 import 'package:flutter_application_1/Providers/coin_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Providers/profile_provider.dart';
+import 'package:flutter_application_1/Providers/progress_provider.dart';
 import 'package:flutter_application_1/Login-Logout/logout.dart';
 import 'package:flutter_application_1/Bottom-Navigation-Bar/bottombar.dart';
 
@@ -9,6 +12,7 @@ class Profile extends StatefulWidget {
   const Profile({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -26,7 +30,6 @@ class _ProfilePageState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    // Ensure that the PageView loops infinitely
     _pageController.addListener(() {
       if (_pageController.page == badgeImages.length - 1) {
         _pageController.jumpToPage(0);
@@ -47,85 +50,88 @@ class _ProfilePageState extends State<Profile> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.purple.shade50, // Light purple background
+      backgroundColor: Colors.purple.shade50,
       body: Consumer<ProfileProvider>(
         builder: (context, profileProvider, child) {
           return FutureBuilder(
             future: profileProvider.initialization,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child: CircularProgressIndicator()); // Show loading spinner
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
                 return SafeArea(
-                  // Wrap the content in SafeArea to avoid UI overlaps
                   child: SingleChildScrollView(
-                    // Wrap the entire content in a scrollable widget
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Profile header section
-                        Stack(
-                          clipBehavior: Clip
-                              .none, // Allows the second container to extend beyond the first
+                        Column(
                           children: [
-                            // Bottom Layer - Darker shade for depth
-                            Positioned(
-                              top:
-                                  20, // Pushes this layer slightly lower to create the effect
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                width: screenWidth,
-                                height: 90, // Height of the shadow layer
-                                decoration: BoxDecoration(
-                                  color: Colors.deepPurple
-                                      .shade700, // Slightly darker purple for depth
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Top Layer - Main Banner
-                            Container(
-                              width: screenWidth,
-                              height: 110,
-                              padding: const EdgeInsets.all(20),
-                              decoration: const BoxDecoration(
-                                color: Colors.purple, // Main banner color
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                ),
-                              ),
-                              child: const Column(
-                                children: [
-                                  SizedBox(height: 30),
-                                  Text(
-                                    "Profile",
-                                    style: TextStyle(
-                                      color: Colors
-                                          .white, // White text for visibility
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                            // Profile header section
+                            Stack(
+                              clipBehavior: Clip.none,
+                              alignment: Alignment.topCenter,
+                              children: [
+                                Positioned(
+                                  top: 15,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    width: screenWidth,
+                                    height: 100,
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 91, 24, 233),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(30),
+                                        bottomRight: Radius.circular(30),
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(height: 40),
-                                  LogoutButton(), // Log out button
-                                ],
-                              ),
+                                ),
+                                Container(
+                                  width: screenWidth,
+                                  height: 100,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 140, 82, 255),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 25),
+                                      Text(
+                                        "Profile",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(height: 10),
+                                LogoutButton(),
+                                SizedBox(height: 10),
+                              ],
                             ),
                           ],
                         ),
-
                         const SizedBox(height: 20),
-                        // Profile card with user details
                         Card(
-                          color: Colors.purple.shade200,
+                          color: const Color.fromARGB(255, 172, 130, 253),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -134,14 +140,32 @@ class _ProfilePageState extends State<Profile> {
                             padding: const EdgeInsets.all(16),
                             child: Column(
                               children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: AssetImage(profileProvider
-                                      .profilepic), // Profile picture
+                                GestureDetector(
+                                  onTap: () async {
+                                    final selectedAvatar =
+                                        await Navigator.push<String>(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UserCreate(),
+                                      ),
+                                    );
+                                    if (selectedAvatar != null) {
+                                      await profileProvider.updateProfilePicture(
+                                          // ignore: use_build_context_synchronously
+                                          context,
+                                          selectedAvatar);
+                                    }
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage:
+                                        AssetImage(profileProvider.profilepic),
+                                  ),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  profileProvider.fullname, // User's name
+                                  profileProvider.fullname,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -149,7 +173,7 @@ class _ProfilePageState extends State<Profile> {
                                   ),
                                 ),
                                 Text(
-                                  '${Provider.of<CoinProvider>(context, listen: false).coin}', // Display coin balance
+                                  '${Provider.of<CoinProvider>(context, listen: false).coin}',
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(height: 10),
@@ -168,18 +192,30 @@ class _ProfilePageState extends State<Profile> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        // Goals Section
                         _goalSection(
-                            "Streak",
-                            profileProvider.streak.toDouble(),
-                            30), // Streak progress
-                        _goalSection(
-                            "Your Current Level", 5, 10), // User level progress
-                        _goalSection(
-                            "Units Covered", 23, 100), // Covered units progress
+                            "Streak", profileProvider.streak.toDouble(), 30),
+                        Consumer<ProgressProvider>(
+                          builder: (context, progressProvider, child) {
+                            return _goalSection("Your Current Level",
+                                progressProvider.currentLevelInt as double, 15);
+                          },
+                        ),
+                        Consumer<ProgressProvider>(
+                          builder: (context, progressProvider, child) {
+                            // Convert the current level to the unit scale (each unit has 5 levels)
+                            // Example: level 6 maps to unit 2, level 11 maps to unit 3
+                            double unitProgress =
+                                (((progressProvider.currentLevelInt) / 5))
+                                    .ceil() as double;
 
+                            return _goalSection(
+                              "Your Current Unit",
+                              unitProgress, // This shows the level as a fraction (e.g., 0.33, 0.66)
+                              3, // The scale for the slider (Unit 1, Unit 2, Unit 3)
+                            );
+                          },
+                        ),
                         const SizedBox(height: 20),
-                        // Badges Section
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -193,25 +229,27 @@ class _ProfilePageState extends State<Profile> {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              // Container with cyclic scroll for badges
-                              Container(
-                                height: 150, // Badge height adjusted
+                              SizedBox(
+                                height: 80,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: null, // Infinite scroll
+                                  itemCount: badgeImages.length,
                                   itemBuilder: (context, index) {
-                                    int loopIndex = index %
-                                        badgeImages
-                                            .length; // Ensure cycling through badges
+                                    bool isUnlocked =
+                                        index <= profileProvider.unlockedBadges;
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 20),
                                       child: ClipOval(
                                         child: Image.asset(
-                                          badgeImages[
-                                              loopIndex], // Get the badge image
-                                          width: 120, // Size of the badge
-                                          height: 120,
-                                          fit: BoxFit.cover,
+                                          badgeImages[index],
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.fill,
+                                          color:
+                                              isUnlocked ? null : Colors.grey,
+                                          colorBlendMode: isUnlocked
+                                              ? BlendMode.dstIn
+                                              : BlendMode.saturation,
                                         ),
                                       ),
                                     );
@@ -230,27 +268,32 @@ class _ProfilePageState extends State<Profile> {
           );
         },
       ),
-      bottomNavigationBar:
-          const BottomBar(initialIndex: 3), // Bottom navigation bar
+      bottomNavigationBar: const BottomBar(initialIndex: 3),
     );
   }
 
-  // Helper function for displaying follow and following info
   Widget _infoButton(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.purple.shade700,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.white),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FriendsWidget()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 97, 71, 197),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
 
-  // Helper function to create goal progress sections
   Widget _goalSection(String title, double value, double maxValue) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -266,20 +309,26 @@ class _ProfilePageState extends State<Profile> {
             children: [
               Text(
                 title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 5),
-              Text("${value.toInt()}"), // Display current value
-              Slider(
-                value: value,
-                min: 0,
-                max: maxValue,
-                activeColor: Colors.purple,
-                inactiveColor: Colors.purple.shade100,
-                onChanged: (newValue) {}, // Disabled slider
+              Text("${value.toInt()}"),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  trackHeight: 7,
+                  thumbShape:
+                      const RoundSliderThumbShape(enabledThumbRadius: 0.0),
+                  overlayColor: Colors.transparent,
+                ),
+                child: Slider(
+                  value: value,
+                  min: 0,
+                  max: maxValue,
+                  activeColor: const Color.fromARGB(255, 140, 83, 255),
+                  inactiveColor: Colors.purple.shade100,
+                  onChanged: (newValue) {},
+                ),
               ),
             ],
           ),

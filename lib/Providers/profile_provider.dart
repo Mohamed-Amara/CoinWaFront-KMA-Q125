@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
 import 'dart:async';
@@ -27,8 +28,11 @@ class ProfileProvider extends ChangeNotifier {
   late Future<void> initialization;
 
   ProfileProvider(BuildContext context) {
-     initialization = _fetchProfilePage(context);
+    initialization = _fetchProfilePage(context);
   }
+
+  // Getter for the number of unlocked badges
+  int get unlockedBadges => _badges.length;
 
   Future<void> _fetchToken(BuildContext context) async {
     try {
@@ -37,25 +41,34 @@ class ProfileProvider extends ChangeNotifier {
         _token = token;
         notifyListeners();
       } else {
-        print("No token found");
+        if (kDebugMode) {
+          print("No token found");
+        }
       }
     } catch (error) {
-      print("Error fetching user token: $error");
+      if (kDebugMode) {
+        print("Error fetching user token: $error");
+      }
     }
   }
 
   Future<void> _fetchProfilePage(BuildContext context) async {
     try {
       final response = await _authService.getUserProfile(context);
+      // ignore: use_build_context_synchronously
       _fetchToken(context);
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         _setProfileData(responseData);
       } else {
-        print('Error fetching profile page: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Error fetching profile page: ${response.statusCode}');
+        }
       }
     } catch (error) {
-      print("Error fetching profile page: $error");
+      if (kDebugMode) {
+        print("Error fetching profile page: $error");
+      }
     }
   }
 
@@ -66,40 +79,50 @@ class ProfileProvider extends ChangeNotifier {
     _followingNum = responseData['following']['followingAmount'];
     _profilepic = responseData['profilepic'] ?? 'assets/defaultguy.png';
     _streak = responseData['loginStreak'];
-    _badges = List<String>.from(responseData['badges'].map((badge) => badge.toString()));
+    _badges = List<String>.from(
+        responseData['badges'].map((badge) => badge.toString()));
     notifyListeners(); // Notify listeners about the change
   }
 
-  Future<void> updateProfilePicture(BuildContext context, String newProfilePic) async {
+  Future<void> updateProfilePicture(
+      BuildContext context, String newProfilePic) async {
     try {
-      final response = await _authService.updateUserProfile(context, {'profilepic': newProfilePic});
+      final response = await _authService
+          .updateUserProfile(context, {'profilepic': newProfilePic});
 
       if (response.statusCode == 200) {
         _profilepic = newProfilePic;
         notifyListeners(); // Notify listeners about the change
       } else {
-        print('Error updating profile picture: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Error updating profile picture: ${response.statusCode}');
+        }
       }
     } catch (error) {
-      print("Error updating profile picture: $error");
+      if (kDebugMode) {
+        print("Error updating profile picture: $error");
+      }
     }
   }
 
   Future<void> updateUserBadge(BuildContext context, String badgeName) async {
     try {
-      final response = await _authService.updateBadges(context, 'assets/Badges/$badgeName.png');
+      final response = await _authService.updateBadges(
+          context, 'assets/Badges/$badgeName.png');
 
       if (response.statusCode == 200) {
         _badges.add(badgeName);
         notifyListeners(); // Notify listeners about the change
-        
+
         // Show badge popup
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           barrierDismissible: true,
           builder: (BuildContext context) {
             return BadgePopup(
-              badgeImagePath: 'assets/Badges/$badgeName.png', // Path to badge image
+              badgeImagePath:
+                  'assets/Badges/$badgeName.png', // Path to badge image
               onClose: () {
                 Navigator.of(context).pop();
               },
@@ -107,10 +130,14 @@ class ProfileProvider extends ChangeNotifier {
           },
         );
       } else {
-        print('Error updating user badge: ${response.statusCode}');
+        if (kDebugMode) {
+          print('Error updating user badge: ${response.statusCode}');
+        }
       }
     } catch (error) {
-      print("Error updating user badge: $error");
+      if (kDebugMode) {
+        print("Error updating user badge: $error");
+      }
     }
   }
 
