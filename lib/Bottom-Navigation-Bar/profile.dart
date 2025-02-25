@@ -1,60 +1,56 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Providers/coin_provider.dart';
-import 'package:flutter_application_1/Providers/profile_provider.dart';
-import 'package:flutter_application_1/Bottom-Navigation-Bar/bottombar.dart';
 import 'package:flutter_application_1/Bottom-Navigation-Bar/Friends/friends.dart';
-import 'package:flutter_application_1/Login-Logout/logout.dart';
+import 'package:flutter_application_1/Bottom-Navigation-Bar/usercreate.dart';
+import 'package:flutter_application_1/Providers/coin_provider.dart';
 import 'package:provider/provider.dart';
-import 'usercreate.dart'; // Ensure this import points to the correct path
+import 'package:flutter_application_1/Providers/profile_provider.dart';
+import 'package:flutter_application_1/Providers/progress_provider.dart';
+import 'package:flutter_application_1/Login-Logout/logout.dart';
+import 'package:flutter_application_1/Bottom-Navigation-Bar/bottombar.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
-  _ProfileState createState() => _ProfileState();
+  // ignore: library_private_types_in_public_api
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfilePageState extends State<Profile> {
+  final PageController _pageController = PageController();
+  final List<String> badgeImages = [
+    "assets/Badges/baby.png",
+    "assets/Badges/early.png",
+    "assets/Badges/finwhiz.png",
+    "assets/Badges/piggybank.png",
+    "assets/Badges/pretty.png",
+    "assets/Badges/welcome.png",
+  ];
+
   @override
   void initState() {
     super.initState();
-    // Trigger data fetch when this widget is initialized
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      Provider.of<ProfileProvider>(context, listen: false).fetchUserData(context);
-      Provider.of<CoinProvider>(context, listen: false).fetchUserData(context);
+    _pageController.addListener(() {
+      if (_pageController.page == badgeImages.length - 1) {
+        _pageController.jumpToPage(0);
+      } else if (_pageController.page == 0) {
+        _pageController.jumpToPage(badgeImages.length - 1);
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    List<String> allBadges = [
-      "assets/Badges/baby.png",
-      "assets/Badges/early.png",
-      "assets/Badges/finwhiz.png",
-      "assets/Badges/piggybank.png",
-      "assets/Badges/pretty.png",
-      "assets/Badges/welcome.png"
-    ];
-
-    Widget badgeDisplay(String imagePath, {double opacity = 1.0}) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Opacity(
-          opacity: opacity,
-          child: Image.asset(
-            imagePath,
-            width: 80,
-          ),
-        ),
-      );
-    }
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 241, 219),
+      backgroundColor: Colors.purple.shade50,
       body: Consumer<ProfileProvider>(
         builder: (context, profileProvider, child) {
           return FutureBuilder(
@@ -65,248 +61,56 @@ class _ProfileState extends State<Profile> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
-                String username = profileProvider.username;
-                String realname = profileProvider.fullname;
-                int followers = profileProvider.followerNum;
-                int following = profileProvider.followingNum;
-                int streak = profileProvider.streak;
-                String avatarImagePath = profileProvider.profilepic;
-                List<String> achievedBadges = profileProvider.badges;
-
-                // Remove achieved badges from allBadges
-                for (String badge in achievedBadges) {
-                  allBadges.remove(badge);
-                }
-
-                return SingleChildScrollView(
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 60.0, bottom: 10),
-                            child: GestureDetector(
-                              onTap: () async {
-                                final selectedAvatar =
-                                    await Navigator.push<String>(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const UserCreate(),
-                                  ),
-                                );
-
-                                if (selectedAvatar != null) {
-                                  await profileProvider
-                                      .updateProfilePicture(context, selectedAvatar);
-                                }
-                              },
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/userdollar.png',
-                                    width: min(screenWidth * 0.98, 600),
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: AssetImage(avatarImagePath),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ClipPath(
-                                clipper: FlippedTriangleClipper(),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  color: const Color(0xffcb9163),
-                                ),
-                              ),
-                              Container(
-                                width: 100,
-                                height: 30,
-                                color: const Color(0xffcb9163),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: max(600, screenHeight - 310),
-                            alignment: Alignment.topCenter,
-                            color: const Color(0xffcb9163),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                return SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            // Profile header section
+                            Stack(
+                              clipBehavior: Clip.none,
+                              alignment: Alignment.topCenter,
                               children: [
-                                Container(
-                                  width: 600,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          alignment: Alignment.centerLeft,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16.0, vertical: 16),
-                                          child: Text(
-                                            '$username\n$realname',
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                                Positioned(
+                                  top: 15,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    width: screenWidth,
+                                    height: 100,
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 91, 24, 233),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(30),
+                                        bottomRight: Radius.circular(30),
                                       ),
-                                      Expanded(
-                                        child: Container(
-                                          alignment: Alignment.centerRight,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15.0, vertical: 16),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                     FriendsWidget(),
-                                                ),
-                                              );
-                                            },
-                                            child: Text(
-                                              '$following following \n $followers followers',
-                                              textAlign: TextAlign.right,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 0.0, bottom: 10),
-                                  child: Stack(
-                                    children: [
-                                      Image.asset(
-                                        'assets/openwallet.png',
-                                        width: 400,
-                                      ),
-                                      Positioned(
-                                        bottom: 35,
-                                        left: 40,
-                                        child: Text(
-                                          '$streak day streak',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 40,
-                                        right: 70,
-                                        child: LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            double fontSize = min(
-                                                40.0, constraints.maxWidth / 5);
-                                            return Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/flatcoin.png',
-                                                  width: 50,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  '${Provider.of<CoinProvider>(context, listen: false).coin}',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: fontSize,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 0),
-                                  child: const Text(
-                                    'Badges',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 0.0, bottom: 10, right: 5, left: 5),
-                                  child: Stack(
-                                    alignment: Alignment.center,
+                                Container(
+                                  width: screenWidth,
+                                  height: 100,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 140, 82, 255),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        width: 500,
-                                        height: 280,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffffccaa),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: Color(
-                                                0xffa36737), // Change this to your desired border color
-                                            width:
-                                                5.0, // Change this to your desired border width
-                                          ),
-                                        ),
-                                        child: GridView.builder(
-                                          padding: EdgeInsets.all(10.0),
-                                          shrinkWrap: true,
-                                          itemCount: achievedBadges.length +
-                                              allBadges.length,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            mainAxisSpacing: 10.0,
-                                            crossAxisSpacing: 10.0,
-                                          ),
-                                          itemBuilder: (context, index) {
-                                            if (index < achievedBadges.length) {
-                                              return badgeDisplay(
-                                                  achievedBadges[index]);
-                                            } else {
-                                              int remainingIndex =
-                                                  index - achievedBadges.length;
-                                              return badgeDisplay(
-                                                  allBadges[remainingIndex],
-                                                  opacity: 0.3);
-                                            }
-                                          },
+                                      SizedBox(height: 25),
+                                      Text(
+                                        "Profile",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],
@@ -314,11 +118,149 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 20),
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(height: 10),
+                                LogoutButton(),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Card(
+                          color: const Color.fromARGB(255, 172, 130, 253),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ],
-                      ),
-                      const LogoutButton()
-                    ],
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    final selectedAvatar =
+                                        await Navigator.push<String>(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UserCreate(),
+                                      ),
+                                    );
+                                    if (selectedAvatar != null) {
+                                      await profileProvider.updateProfilePicture(
+                                          // ignore: use_build_context_synchronously
+                                          context,
+                                          selectedAvatar);
+                                    }
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage:
+                                        AssetImage(profileProvider.profilepic),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  profileProvider.fullname,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${Provider.of<CoinProvider>(context, listen: false).coin}',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    _infoButton(
+                                        "${profileProvider.followingNum} Following"),
+                                    const SizedBox(width: 10),
+                                    _infoButton(
+                                        "${profileProvider.followerNum} Followers"),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        _goalSection(
+                            "Streak", profileProvider.streak.toDouble(), 30),
+                        Consumer<ProgressProvider>(
+                          builder: (context, progressProvider, child) {
+                            return _goalSection("Your Current Level",
+                                progressProvider.currentLevelInt as double, 15);
+                          },
+                        ),
+                        Consumer<ProgressProvider>(
+                          builder: (context, progressProvider, child) {
+                            // Convert the current level to the unit scale (each unit has 5 levels)
+                            // Example: level 6 maps to unit 2, level 11 maps to unit 3
+                            double unitProgress =
+                                (((progressProvider.currentLevelInt) / 5))
+                                    .ceil() as double;
+
+                            return _goalSection(
+                              "Your Current Unit",
+                              unitProgress, // This shows the level as a fraction (e.g., 0.33, 0.66)
+                              3, // The scale for the slider (Unit 1, Unit 2, Unit 3)
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Badges",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                height: 80,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: badgeImages.length,
+                                  itemBuilder: (context, index) {
+                                    bool isUnlocked =
+                                        index <= profileProvider.unlockedBadges;
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          badgeImages[index],
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.fill,
+                                          color:
+                                              isUnlocked ? null : Colors.grey,
+                                          colorBlendMode: isUnlocked
+                                              ? BlendMode.dstIn
+                                              : BlendMode.saturation,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
@@ -329,19 +271,69 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: const BottomBar(initialIndex: 3),
     );
   }
-}
 
-class FlippedTriangleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.moveTo(size.width, 0.0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0.0, size.height);
-    path.close();
-    return path;
+  Widget _infoButton(String text) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FriendsWidget()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 97, 71, 197),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  Widget _goalSection(String title, double value, double maxValue) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 5),
+              Text("${value.toInt()}"),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  trackHeight: 7,
+                  thumbShape:
+                      const RoundSliderThumbShape(enabledThumbRadius: 0.0),
+                  overlayColor: Colors.transparent,
+                ),
+                child: Slider(
+                  value: value,
+                  min: 0,
+                  max: maxValue,
+                  activeColor: const Color.fromARGB(255, 140, 83, 255),
+                  inactiveColor: Colors.purple.shade100,
+                  onChanged: (newValue) {},
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
