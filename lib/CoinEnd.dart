@@ -80,30 +80,22 @@ class _CoinEndState extends State<CoinEnd> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Title Box
+                  // **Title Box - Now White & Transparent**
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          const Color(0xFF7B73DF),
-                          const Color(0xFF5D50C8).withOpacity(0.9),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
+                          color: Colors.black.withOpacity(0.1),
                           blurRadius: 10,
                           offset: const Offset(2, 4),
                         ),
                       ],
                     ),
                     child: const Text(
-                      "This isn’t the end!",
+                      "This Isn’t the End!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 26,
@@ -115,18 +107,17 @@ class _CoinEndState extends State<CoinEnd> {
 
                   const SizedBox(height: 25),
 
-                  // Message Box with softer transparency
+                  // **Message Box - More Opaque**
                   Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withOpacity(0.25),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                          color: Colors.white.withOpacity(0.3), width: 1.5),
+                      border: Border.all(color: Colors.white.withOpacity(0.35), width: 1.5),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withOpacity(0.12),
                           blurRadius: 15,
                           offset: const Offset(2, 5),
                         ),
@@ -135,37 +126,27 @@ class _CoinEndState extends State<CoinEnd> {
                     child: Column(
                       children: [
                         const Text(
-                          "More content is coming soon! Stay tuned for new adventures and lessons!",
+                          "More content is coming soon!\nStay tuned for new adventures and lessons!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                        // const SizedBox(height: 8),
-                        // const Text(
-                        //   "More content is coming soon! Stay tuned for new adventures and lessons!",
-                        //   textAlign: TextAlign.center,
-                        //   style: TextStyle(
-                        //     fontSize: 17,
-                        //     fontWeight: FontWeight.w500,
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                         const SizedBox(height: 15),
 
-                        // Party Wawa Image inside the purple box
+                        // Party Wawa Image inside the message box
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Image.asset(
                             'assets/party_wawa.png',
-                            height: 150,
-                            width: 150, // Adjust size
+                            height: 250,
+                            width: 250, // Adjust size
                           ),
                         ),
                       ],
@@ -174,17 +155,16 @@ class _CoinEndState extends State<CoinEnd> {
 
                   const SizedBox(height: 25),
 
-                  // Remind Me Button with modern design
+                  // **Remind Me Button - Now Deep Purple**
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.2),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 14),
+                      backgroundColor: const Color(0xFF7B73DF), // Deep Purple
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                       elevation: 4,
-                      shadowColor: Colors.white.withOpacity(0.2),
+                      shadowColor: Colors.white.withOpacity(0.3),
                     ),
                     onPressed: () {
                       // Implement reminder logic here

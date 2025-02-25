@@ -51,7 +51,7 @@ List<String> titles = [
     "Saving",
     "Assets/Liabilities",
     "Credit Cards",
-    "This isn't the end!"
+    "This Isn't the End!"
   ]; 
 
   // Color function for other units
@@ -549,15 +549,15 @@ Widget _buildEnd(BuildContext context) {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(68, 62, 141, 0.612),
+                            color: Color.fromRGBO(58, 51, 134, 0.612),
                           ),
                         ),
                         Opacity(
                           opacity: canAccessEndCoin ? 1.0 : 0.5, // Dim the coin if locked
                           child: Image.asset(
                             'assets/confet_coin.png',
-                            width: 200,
-                            height: 200,
+                            width: 300,
+                            height: 300,
                           ),
                         ),
                       ],
@@ -1047,7 +1047,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
                 ),
               ),
               Text(
-                widget.currentUnit == 3 ? "This isn't the end!" : titles[widget.currentUnit],
+                widget.currentUnit == 3 ? "This Isn't the End!" : titles[widget.currentUnit],
                 style: const TextStyle(
                   fontFamily: "Serif",
                   fontSize: 35,
