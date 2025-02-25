@@ -5,10 +5,13 @@ import '../Backend-Service/auth_service.dart';
 import '../lobby.dart';
 import 'Forgot-password.dart'; // Import the ForgotPasswordPage
 import 'home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Providers/profile_provider.dart';
 
 void main() {
   runApp(const Login2App());
 }
+
 
 // Main app widget
 class Login2App extends StatelessWidget {
@@ -36,6 +39,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
   final AuthService _authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -59,6 +64,105 @@ class _LoginPageState extends State<LoginPage> {
           now.hour == 6) {
         Provider.of<ProfileProvider>(context, listen: false)
             .updateUserBadge(context, "early");
+      }
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? lastDay = prefs.getInt('lastDay');
+      int today = DateTime.now().day;
+      if (lastDay == null || lastDay != today) {
+        print("worked");
+        //Show the dialog
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor: Color(0xff8483e4),
+              contentPadding: EdgeInsets.zero,
+              content: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      width: 250,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            // Access ProfileProvider using Provider.of(context)
+                            Consumer<ProfileProvider>(
+                              builder: (context, profileProvider, child) {
+                                // Determine the image based on the streak value
+                                String imageAsset = profileProvider.streak >= 30
+                                    ? 'assets/very_fire_wawa.png' // 1 month streak
+                                    : profileProvider.streak >= 7
+                                    ? 'assets/fire_wawa.png' // 1 week streak
+                                    : profileProvider.streak >= 5
+                                    ? 'assets/slight_fire_wawa.png' // 5 day streak
+                                    : profileProvider.streak >= 3
+                                    ? 'assets/wawa.png' // 3 day streak
+                                    : profileProvider.streak >= 1
+                                    ? 'assets/ice_wawa.png' // 1 day streak
+                                    : 'assets/ice_wawa.png'; // Default for no streak
+
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                      child: Image.asset(
+                                        imageAsset,
+                                        width: 150,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${profileProvider.streak}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: IconButton(
+                      icon: Icon(Icons.close, color: Colors.red),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+
+            prefs.setInt('lastDay', today);
+          }
+        );
+        prefs.setInt('lastDay', today);
       }
 
       // Navigate to the lobby page
