@@ -28,7 +28,7 @@ import 'Providers/lives_provider.dart';
 import 'Providers/profile_provider.dart';
 import 'Templates/lives_widget.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'package:flutter_application_1/CoinEnd.dart';
 
 class LobbyApp extends StatelessWidget {
   const LobbyApp({super.key});
@@ -46,6 +46,31 @@ class LobbyApp extends StatelessWidget {
   }
 }
 
+//need this to be global in this file
+List<String> titles = [
+    "Saving",
+    "Assets/Liabilities",
+    "Credit Cards",
+    "This Isn't the End!"
+  ]; 
+
+  // Color function for other units
+  Color _getColorForUnit(int unit) {
+    switch (unit) {
+      case 0:
+        return const Color(0xff21945C);
+      case 1:
+        return const Color(0xFF7870DE);
+      case 2:
+        return const Color.fromARGB(255, 61, 121, 231);
+      case 3:
+        return const Color(0xFF7B73DF); // Gradient takes over when unit == 3
+      default:
+        return const Color(0xff21945C);
+    }
+  }
+
+
 class LobbyPage extends StatefulWidget {
   const LobbyPage({super.key});
 
@@ -57,7 +82,6 @@ class _LobbyPageState extends State<LobbyPage> {
   int _selectedIndex = 0;
   int unit = 0;
 
-
 //This allows the lobby page to fetch the MongoDB database for the user's data
   Future<void> fetchData() async {
     await Future.wait([
@@ -68,72 +92,72 @@ class _LobbyPageState extends State<LobbyPage> {
     ]);
   }
 
-
 //This is used for changing the color of the piggy bank and title when you scroll
   final List<Color> _colors = [
-     const Color(0xff21945C),
-     const Color(0xFF7870DE),
-     const Color.fromARGB(255, 61, 121, 231),
+    const Color(0xff21945C),
+    const Color(0xFF7870DE),
+    const Color.fromARGB(255, 61, 121, 231),
+    const Color(0xFF7B73DF)
   ];
 
-//The coin itself has an imprint that changes based on level. Add more to the list if you want to add more levels 
+//The coin itself has an imprint that changes based on level. Add more to the list if you want to add more levels
   final List<String> _coinImage = [
     "assets/wallet_coin.png",
     "assets/coin_level.png"
   ];
-  final ScrollController _scrollController = ScrollController(); //Let's you observe scrolling information on the page
-  List<String> titles = ["Saving", "Assets/Liabilities", "Credit Cards"]; //Titles of all the units
+  final ScrollController _scrollController =
+      ScrollController(); //Let's you observe scrolling information on the page
+  // List<String> titles = [
+  //   "Saving",
+  //   "Assets/Liabilities",
+  //   "Credit Cards",
+  //   "This isn't the end!"
+  // ]; //Titles of all the units
   Color _titleColor = const Color(0xff21945C);
 
-@override
-void initState() {
-  super.initState();
-  _scrollController.addListener(_scrollListener);
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    fetchData();
-  });
-}
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchData();
+    });
+  }
 
 //This is responsible for the title and piggybank colors changing based on how far you scroll
   void _scrollListener() {
-    final scrollPosition = _scrollController.position.pixels;
-    const changeColorPosition = 550;
-    const changeColorPosition2 = 1100;
-    if (scrollPosition < changeColorPosition2 && scrollPosition > changeColorPosition &&
-        _titleColor != const Color(0xFF7870DE)) {
-      setState(() {
-        _titleColor = const Color(0xFF7870DE);
-        unit = 1;
-      });
-    } else if (scrollPosition <= changeColorPosition &&
-        _titleColor != const Color(0xff21945C)) {
-      setState(() {
-        _titleColor = const Color(0xff21945C);
-        unit = 0;
-      });
-    }
-    else if (scrollPosition >= changeColorPosition2 &&
-        _titleColor != const Color.fromARGB(255, 61, 121, 231)){
-          setState(() {
-        _titleColor = const Color.fromARGB(255, 61, 121, 231);
-        unit = 2;
-      });
-        }
+  final scrollPosition = _scrollController.position.pixels;
+  const changeColorPosition1 = 550;
+  const changeColorPosition2 = 1100;
+  const changeColorPositionEnd = 1600; // Position for End Coin
+
+  int newUnit = 0;
+
+  if (scrollPosition >= changeColorPositionEnd) {
+    newUnit = titles.length - 1; // Special case for End Coin
+  } else if (scrollPosition >= changeColorPosition2) {
+    newUnit = 2;
+  } else if (scrollPosition > changeColorPosition1) {
+    newUnit = 1;
+  } else {
+    newUnit = 0;
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+  if (newUnit != unit) {
+    setState(() {
+      unit = newUnit;
+      _titleColor = _getColorForUnit(unit);
+    });
   }
+}
 
 //This is the main build method
 
   @override
   Widget build(BuildContext context) {
-    final double containerWidth = min(MediaQuery.of(context).size.width, 500); //MediaQuery.of(context).size.width basically fetches the width of the screen you are using the app on
+    final double containerWidth = min(MediaQuery.of(context).size.width,
+        500); //MediaQuery.of(context).size.width basically fetches the width of the screen you are using the app on
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 241, 219),
       body: Stack(
@@ -153,6 +177,8 @@ void initState() {
                       _buildUnit2(context),
                       _buildHorizontalLine(titles[2]),
                       _buildUnit3(context),
+                      _buildHorizontalLine(titles[titles.length - 1]),
+                      _buildEnd(context),
                       const SizedBox(height: 200),
                     ],
                   ),
@@ -160,44 +186,7 @@ void initState() {
               ),
             ),
           ),
-          AnimatedContainer( //animated so color can change smoothly
-            duration: const Duration(milliseconds: 300),
-            width: double.infinity,
-            height: 160,
-            decoration: BoxDecoration(
-              color: _titleColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    'Piggy Bank ${unit + 1}:',
-                    style: const TextStyle(
-                      fontFamily: "Serif",
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Text(
-                  titles[unit],
-                  style: const TextStyle(
-                    fontFamily: "Serif",
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          AnimatedGradientBackground(currentUnit: unit),
           Align(
             alignment: Alignment.bottomCenter,
             child: Column(
@@ -231,7 +220,8 @@ void initState() {
                             height: 40,
                           ),
                           Consumer<CoinProvider>(
-                            builder: (BuildContext context, coinProvider, child) {
+                            builder:
+                                (BuildContext context, coinProvider, child) {
                               return Text(
                                 '${coinProvider.coin}', // Uses provider to fetch the database for the amount of coins the user has and displays it
                                 style: const TextStyle(
@@ -249,17 +239,22 @@ void initState() {
 
                               // Default to ice_wawa.png if no streak or any other condition is met
                               if (profileProvider.streak >= 30) {
-                                imageAsset = 'assets/very_fire_wawa.png'; // 1 month streak
+                                imageAsset =
+                                    'assets/very_fire_wawa.png'; // 1 month streak
                               } else if (profileProvider.streak >= 7) {
-                                imageAsset = 'assets/fire_wawa.png'; // 1 week streak
+                                imageAsset =
+                                    'assets/fire_wawa.png'; // 1 week streak
                               } else if (profileProvider.streak >= 5) {
-                                imageAsset = 'assets/slight_fire_wawa.png'; // 5 day streak
+                                imageAsset =
+                                    'assets/slight_fire_wawa.png'; // 5 day streak
                               } else if (profileProvider.streak >= 3) {
                                 imageAsset = 'assets/wawa.png'; // 3 day streak
                               } else if (profileProvider.streak >= 1) {
-                                imageAsset = 'assets/ice_wawa.png'; // 1 day streak
+                                imageAsset =
+                                    'assets/ice_wawa.png'; // 1 day streak
                               } else {
-                                imageAsset = 'assets/ice_wawa.png'; // Default to ice_wawa for no streak
+                                imageAsset =
+                                    'assets/ice_wawa.png'; // Default to ice_wawa for no streak
                               }
 
                               return Row(
@@ -268,7 +263,9 @@ void initState() {
                                     alignment: Alignment.center,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 150.0), // Move image slightly downward
+                                        padding: const EdgeInsets.only(
+                                            top:
+                                                150.0), // Move image slightly downward
                                         child: Image.asset(
                                           imageAsset,
                                           width: 70,
@@ -277,7 +274,9 @@ void initState() {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 170.0), // Keep text aligned relative to the image
+                                        padding: const EdgeInsets.only(
+                                            top:
+                                                170.0), // Keep text aligned relative to the image
                                         child: Text(
                                           '${profileProvider.streak}',
                                           style: const TextStyle(
@@ -291,11 +290,8 @@ void initState() {
                                   ),
                                 ],
                               );
-
-
                             },
                           ),
-
                           const SizedBox(width: 10),
                           Consumer<LivesProvider>(
                             builder: (context, livesProvider, child) {
@@ -342,7 +338,8 @@ void initState() {
                     showUnselectedLabels: false,
                     iconSize: 30,
                     onTap: (index) {
-                      setState(() { //set state is necessary for real-time updates on the screen (can only use with Stateful widget)
+                      setState(() {
+                        //set state is necessary for real-time updates on the screen (can only use with Stateful widget)
                         _selectedIndex = index;
                       });
 
@@ -360,15 +357,12 @@ void initState() {
                           MaterialPageRoute(
                               builder: (context) => const Profile()),
                         );
-
                       }
                       if (index == 1) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => PigShelf()),
+                          MaterialPageRoute(builder: (context) => PigShelf()),
                         );
-
                       }
                     },
                   ),
@@ -400,7 +394,6 @@ void initState() {
     );
   }
 
-
 //Widget for creating all the coins for unit 1
   Widget _buildUnit1(BuildContext context) {
     return CustomPaint(
@@ -416,15 +409,14 @@ void initState() {
           _buildCoinLevel(
               context, Alignment.centerRight, "Where to Save Your Money",
               index: 3),
-          _buildCoinLevel(
-              context, Alignment.centerLeft, "Piggy Bank 1 End",
+          _buildCoinLevel(context, Alignment.centerLeft, "Piggy Bank 1 End",
               index: 4, isFirst: true),
         ],
       ),
     );
   }
 
-//This is the horizontal line in between units 
+//This is the horizontal line in between units
   Widget _buildHorizontalLine(String text) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
@@ -463,10 +455,10 @@ void initState() {
       painter: PathPainter(),
       child: Column(
         children: <Widget>[
-          _buildCoinLevel(
-              context, Alignment.centerLeft, "What Are Assets?",
+          _buildCoinLevel(context, Alignment.centerLeft, "What Are Assets?",
               index: 5, isFirst: true),
-          _buildCoinLevel(context, Alignment.centerRight, "Depreciating/Appreciating Assets",
+          _buildCoinLevel(context, Alignment.centerRight,
+              "Depreciating/Appreciating Assets",
               index: 6),
           _buildCoinLevel(context, Alignment.centerLeft, "What are Liabilities",
               index: 7, isFirst: true),
@@ -487,11 +479,14 @@ void initState() {
           _buildCoinLevel(
               context, Alignment.centerLeft, "Good Debt vs Bad Debt",
               index: 10, isFirst: true),
-          _buildCoinLevel(context, Alignment.centerRight, "What is a Credit Card",
+          _buildCoinLevel(
+              context, Alignment.centerRight, "What is a Credit Card",
               index: 11),
-          _buildCoinLevel(context, Alignment.centerLeft, "Types of Credit Cards",
+          _buildCoinLevel(
+              context, Alignment.centerLeft, "Types of Credit Cards",
               index: 12, isFirst: true),
-          _buildCoinLevel(context, Alignment.centerRight, "How to Get a Credit Card",
+          _buildCoinLevel(
+              context, Alignment.centerRight, "How to Get a Credit Card",
               index: 13),
           _buildCoinLevel(context, Alignment.centerLeft, "Piggy Bank 3 End",
               index: 14, isFirst: true),
@@ -499,6 +494,85 @@ void initState() {
       ),
     );
   }
+
+Widget _buildEnd(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 40.0),
+    child: Consumer<ProgressProvider>(
+      builder: (context, progressProvider, child) {
+        bool canAccessEndCoin = progressProvider.level >= 15; // Ensure all levels are completed
+
+        return Column(
+          children: <Widget>[
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  if (canAccessEndCoin) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CoinEnd()),
+                    );
+                  } else {
+                    // Show a message if user hasn't completed all coins
+                    showDialog(
+                      // context: context,
+                      // builder: (context) => AlertDialog(
+                      //   title: const Text('Complete All Coins First!'),
+                      //   content: const Text(
+                      //     'You need to finish all previous levels before accessing this message.',
+                      //   ),
+                      //   actions: [
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         Navigator.of(context).pop();
+                      //       },
+                      //       child: const Text('OK'),
+                      //     ),
+                      //   ],
+                      // ),
+                      context: context,
+                                      builder: (context) => DismissibleDialog(),
+                    );
+                  }
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // CustomPaint(
+                    //   size: const Size(100, 100),
+                    //   painter: DaVinci(),
+                    // ),
+                    Column(
+                      children: [
+                        const Text(
+                          "HANG ON TIGHT!",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(58, 51, 134, 0.612),
+                          ),
+                        ),
+                        Opacity(
+                          opacity: canAccessEndCoin ? 1.0 : 0.5, // Dim the coin if locked
+                          child: Image.asset(
+                            'assets/confet_coin.png',
+                            width: 300,
+                            height: 300,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 80),
+          ],
+        );
+      },
+    ),
+  );
+}
 
   //These are the intro pages to every coin
   final List<Widget> _pages = [
@@ -576,7 +650,8 @@ void initState() {
       sublevelCount: 7,
       levelNumber: 14,
     ),
-    Coin15()
+    Coin15(),
+    CoinEnd()
   ];
 
   Widget _buildCoinLevel(
@@ -619,21 +694,25 @@ void initState() {
                           alignment: Alignment.center,
                           children: [
                             if (isSelected)
-                            (index <= 5)?
-                              Image.asset(
-                                'assets/hexagon.png',
-                                width: 110,
-                                height: 110,
-                              ):
-
-                              ColorFiltered(
-                                colorFilter: ColorFilter.mode((index < 10)?const Color(0xff6327DB): const Color.fromARGB(255, 61, 121, 231), BlendMode.srcIn),
-                                child: Image.asset(
-                                  'assets/hexagon.png',
-                                  width: 110,
-                                  height: 110,
-                                ),
-                              ),
+                              (index <= 5)
+                                  ? Image.asset(
+                                      'assets/hexagon.png',
+                                      width: 110,
+                                      height: 110,
+                                    )
+                                  : ColorFiltered(
+                                      colorFilter: ColorFilter.mode(
+                                          (index < 10)
+                                              ? const Color(0xff6327DB)
+                                              : const Color.fromARGB(
+                                                  255, 61, 121, 231),
+                                          BlendMode.srcIn),
+                                      child: Image.asset(
+                                        'assets/hexagon.png',
+                                        width: 110,
+                                        height: 110,
+                                      ),
+                                    ),
                             IconButton(
                               onPressed: () {
                                 if (lives != 0) {
@@ -641,19 +720,29 @@ void initState() {
                                               listen: false)
                                           .level >=
                                       index) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => _pages[index],
-                                      ),
-                                    );
+                                   Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) {
+      if (index >= _pages.length) {
+        print("🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
+        return const Scaffold(
+          body: Center(child: Text("Error: Page Not Found")),
+        );
+      } else {
+        print("✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
+        return _pages[index];
+      }
+    },
+  ),
+);
+
                                   } else {
                                     //Handle the case where the coin is not equal to index, e.g., show a dialog
                                     showDialog(
                                       context: context,
                                       builder: (context) => DismissibleDialog(),
                                     );
-
                                   }
                                 } else {
                                   Navigator.push(
@@ -700,20 +789,21 @@ void initState() {
                           children: [
                             if (isSelected)
                               if (isSelected)
-                            (index < 5)?
-                              Image.asset(
-                                'assets/hexagon.png',
-                                width: 110,
-                                height: 110,
-                              ):
-                              ColorFiltered(
-                                colorFilter: const ColorFilter.mode(Color(0xff6327DB), BlendMode.srcIn),
-                                child: Image.asset(
-                                  'assets/hexagon.png',
-                                  width: 110,
-                                  height: 110,
-                                ),
-                              ),
+                                (index < 5)
+                                    ? Image.asset(
+                                        'assets/hexagon.png',
+                                        width: 110,
+                                        height: 110,
+                                      )
+                                    : ColorFiltered(
+                                        colorFilter: const ColorFilter.mode(
+                                            Color(0xff6327DB), BlendMode.srcIn),
+                                        child: Image.asset(
+                                          'assets/hexagon.png',
+                                          width: 110,
+                                          height: 110,
+                                        ),
+                                      ),
                             IconButton(
                               onPressed: () {
                                 if (lives != 0) {
@@ -724,16 +814,31 @@ void initState() {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => _pages[index],
+                                        builder: (context) {
+                                          if (index >= _pages.length) {
+                                            print(
+                                                "🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
+                                            return const Scaffold(
+                                              body: Center(
+                                                  child: Text(
+                                                      "Error: Page Not Found")),
+                                            );
+                                          } else {
+                                            print(
+                                                "✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
+                                            return _pages[index];
+                                          }
+                                        },
                                       ),
                                     );
-                                  } else {
+                                  }
+
+                                  else {
                                     //Handle the case where the coin is not equal to index, e.g., show a dialog
                                     showDialog(
                                       context: context,
                                       builder: (context) => DismissibleDialog(),
                                     );
-
                                   }
                                 } else {
                                   Navigator.push(
@@ -793,6 +898,43 @@ class PathPainter extends CustomPainter {
   }
 }
 
+class DaVinci extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 4
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+
+    // Start at the last coin (Piggy Bank 3 End)
+    path.moveTo(size.width * 0.5, 20); 
+
+    // Curve downward towards the End Coin
+    path.quadraticBezierTo(
+        size.width * 0.5, 80, size.width * 0.55, 130);
+
+    // Final smooth transition into the piggy bank
+    path.quadraticBezierTo(
+        size.width * 0.55, 200, size.width * 0.5, 280);
+
+    final dashedPath = dashPath(
+      path,
+      dashArray: CircularIntervalList<double>([10.0, 12.0]), 
+    );
+
+    canvas.drawPath(dashedPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+
+
 //If the user tries to access a level that they are not on, it will call this dialog.
 class DismissibleDialog extends StatelessWidget {
   const DismissibleDialog({super.key});
@@ -817,3 +959,107 @@ class DismissibleDialog extends StatelessWidget {
     );
   }
 }
+
+class AnimatedGradientBackground extends StatefulWidget {
+  final int currentUnit; // Track the unit number
+  const AnimatedGradientBackground({Key? key, required this.currentUnit})
+      : super(key: key);
+
+  @override
+  _AnimatedGradientBackgroundState createState() =>
+      _AnimatedGradientBackgroundState();
+}
+
+class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Color?> _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2), // Faster transition
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _colorAnimation = ColorTween(
+      begin: const Color.fromARGB(255, 148, 142, 223), // Deep Purple
+      end: const Color(0xFF5D50C8), // Slightly lighter Purple
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Only animate when unit == 3
+    bool shouldAnimate = widget.currentUnit == 3;
+
+    return AnimatedBuilder(
+      animation: _colorAnimation,
+      builder: (context, child) {
+        return Container(
+          width: double.infinity,
+          height: 160,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: shouldAnimate
+                  ? [
+                      _colorAnimation.value ?? const Color(0xFF7B73DF),
+                      const Color(0xFF5D50C8), // Lighter Purple
+                      _colorAnimation.value ?? const Color(0xFF7B73DF),
+                    ]
+                  : [
+                      _getColorForUnit(widget.currentUnit),
+                      _getColorForUnit(widget.currentUnit)
+                    ], // Regular color if not last unit
+            ),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'Piggy Bank ${widget.currentUnit + 1}:',
+                  style: const TextStyle(
+                    fontFamily: "Serif",
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Text(
+                widget.currentUnit == 3 ? "This Isn't the End!" : titles[widget.currentUnit],
+                style: const TextStyle(
+                  fontFamily: "Serif",
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+    }
