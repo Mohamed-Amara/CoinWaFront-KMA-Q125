@@ -48,28 +48,27 @@ class LobbyApp extends StatelessWidget {
 
 //need this to be global in this file
 List<String> titles = [
-    "Saving",
-    "Assets/Liabilities",
-    "Credit Cards",
-    "This Isn't the End!"
-  ]; 
+  "Saving",
+  "Assets/Liabilities",
+  "Credit Cards",
+  "This Isn't the End!"
+];
 
-  // Color function for other units
-  Color _getColorForUnit(int unit) {
-    switch (unit) {
-      case 0:
-        return const Color(0xff21945C);
-      case 1:
-        return const Color(0xFF7870DE);
-      case 2:
-        return const Color.fromARGB(255, 61, 121, 231);
-      case 3:
-        return const Color(0xFF7B73DF); // Gradient takes over when unit == 3
-      default:
-        return const Color(0xff21945C);
-    }
+// Color function for other units
+Color _getColorForUnit(int unit) {
+  switch (unit) {
+    case 0:
+      return const Color(0xff21945C);
+    case 1:
+      return const Color(0xFF7870DE);
+    case 2:
+      return const Color.fromARGB(255, 61, 121, 231);
+    case 3:
+      return const Color(0xFF7B73DF); // Gradient takes over when unit == 3
+    default:
+      return const Color(0xff21945C);
   }
-
+}
 
 class LobbyPage extends StatefulWidget {
   const LobbyPage({super.key});
@@ -127,30 +126,30 @@ class _LobbyPageState extends State<LobbyPage> {
 
 //This is responsible for the title and piggybank colors changing based on how far you scroll
   void _scrollListener() {
-  final scrollPosition = _scrollController.position.pixels;
-  const changeColorPosition1 = 550;
-  const changeColorPosition2 = 1100;
-  const changeColorPositionEnd = 1600; // Position for End Coin
+    final scrollPosition = _scrollController.position.pixels;
+    const changeColorPosition1 = 550;
+    const changeColorPosition2 = 1100;
+    const changeColorPositionEnd = 1600; // Position for End Coin
 
-  int newUnit = 0;
+    int newUnit = 0;
 
-  if (scrollPosition >= changeColorPositionEnd) {
-    newUnit = titles.length - 1; // Special case for End Coin
-  } else if (scrollPosition >= changeColorPosition2) {
-    newUnit = 2;
-  } else if (scrollPosition > changeColorPosition1) {
-    newUnit = 1;
-  } else {
-    newUnit = 0;
+    if (scrollPosition >= changeColorPositionEnd) {
+      newUnit = titles.length - 1; // Special case for End Coin
+    } else if (scrollPosition >= changeColorPosition2) {
+      newUnit = 2;
+    } else if (scrollPosition > changeColorPosition1) {
+      newUnit = 1;
+    } else {
+      newUnit = 0;
+    }
+
+    if (newUnit != unit) {
+      setState(() {
+        unit = newUnit;
+        _titleColor = _getColorForUnit(unit);
+      });
+    }
   }
-
-  if (newUnit != unit) {
-    setState(() {
-      unit = newUnit;
-      _titleColor = _getColorForUnit(unit);
-    });
-  }
-}
 
 //This is the main build method
 
@@ -209,109 +208,115 @@ class _LobbyPageState extends State<LobbyPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
+                      padding: const EdgeInsets.only(
+                          bottom: 15), // Keep overall position
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment
+                            .end, // Ensure all elements align at the bottom
                         children: [
-                          Image.asset(
-                            'assets/wacoin.png', // This is the amount of coins the user has
-                            width: 40,
-                            height: 40,
-                          ),
-                          Consumer<CoinProvider>(
-                            builder:
-                                (BuildContext context, coinProvider, child) {
-                              return Text(
-                                '${coinProvider.coin}', // Uses provider to fetch the database for the amount of coins the user has and displays it
+                          // Coins (Text → Icon)
+                          Row(
+                            children: [
+                              Text(
+                                '${context.watch<CoinProvider>().coin}',
                                 style: const TextStyle(
                                   color: Color(0xFFEFEBEB),
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              );
-                            },
+                              ),
+                              const SizedBox(width: 5),
+                              Image.asset(
+                                'assets/wacoin.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          Consumer<ProfileProvider>(
-                            builder: (context, profileProvider, child) {
-                              String imageAsset;
 
-                              // Default to ice_wawa.png if no streak or any other condition is met
-                              if (profileProvider.streak >= 30) {
-                                imageAsset =
-                                    'assets/very_fire_wawa.png'; // 1 month streak
-                              } else if (profileProvider.streak >= 7) {
-                                imageAsset =
-                                    'assets/fire_wawa.png'; // 1 week streak
-                              } else if (profileProvider.streak >= 5) {
-                                imageAsset =
-                                    'assets/slight_fire_wawa.png'; // 5 day streak
-                              } else if (profileProvider.streak >= 3) {
-                                imageAsset = 'assets/wawa.png'; // 3 day streak
-                              } else if (profileProvider.streak >= 1) {
-                                imageAsset =
-                                    'assets/ice_wawa.png'; // 1 day streak
-                              } else {
-                                imageAsset =
-                                    'assets/ice_wawa.png'; // Default to ice_wawa for no streak
-                              }
+                          const SizedBox(
+                              width:
+                                  0), // Reduced spacing to bring everything closer
 
-                              return Row(
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top:
-                                                150.0), // Move image slightly downward
-                                        child: Image.asset(
-                                          imageAsset,
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top:
-                                                170.0), // Keep text aligned relative to the image
-                                        child: Text(
-                                          '${profileProvider.streak}',
-                                          style: const TextStyle(
-                                            color: Color(0xFFEFEBEB),
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          // Streak (Icon Below, Number Above)
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Wrap the image in a Transform widget to move it downward
+                              Transform.translate(
+                                offset: const Offset(0,
+                                    55), // Adjust the Y offset to move the icon down
+                                child: Image.asset(
+                                  () {
+                                    if (context
+                                            .watch<ProfileProvider>()
+                                            .streak >=
+                                        30) {
+                                      return 'assets/very_fire_wawa.png';
+                                    } else if (context
+                                            .watch<ProfileProvider>()
+                                            .streak >=
+                                        7) {
+                                      return 'assets/fire_wawa.png';
+                                    } else if (context
+                                            .watch<ProfileProvider>()
+                                            .streak >=
+                                        5) {
+                                      return 'assets/slight_fire_wawa.png';
+                                    } else if (context
+                                            .watch<ProfileProvider>()
+                                            .streak >=
+                                        3) {
+                                      return 'assets/wawa.png';
+                                    } else if (context
+                                            .watch<ProfileProvider>()
+                                            .streak >=
+                                        1) {
+                                      return 'assets/ice_wawa.png';
+                                    } else {
+                                      return 'assets/ice_wawa.png';
+                                    }
+                                  }(),
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                              const SizedBox(
+                                  height:
+                                      2), // Small spacing between icon and text
+                              Transform.translate(
+                                offset: const Offset(0,
+                                    10), // Move the streak number down by 10 pixels
+                                child: Text(
+                                  '${context.watch<ProfileProvider>().streak}',
+                                  style: const TextStyle(
+                                    color: Color(0xFFEFEBEB),
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              );
-                            },
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          Consumer<LivesProvider>(
-                            builder: (context, livesProvider, child) {
-                              return Row(
-                                children: [
-                                  LivesWidget(
-                                    lives: livesProvider.lives,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '${livesProvider.lives}', // Show lives count
-                                    style: const TextStyle(
-                                      color: Color(0xFFEFEBEB),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
+
+                          const SizedBox(width: 0), // Reduced spacing
+
+                          // Lives (Icon → Text)
+                          Row(
+                            children: [
+                              LivesWidget(
+                                  lives: context.watch<LivesProvider>().lives),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${context.watch<LivesProvider>().lives}',
+                                style: const TextStyle(
+                                  color: Color(0xFFEFEBEB),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -495,84 +500,87 @@ class _LobbyPageState extends State<LobbyPage> {
     );
   }
 
-Widget _buildEnd(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 40.0),
-    child: Consumer<ProgressProvider>(
-      builder: (context, progressProvider, child) {
-        bool canAccessEndCoin = progressProvider.level >= 15; // Ensure all levels are completed
+  Widget _buildEnd(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40.0),
+      child: Consumer<ProgressProvider>(
+        builder: (context, progressProvider, child) {
+          bool canAccessEndCoin =
+              progressProvider.level >= 15; // Ensure all levels are completed
 
-        return Column(
-          children: <Widget>[
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  if (canAccessEndCoin) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CoinEnd()),
-                    );
-                  } else {
-                    // Show a message if user hasn't completed all coins
-                    showDialog(
-                      // context: context,
-                      // builder: (context) => AlertDialog(
-                      //   title: const Text('Complete All Coins First!'),
-                      //   content: const Text(
-                      //     'You need to finish all previous levels before accessing this message.',
-                      //   ),
-                      //   actions: [
-                      //     TextButton(
-                      //       onPressed: () {
-                      //         Navigator.of(context).pop();
-                      //       },
-                      //       child: const Text('OK'),
-                      //     ),
-                      //   ],
+          return Column(
+            children: <Widget>[
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    if (canAccessEndCoin) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CoinEnd()),
+                      );
+                    } else {
+                      // Show a message if user hasn't completed all coins
+                      showDialog(
+                        // context: context,
+                        // builder: (context) => AlertDialog(
+                        //   title: const Text('Complete All Coins First!'),
+                        //   content: const Text(
+                        //     'You need to finish all previous levels before accessing this message.',
+                        //   ),
+                        //   actions: [
+                        //     TextButton(
+                        //       onPressed: () {
+                        //         Navigator.of(context).pop();
+                        //       },
+                        //       child: const Text('OK'),
+                        //     ),
+                        //   ],
+                        // ),
+                        context: context,
+                        builder: (context) => DismissibleDialog(),
+                      );
+                    }
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // CustomPaint(
+                      //   size: const Size(100, 100),
+                      //   painter: DaVinci(),
                       // ),
-                      context: context,
-                                      builder: (context) => DismissibleDialog(),
-                    );
-                  }
-                },
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // CustomPaint(
-                    //   size: const Size(100, 100),
-                    //   painter: DaVinci(),
-                    // ),
-                    Column(
-                      children: [
-                        const Text(
-                          "HANG ON TIGHT!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(58, 51, 134, 0.612),
+                      Column(
+                        children: [
+                          const Text(
+                            "HANG ON TIGHT!",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(58, 51, 134, 0.612),
+                            ),
                           ),
-                        ),
-                        Opacity(
-                          opacity: canAccessEndCoin ? 1.0 : 0.5, // Dim the coin if locked
-                          child: Image.asset(
-                            'assets/confet_coin.png',
-                            width: 300,
-                            height: 300,
+                          Opacity(
+                            opacity: canAccessEndCoin
+                                ? 1.0
+                                : 0.5, // Dim the coin if locked
+                            child: Image.asset(
+                              'assets/confet_coin.png',
+                              width: 300,
+                              height: 300,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 80),
-          ],
-        );
-      },
-    ),
-  );
-}
+              const SizedBox(height: 80),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   //These are the intro pages to every coin
   final List<Widget> _pages = [
@@ -651,7 +659,7 @@ Widget _buildEnd(BuildContext context) {
       levelNumber: 14,
     ),
     Coin15(),
-    CoinEnd()
+    const CoinEnd()
   ];
 
   Widget _buildCoinLevel(
@@ -720,23 +728,26 @@ Widget _buildEnd(BuildContext context) {
                                               listen: false)
                                           .level >=
                                       index) {
-                                   Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) {
-      if (index >= _pages.length) {
-        print("🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
-        return const Scaffold(
-          body: Center(child: Text("Error: Page Not Found")),
-        );
-      } else {
-        print("✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
-        return _pages[index];
-      }
-    },
-  ),
-);
-
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          if (index >= _pages.length) {
+                                            print(
+                                                "🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
+                                            return const Scaffold(
+                                              body: Center(
+                                                  child: Text(
+                                                      "Error: Page Not Found")),
+                                            );
+                                          } else {
+                                            print(
+                                                "✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
+                                            return _pages[index];
+                                          }
+                                        },
+                                      ),
+                                    );
                                   } else {
                                     //Handle the case where the coin is not equal to index, e.g., show a dialog
                                     showDialog(
@@ -831,9 +842,7 @@ Widget _buildEnd(BuildContext context) {
                                         },
                                       ),
                                     );
-                                  }
-
-                                  else {
+                                  } else {
                                     //Handle the case where the coin is not equal to index, e.g., show a dialog
                                     showDialog(
                                       context: context,
@@ -909,19 +918,17 @@ class DaVinci extends CustomPainter {
     final path = Path();
 
     // Start at the last coin (Piggy Bank 3 End)
-    path.moveTo(size.width * 0.5, 20); 
+    path.moveTo(size.width * 0.5, 20);
 
     // Curve downward towards the End Coin
-    path.quadraticBezierTo(
-        size.width * 0.5, 80, size.width * 0.55, 130);
+    path.quadraticBezierTo(size.width * 0.5, 80, size.width * 0.55, 130);
 
     // Final smooth transition into the piggy bank
-    path.quadraticBezierTo(
-        size.width * 0.55, 200, size.width * 0.5, 280);
+    path.quadraticBezierTo(size.width * 0.55, 200, size.width * 0.5, 280);
 
     final dashedPath = dashPath(
       path,
-      dashArray: CircularIntervalList<double>([10.0, 12.0]), 
+      dashArray: CircularIntervalList<double>([10.0, 12.0]),
     );
 
     canvas.drawPath(dashedPath, paint);
@@ -932,8 +939,6 @@ class DaVinci extends CustomPainter {
     return false;
   }
 }
-
-
 
 //If the user tries to access a level that they are not on, it will call this dialog.
 class DismissibleDialog extends StatelessWidget {
@@ -1047,7 +1052,9 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
                 ),
               ),
               Text(
-                widget.currentUnit == 3 ? "This Isn't the End!" : titles[widget.currentUnit],
+                widget.currentUnit == 3
+                    ? "This Isn't the End!"
+                    : titles[widget.currentUnit],
                 style: const TextStyle(
                   fontFamily: "Serif",
                   fontSize: 35,
@@ -1061,5 +1068,4 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
       },
     );
   }
-
-    }
+}
