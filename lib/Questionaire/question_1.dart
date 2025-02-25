@@ -5,9 +5,10 @@ import 'answer_model.dart';
 class Question1Page extends StatefulWidget {
   final AnswerModel answerModel;
 
-  Question1Page({Key? key, required this.answerModel}) : super(key: key);
+  const Question1Page({super.key, required this.answerModel});
 
   @override
+  // ignore: library_private_types_in_public_api
   _Question1PageState createState() => _Question1PageState();
 }
 
@@ -25,6 +26,7 @@ class _Question1PageState extends State<Question1Page> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -32,7 +34,7 @@ class _Question1PageState extends State<Question1Page> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/welcome_background.png"),
             fit: BoxFit.cover,
@@ -43,8 +45,8 @@ class _Question1PageState extends State<Question1Page> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 40), // Adjusted for top padding
-              Text(
+              const SizedBox(height: 40), // Adjusted for top padding
+              const Text(
                 "Question 1",
                 style: TextStyle(
                   color: Colors.black,
@@ -52,13 +54,16 @@ class _Question1PageState extends State<Question1Page> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'How comfortable are you with managing money?',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -69,11 +74,14 @@ class _Question1PageState extends State<Question1Page> {
                       alignment: WrapAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'beginner'),
+                          onTap: () =>
+                              setState(() => selectedValue = 'beginner'),
                           child: OptionCard(
                             value: 'beginner',
-                            label: 'I have no experience and want to learn from scratch',
-                            color: Colors.blue[200]!,
+                            label:
+                                'I have no experience and want to learn from scratch',
+                            color: const Color.fromARGB(
+                                255, 140, 82, 255), // #CDE5FF
                             isSelected: selectedValue == 'beginner',
                           ),
                         ),
@@ -81,8 +89,10 @@ class _Question1PageState extends State<Question1Page> {
                           onTap: () => setState(() => selectedValue = 'medium'),
                           child: OptionCard(
                             value: 'medium',
-                            label: 'I know a little but want to improve my skills',
-                            color: Colors.purple[200]!,
+                            label:
+                                'I know a little but want to improve my skills',
+                            color: const Color.fromARGB(
+                                255, 140, 82, 255), // #F1C3FF
                             isSelected: selectedValue == 'medium',
                           ),
                         ),
@@ -90,19 +100,21 @@ class _Question1PageState extends State<Question1Page> {
                           onTap: () => setState(() => selectedValue = 'expert'),
                           child: OptionCard(
                             value: 'expert',
-                            label: 'I feel confident but want to learn advanced strategies',
-                            color: Colors.teal[200]!,
+                            label:
+                                'I feel confident but want to learn advanced strategies',
+                            color: const Color.fromARGB(
+                                255, 140, 82, 255), // #C3FFFD
                             isSelected: selectedValue == 'expert',
                           ),
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Image.asset(
                       "assets/wawaTalk.png",
                       width: screenWidth * 0.5,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -112,13 +124,15 @@ class _Question1PageState extends State<Question1Page> {
                     ElevatedButton(
                       onPressed: () => _navigateToQuestion2(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        backgroundColor: Colors.deepPurple,
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                       ),
-                      child: Text('Continue', style: TextStyle(fontSize: 18, color: Colors.white)),
+                      child: const Text('Next',
+                          style: TextStyle(fontSize: 18, color: Colors.white)),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
             ],
@@ -135,7 +149,8 @@ class OptionCard extends StatelessWidget {
   final bool isSelected;
   final Color color;
 
-  OptionCard({
+  const OptionCard({
+    super.key,
     required this.value,
     required this.label,
     required this.color,
@@ -149,20 +164,24 @@ class OptionCard extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected ? Border.all(color: Colors.blue, width: 3) : null,
+        border: isSelected
+            ? Border.all(color: Colors.purpleAccent, width: 3)
+            : null,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Removed Icon, keeping only text
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             label,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Increased font size
+            style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold), // Increased font size
             textAlign: TextAlign.center, // Center aligned the text
           ),
         ],
