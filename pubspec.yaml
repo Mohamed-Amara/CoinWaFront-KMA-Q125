@@ -26,6 +26,8 @@ dependencies:
   dotted_border: ^2.1.0
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.2
+  audioplayers: ^6.2.0
+  vibration: ^3.1.3
 
 dev_dependencies:
   flutter_test:
@@ -329,3 +331,5 @@ flutter:
     - assets/party_wawa.png
     - assets/end_page_background.png
     - assets/profileback.png
+    - assets/sounds/coin_drop.mp3
+    - assets/sounds/confetti.mp3

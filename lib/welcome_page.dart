@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:vibration/vibration.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -13,6 +15,7 @@ class _WelcomePageState extends State<WelcomePage>
   late AnimationController _controller;
   late Animation<double> _fadeInText;
   late Animation<double> _coinFallAnimation;
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio Player instance
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _WelcomePageState extends State<WelcomePage>
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      _playCoinDropSound(); // Play sound when animation starts
       _controller.forward();
     });
 
@@ -40,53 +44,39 @@ class _WelcomePageState extends State<WelcomePage>
     });
   }
 
+  Future<void> _playCoinDropSound() async {
+    await _audioPlayer.play(AssetSource('sounds/coin_drop.mp3')); // Ensure you have this file in assets
+  }
+
+  Future<void> _triggerVibration() async {
+    if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate(duration: 100); // Vibrate for 100ms
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double maxWidth = screenWidth > 600
-        ? 600
-        : screenWidth; // Limit max width for larger screens
+    double maxWidth = screenWidth > 600 ? 600 : screenWidth;
 
-    // Bounce effect: Less bounce on smaller screens
-    double bounceBackFactor;
+    double bounceBackFactor = screenHeight * 0.005;
+    double fallEndPosition = screenHeight * 0.88;
 
-    if (screenWidth <= 400) {
-      // Small phones (e.g., old iPhones, compact Android devices)
-      bounceBackFactor = screenHeight * 0.002;
-    } else if (screenWidth > 400 && screenWidth <= 600) {
-      // Regular smartphones (most modern phones)
-      bounceBackFactor = screenHeight * 0.005;
-    } else if (screenWidth > 600 && screenWidth <= 900) {
-      // Small tablets or foldable devices
-      bounceBackFactor = screenHeight * 0.045;
-    } else if (screenWidth > 900 && screenWidth <= 1200) {
-      // Large tablets or small laptops
-      bounceBackFactor = screenHeight * 0.05;
-    } else {
-      // Desktops or ultra-wide screens
-      bounceBackFactor = screenHeight * 0.085;
-    }
-
-    // Coin fall position: Falls lower on all screens, especially on smaller ones
-    double fallEndPosition =
-        screenHeight > 800 ? screenHeight * 0.88 : screenHeight * 0.93;
-
-    // Coin Fall Animation
     _coinFallAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(
-          begin: screenHeight * -0.14, // Start from above the screen
-          end: fallEndPosition, // Falls down to adjusted position
+          begin: screenHeight * -0.14,
+          end: fallEndPosition,
         ).chain(CurveTween(curve: Curves.easeOutBack)),
-        weight: 80, // Falling weight
+        weight: 80,
       ),
       TweenSequenceItem(
         tween: Tween<double>(
           begin: fallEndPosition,
-          end: fallEndPosition - bounceBackFactor, // Slight bounce
+          end: fallEndPosition - bounceBackFactor,
         ).chain(CurveTween(curve: Curves.easeOut)),
-        weight: 20, // Bounce weight
+        weight: 20,
       ),
     ]).animate(_controller);
 
@@ -94,58 +84,47 @@ class _WelcomePageState extends State<WelcomePage>
       body: Stack(
         alignment: Alignment.center,
         children: [
-          // Background Image
           Positioned.fill(
             child:
-                Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
+            Image.asset('assets/welcome_background.png', fit: BoxFit.cover),
           ),
-
-          // Welcome Text Animation
           Positioned(
             top: screenHeight * 0.25,
             child: FadeTransition(
               opacity: _fadeInText,
-              child: Column(
-                children: [
-                  Image.asset('assets/welcome_to.png', width: maxWidth * 0.9),
-                ],
-              ),
+              child: Image.asset('assets/welcome_to.png', width: maxWidth * 0.9),
             ),
           ),
-
-          // Piggy Bank Image at Bottom
           Positioned(
             bottom: 0,
-            child: Image.asset(
-              'assets/banky.png',
-              width: maxWidth, // Full width but limited for larger screens
-              fit: BoxFit.fitWidth,
-            ),
+            child: Image.asset('assets/banky.png', width: maxWidth, fit: BoxFit.fitWidth),
           ),
-
-          // Falling Coin Animation
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
+              if (_controller.isCompleted) {
+                _triggerVibration(); // Vibrate when animation completes
+              }
               return Positioned(
                 top: _coinFallAnimation.value,
                 child:
-                    Image.asset('assets/dropCoin.png', width: 0.23 * maxWidth),
+                Image.asset('assets/dropCoin.png', width: 0.23 * maxWidth),
               );
             },
           ),
-
-          // Piggy Bank Stretched Across Bottom
           Positioned(
             bottom: 0,
-            child: Image.asset(
-              'assets/banky2.png',
-              width: maxWidth, // Full width but limited for larger screens
-              fit: BoxFit.fitWidth,
-            ),
+            child: Image.asset('assets/banky2.png', width: maxWidth, fit: BoxFit.fitWidth),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _audioPlayer.dispose(); // Dispose audio player
+    super.dispose();
   }
 }

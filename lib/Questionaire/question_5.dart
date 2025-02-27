@@ -39,7 +39,7 @@ class _Question5PageState extends State<Question5Page> {
             .updateUserBadge(context, "welcome");
 
         // Navigate to the next page (for example, LobbyPage)
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LobbyPage()),
         );
