@@ -15,6 +15,8 @@ class ProfileProvider extends ChangeNotifier {
   List<String> _badges = [];
   String _token = "";
 
+  List<DateTime> _loginDays = []; // Store the actual login days
+
   String get username => _username;
   String get fullname => _fullname;
   int get followingNum => _followingNum;
@@ -23,6 +25,17 @@ class ProfileProvider extends ChangeNotifier {
   int get streak => _streak;
   List<String> get badges => _badges;
   String get token => _token;
+
+  // Getter for streakDays, returns a list of booleans (Mon-Sun)
+  List<bool> get streakDays {
+    List<bool> days = List.filled(7, false); // Days of the week (Mon-Sun)
+    for (var loginDay in _loginDays) {
+      int dayOfWeek =
+          loginDay.weekday - 1; // Convert from 1-7 (Mon-Sun) to 0-6 (Mon-Sun)
+      days[dayOfWeek] = true;
+    }
+    return days;
+  }
 
   final AuthService _authService = AuthService();
   late Future<void> initialization;
@@ -81,7 +94,19 @@ class ProfileProvider extends ChangeNotifier {
     _streak = responseData['loginStreak'];
     _badges = List<String>.from(
         responseData['badges'].map((badge) => badge.toString()));
+
+    // Set login days based on response
+    _loginDays = List<DateTime>.from(
+        responseData['loginDays'].map((day) => DateTime.parse(day)));
+
     notifyListeners(); // Notify listeners about the change
+  }
+
+  // Simulate login days (for testing purposes)
+  void simulateLoginDays(List<DateTime> loginDays) {
+    _loginDays = loginDays;
+    _streak = loginDays.length; // Update streak based on login days count
+    notifyListeners();
   }
 
   Future<void> updateProfilePicture(
