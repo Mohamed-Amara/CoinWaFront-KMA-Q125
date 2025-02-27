@@ -6,7 +6,6 @@ import 'package:flutter_application_1/Bottom-Navigation-Bar/bottombar.dart';
 
 import 'package:provider/provider.dart';
 
-
 class LeaderboardWidget extends StatefulWidget {
   const LeaderboardWidget({super.key});
 
@@ -14,40 +13,47 @@ class LeaderboardWidget extends StatefulWidget {
   State<LeaderboardWidget> createState() => _LeaderboardWidgetState();
 }
 
-class _LeaderboardWidgetState extends State<LeaderboardWidget>
-    with TickerProviderStateMixin {
-  late TabController _tabBarController;
+class _LeaderboardWidgetState extends State<LeaderboardWidget> {
+  late PageController _pageController;
   late Future<void> _futureFetch;
+  int _selectedTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabBarController = TabController(
-      vsync: this,
-      length: 2,
-      initialIndex: 0,
-    )..addListener(() {
-        setState(() {
-          _futureFetch = context
-              .read<LeaderProvider>()
-              .fetchUserData(context, _tabBarController.index == 0);
-        });
+    _pageController = PageController(initialPage: _selectedTab);
+
+    // Delay fetching data to avoid calling context.read<T>() in initState()
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        _futureFetch =
+            context.read<LeaderProvider>().fetchUserData(context, true);
       });
 
-    _futureFetch = context.read<LeaderProvider>().fetchUserData(context, true);
-
-    // Fetch data in initState
-    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProfileProvider>().fetchUserData(context);
       context.read<CoinProvider>().fetchUserData(context);
     });
   }
 
+  void _onTabChanged(int index) {
+    setState(() {
+      _selectedTab = index;
+      _pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+
+      // Fetch leaderboard data based on selected tab
+      _futureFetch = context
+          .read<LeaderProvider>()
+          .fetchUserData(context, index == 0);
+    });
+  }
+
   @override
   void dispose() {
-    _tabBarController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
+
 
   Widget leaderblock(String imagepath, String username, int followers,
       int coinNum, int position) {
@@ -115,119 +121,131 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 232, 228, 255),
-      appBar: AppBar(
-        backgroundColor: const Color(0xff7870de),
-        automaticallyImplyLeading: false,
-        title: const Center(
-          child: Text(
-            'Leaderboard',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-        ),
-        centerTitle: false,
-        elevation: 2,
-      ),
       body: SafeArea(
         top: true,
         child: Column(
           children: [
-            Align(
-              alignment: const Alignment(0, 0),
-              child: TabBar(
-                labelColor: Colors.black,
-                unselectedLabelColor: const Color(0xff57636C),
-                indicatorColor: const Color(0xff4B39EF),
-                padding: const EdgeInsets.all(4),
-                tabs: const [
-                  Tab(text: 'Global'),
-                  Tab(text: 'Friends'),
-                ],
-                controller: _tabBarController,
+            // Header with Larger Text
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 120, // Increased height
+                    decoration: const BoxDecoration(
+                      color: Color(0xff7870de),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 120,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 30), // Adjusted spacing
+                      Text(
+                        'Leaderboard',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32, // Increased font size
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Smaller Tab Bar Container
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 40), // Less horizontal padding
+              child: Container(
+                height: 35, // Reduced height
+                decoration: BoxDecoration(
+                  color: const Color(0xFFDAD6F8), // Light purple background
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.all(3), // Adds spacing inside the container
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEAEAF5), // Inner purple background
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min, // Make the row fit the content
+                    children: [
+                      _buildTabButton('Global', 0),
+                      _buildTabButton('Friends', 1),
+                    ],
+                  ),
+                ),
               ),
             ),
+
+
+
+
+            // Tab Content
             Expanded(
-              child: TabBarView(
-                controller: _tabBarController,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _selectedTab = index;
+                  });
+                },
                 children: [
                   _buildTabView(true),
                   _buildTabView(false),
                 ],
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Consumer<ProfileProvider>(
-                builder: (context, profileProvider, child) {
-                  if (profileProvider.username.isEmpty ||
-                      profileProvider.profilepic.isEmpty) {
-                    return const CircularProgressIndicator();
-                  }
-                  return Container(
-                    color: _tabBarController.index == 0
-                        ? const Color.fromARGB(255, 168, 160, 243)
-                        : const Color.fromARGB(255, 159, 198, 255),
-                    padding: const EdgeInsets.all(10),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '#${context.watch<LeaderProvider>().position}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Image.asset(profileProvider.profilepic, width: 80),
-                          const SizedBox(width: 20),
-                          Column(
-                            children: [
-                              Text(
-                                profileProvider.username,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                '${profileProvider.followerNum} followers',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            context.watch<CoinProvider>().coin.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Image.asset('assets/flatcoin.png', width: 60),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            const BottomBar(initialIndex: 2),
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(initialIndex: 2),
+
     );
   }
+
+  Widget _buildTabButton(String text, int index) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _onTabChanged(index),
+        child: Container(
+          height: 30, // Adjusted to match the container
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: _selectedTab == index ? const Color(0xFF7870DE) : Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 12, // Smaller font size
+              fontWeight: FontWeight.w600,
+              color: _selectedTab == index ? Colors.white : Colors.grey[700],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
+
 
   Widget _buildTabView(bool isGlobal) {
     return FutureBuilder<void>(
@@ -268,33 +286,27 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
                             // First Place
                             Stack(
                               clipBehavior: Clip.none,
-                              alignment: AlignmentDirectional(0, -3),
+                              alignment: Alignment.topCenter,
                               children: [
-                                Container(
-                                  width: 120,
-                                  height: 150,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffC0C0C0),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(15),
-                                      bottomRight: Radius.circular(0),
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(0),
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: const AlignmentDirectional(0, -1),
+                                // Profile Picture (Placed higher above the box)
+                                Positioned(
+                                  top: -50, // Raised the image higher
                                   child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF9E9E9E),
+                                    width: 80, // Profile image size
+                                    height: 80,
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.circle,
+                                      color: const Color(0xFF9E9E9E), // Placeholder color
+                                      border: Border.all(
+                                        color: const Color(0xFF3A0066), // Darker purple border
+                                        width: 4,
+                                      ),
                                     ),
-                                    child: ClipOval(
-                                      child: (leaderProvider.username.length < 2)
-                                            ? Text(""):Image.asset(
+                                    child: leaderProvider.username.length < 2
+                                        ? const SizedBox()
+                                        : ClipRRect(
+                                      borderRadius: BorderRadius.circular(40), // Ensures no oval stretching
+                                      child: Image.asset(
                                         leaderProvider.pfp[1],
                                         width: 80,
                                         height: 80,
@@ -303,35 +315,43 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  bottom: 8,
+
+                                // Main Leaderboard Box with lighter purple and dark purple border on top
+                                Container(
+                                  width: 120,
+                                  height: 120, // Adjusted to fit just the name and number
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF9370DB), // Lighter Purple
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: const Border(
+                                      top: BorderSide(
+                                        color: Color(0xFF4B0082), // Darker purple border on top
+                                        width: 4,
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.only(top: 40), // Adjusted for better alignment
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      // Display number "2" (HUGE)
+                                      const Text(
+                                        "2",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40, // Made it much bigger
+                                          color: Colors.amber, // Highlighted color for rank
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5), // Spacing
+
+                                      // Display Username
                                       Text(
-                                        (leaderProvider.username.length < 2)
-                                            ? ""
-                                            : leaderProvider.username[1],
+                                        (leaderProvider.username.length < 2) ? "" : leaderProvider.username[1],
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
-                                        ),
-                                      ),
-                                      Text(
-                                        (leaderProvider.username.length < 2)
-                                            ? ""
-                                            : '${leaderProvider.followers[1]} followers',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Text(
-                                        (leaderProvider.username.length < 2)
-                                            ? ""
-                                            : leaderProvider.coins[1].toString(),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                          color: Colors.white, // Ensure visibility
                                         ),
                                       ),
                                     ],

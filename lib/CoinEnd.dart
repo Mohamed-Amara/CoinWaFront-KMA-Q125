@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class CoinEnd extends StatefulWidget {
   const CoinEnd({super.key});
@@ -10,18 +11,27 @@ class CoinEnd extends StatefulWidget {
 
 class _CoinEndState extends State<CoinEnd> {
   late ConfettiController _confettiController;
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
 
   @override
   void initState() {
     super.initState();
     _confettiController =
         ConfettiController(duration: const Duration(seconds: 3));
+
+    // Play confetti sound when confetti starts
+    _playConfettiSound();
     _confettiController.play();
+  }
+
+  void _playConfettiSound() async {
+    await _audioPlayer.play(AssetSource('sounds/confetti.mp3')); // Ensure file exists in assets
   }
 
   @override
   void dispose() {
     _confettiController.dispose();
+    _audioPlayer.dispose(); // Dispose audio player
     super.dispose();
   }
 
@@ -81,7 +91,7 @@ class _CoinEndState extends State<CoinEnd> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // **Title Box - Now White & Transparent**
+                  // **Title Box**
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 15),
@@ -109,7 +119,7 @@ class _CoinEndState extends State<CoinEnd> {
 
                   const SizedBox(height: 25),
 
-                  // **Message Box - More Opaque**
+                  // **Message Box**
                   Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -158,7 +168,7 @@ class _CoinEndState extends State<CoinEnd> {
 
                   const SizedBox(height: 25),
 
-                  // **Remind Me Button - Now Deep Purple**
+                  // **Remind Me Button**
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF7B73DF), // Deep Purple
