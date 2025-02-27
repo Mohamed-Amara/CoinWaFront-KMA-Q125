@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Backend-Service/auth_service.dart';
-import 'package:flutter_application_1/Questionaire/question_1.dart';
-import 'package:flutter_application_1/Questionaire/answer_model.dart';
+import 'verify_email.dart';
 
 void main() {
   runApp(const LoginApp());
@@ -46,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _register() async {
-    String email = _emailController.text.trim();
+    String email = _emailController.text.trim().toLowerCase();
 
     if (!_isValidEmail(email)) {
       // Show the error dialog for invalid email format
@@ -96,13 +95,11 @@ class _LoginPageState extends State<LoginPage> {
         _passwordController.text,
       );
 
-      // If registration is successful, update user badge and navigate to lobby
-      // Provider.of<ProfileProvider>(context, listen: false)
-      //     .updateUserBadge(context, "welcome");
+      // If registration is successful, navigate to the verification page
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Question1Page(answerModel: AnswerModel()),
+          builder: (context) => VerificationCodePage(email: email),
         ),
       );
     } catch (e) {
@@ -131,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
