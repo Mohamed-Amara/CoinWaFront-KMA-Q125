@@ -131,69 +131,82 @@ class _ProfilePageState extends State<Profile> {
                         ),
                         const SizedBox(height: 20),
                         Card(
-                          color: const Color.fromARGB(255, 172, 130, 253),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
                           margin: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    final selectedAvatar =
-                                        await Navigator.push<String>(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UserCreate(),
-                                      ),
-                                    );
-                                    if (selectedAvatar != null) {
-                                      await profileProvider.updateProfilePicture(
-                                          // ignore: use_build_context_synchronously
-                                          context,
-                                          selectedAvatar);
-                                    }
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage:
-                                        AssetImage(profileProvider.profilepic),
+                          color: Colors
+                              .transparent, // Make sure the Card does not have a white background
+                          elevation: 0, // Remove shadow if needed
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                15), // Apply rounded corners properly
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/profileback.png"), // Ensure this path is correct
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final selectedAvatar =
+                                          await Navigator.push<String>(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const UserCreate(),
+                                        ),
+                                      );
+                                      if (selectedAvatar != null) {
+                                        await profileProvider.updateProfilePicture(
+                                            // ignore: use_build_context_synchronously
+                                            context,
+                                            selectedAvatar);
+                                      }
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 60,
+                                      backgroundImage: AssetImage(
+                                          profileProvider.profilepic),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  profileProvider.fullname,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    profileProvider.fullname,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '${Provider.of<CoinProvider>(context, listen: false).coin}',
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    _infoButton(
-                                        "${profileProvider.followingNum} Following"),
-                                    const SizedBox(width: 10),
-                                    _infoButton(
-                                        "${profileProvider.followerNum} Followers"),
-                                  ],
-                                ),
-                              ],
+                                  Text(
+                                    '${Provider.of<CoinProvider>(context, listen: false).coin}',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      _infoButton(
+                                          "${profileProvider.followingNum} Following"),
+                                      const SizedBox(width: 10),
+                                      _infoButton(
+                                          "${profileProvider.followerNum} Followers"),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+
                         const SizedBox(height: 20),
-                        _goalSection(
-                            "Streak", profileProvider.streak.toDouble(), 30),
+                        _weeklyStreakIndicator(profileProvider.streakDays),
                         Consumer<ProgressProvider>(
                           builder: (context, progressProvider, child) {
                             return _goalSection("Your Current Level",
@@ -202,20 +215,19 @@ class _ProfilePageState extends State<Profile> {
                         ),
                         Consumer<ProgressProvider>(
                           builder: (context, progressProvider, child) {
-                            // Convert the current level to the unit scale (each unit has 5 levels)
-                            // Example: level 6 maps to unit 2, level 11 maps to unit 3
                             double unitProgress =
                                 (((progressProvider.currentLevelInt) / 5))
                                     .ceil() as double;
 
                             return _goalSection(
                               "Your Current Unit",
-                              unitProgress, // This shows the level as a fraction (e.g., 0.33, 0.66)
-                              3, // The scale for the slider (Unit 1, Unit 2, Unit 3)
+                              unitProgress,
+                              3,
                             );
                           },
                         ),
                         const SizedBox(height: 20),
+                        // Badges section
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -259,6 +271,7 @@ class _ProfilePageState extends State<Profile> {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -329,6 +342,53 @@ class _ProfilePageState extends State<Profile> {
                   inactiveColor: Colors.purple.shade100,
                   onChanged: (newValue) {},
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _weeklyStreakIndicator(List<bool> streakDays) {
+    List<String> weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Weekly Streak",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(7, (index) {
+                  bool isActive = streakDays[index];
+                  return Column(
+                    children: [
+                      Icon(
+                        Icons.circle,
+                        size: 30,
+                        color: isActive
+                            ? const Color.fromARGB(255, 140, 83, 255)
+                            : const Color.fromARGB(255, 167, 152, 196),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(weekDays[index],
+                          style: const TextStyle(fontSize: 12)),
+                    ],
+                  );
+                }),
               ),
             ],
           ),
