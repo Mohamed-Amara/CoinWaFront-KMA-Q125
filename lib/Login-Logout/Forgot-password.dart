@@ -17,65 +17,67 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final AuthService _authService = AuthService();
 
   Future<void> _sendResetLink() async {
+  setState(() {
+    _isLoading = true;
+  });
+
+  final email = _emailController.text.trim().toLowerCase();
+
+  if (email.isEmpty) {
     setState(() {
-      _isLoading = true;
+      _isLoading = false;
     });
-
-    final email = _emailController.text.trim();
-
-    if (email.isEmpty) {
-      setState(() {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Empty Email!'),
-            content: const Text('Please enter your email address.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close the dialog
-                },
-                child: const Text('OK'),
-              ),
-            ],
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Empty Email!'),
+        content: const Text('Please enter your email address.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('OK'),
           ),
-        );
-      });
-      return;
-    }
-
-    try {
-      await _authService.forgotPassword(email);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerificationCodePage(email: email),
-        ),
-      );
-    } catch (e) {
-      setState(() {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Invalid Email!'),
-            content: const Text('Please enter a valid email address.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close the dialog
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+        ],
+      ),
+    );
+    return;
   }
+
+  try {
+    await _authService.forgotPassword(email);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VerificationCodePage(email: email),
+      ),
+    );
+  } catch (e) {
+    setState(() {
+      _isLoading = false;
+    });
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Invalid Email!'),
+        content: const Text('Please enter a valid email address.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+}
 
   @override
   Widget build(BuildContext context) {

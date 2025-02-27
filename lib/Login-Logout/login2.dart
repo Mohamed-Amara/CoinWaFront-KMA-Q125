@@ -48,9 +48,11 @@ class _LoginPageState extends State<LoginPage> {
 
   // Method to handle login
   void _login() async {
+    final email = _emailController.text.trim().toLowerCase();
+    final password = _passwordController.text;
     try {
       final response = await _authService.login(
-        _emailController.text,
+        email,
         _passwordController.text,
       );
       print('Login successful: $response');
@@ -158,8 +160,6 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             );
-
-            prefs.setInt('lastDay', today);
           }
         );
         prefs.setInt('lastDay', today);

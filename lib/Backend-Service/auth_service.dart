@@ -30,6 +30,9 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>> login(String email, String password) async {
+    email = email.toLowerCase(); // Convert to lowercase
+    print("Login Request: Email = $email, Password = $password");  // Log the request
+
     final url = Uri.parse('$baseUrl/auth/login');
     final response = await http.post(
       url,
@@ -46,6 +49,7 @@ class AuthService {
       throw Exception('Failed to login: ${response.body}');
     }
   }
+
 
   Future<void> logout() async {
     final token = await getToken();
@@ -70,6 +74,7 @@ class AuthService {
 
   Future<Map<String, dynamic>> register(String fullname, String birthday,
       String username, String email, String password) async {
+    email = email.toLowerCase();
     final url = Uri.parse('$baseUrl/auth/register');
     final response = await http.post(
       url,
@@ -85,14 +90,43 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final token = data['token'];
-      await _storage.write(key: 'user_token', value: token);
-      return data;
+      print("Register response: $data"); // Log the response
+
+      return data; // Do not store token here
     } else {
       final errorMsg = json.decode(response.body)['msg'];
       throw Exception('Failed to register: $errorMsg');
     }
   }
+
+
+  Future<Map<String, dynamic>> verifyEmail(String email, String code) async {
+    email = email.toLowerCase();
+    final url = Uri.parse('$baseUrl/auth/verify-email');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'code': code}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("Verify email response: $data"); // Log the response
+
+      // Store the token here after email verification
+      final token = data['token'];
+      if (token != null) {
+        print(token);
+        await _storage.write(key: 'user_token', value: token);
+      }
+
+      return data;
+    } else {
+      final errorMsg = json.decode(response.body)['msg'];
+      throw Exception('Failed to verify email: $errorMsg');
+    }
+  }
+
 
   Future<String?> getToken() async {
     return await _storage.read(key: 'user_token');
@@ -315,6 +349,7 @@ class AuthService {
     }
   }
   Future<void> forgotPassword(String email) async {
+    email = email.toLowerCase();
     final response = await http.post(
       Uri.parse('$baseUrl/password/forgot-password'),
       headers: {'Content-Type': 'application/json'},
@@ -326,6 +361,7 @@ class AuthService {
   }
 
   Future<void> verifyResetCode(String email, String code) async {
+    email = email.toLowerCase();
     final response = await http.post(
       Uri.parse('$baseUrl/password/verify-reset-code'),
       headers: {'Content-Type': 'application/json'},
@@ -337,6 +373,7 @@ class AuthService {
   }
 
   Future<void> resetPassword(String email, String code, String newPassword) async {
+    email = email.toLowerCase();
     final response = await http.post(
       Uri.parse('$baseUrl/password/reset-password'),
       headers: {'Content-Type': 'application/json'},
@@ -382,4 +419,3 @@ class AuthService {
   }
 
 }
-
