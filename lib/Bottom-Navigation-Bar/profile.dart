@@ -352,6 +352,11 @@ class _ProfilePageState extends State<Profile> {
 
   Widget _weeklyStreakIndicator(List<bool> streakDays) {
     List<String> weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    print("streakDays received: $streakDays");
+
+    // // Fetch streakDays safely
+    // final profileProvider = Provider.of<ProfileProvider>(context, listen: true);
+    // final List<bool> streakDays = profileProvider.streakDays ?? List.filled(7, false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -373,7 +378,7 @@ class _ProfilePageState extends State<Profile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(7, (index) {
-                  bool isActive = streakDays[index];
+                  bool isActive = streakDays.length > index ? streakDays[index] : false;
                   return Column(
                     children: [
                       Icon(
@@ -384,8 +389,7 @@ class _ProfilePageState extends State<Profile> {
                             : const Color.fromARGB(255, 167, 152, 196),
                       ),
                       const SizedBox(height: 5),
-                      Text(weekDays[index],
-                          style: const TextStyle(fontSize: 12)),
+                      Text(weekDays[index], style: const TextStyle(fontSize: 12)),
                     ],
                   );
                 }),
@@ -396,4 +400,6 @@ class _ProfilePageState extends State<Profile> {
       ),
     );
   }
+
+
 }
