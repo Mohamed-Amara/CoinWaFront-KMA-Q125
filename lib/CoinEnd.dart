@@ -25,6 +25,51 @@ class _CoinEndState extends State<CoinEnd> {
     super.dispose();
   }
 
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white.withOpacity(0.9), // Slight transparency
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          "You've been confirmed!",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF7B73DF),
+          ),
+        ),
+        actions: [
+          Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                backgroundColor: const Color(0xFF7B73DF), // Deep Purple
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,7 +159,7 @@ class _CoinEndState extends State<CoinEnd> {
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.25),
+                      color: Colors.white.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: Colors.white.withOpacity(0.35), width: 1.5),
@@ -171,7 +216,7 @@ class _CoinEndState extends State<CoinEnd> {
                       shadowColor: Colors.white.withOpacity(0.3),
                     ),
                     onPressed: () {
-                      // Implement reminder logic here
+                      _showConfirmationDialog(); // Call the confirmation popup
                     },
                     child: const Text(
                       "Remind me",
