@@ -333,3 +333,5 @@ flutter:
     - assets/profileback.png
     - assets/sounds/coin_drop.mp3
     - assets/sounds/confetti.mp3
+    - assets/weekstreakback.png
+    - assets/streakpopback.png
