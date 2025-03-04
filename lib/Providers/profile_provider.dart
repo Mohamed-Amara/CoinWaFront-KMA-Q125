@@ -77,7 +77,6 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   void _setProfileData(Map<String, dynamic> responseData) {
-    print("in response data $responseData");
     _username = responseData['username'];
     _fullname = responseData['fullname'];
     _followerNum = responseData['followers']['followerAmount'];
