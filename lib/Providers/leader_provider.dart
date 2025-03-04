@@ -41,6 +41,11 @@ class LeaderProvider extends ChangeNotifier {
         _username = responseData.map((user) => user["username"] as String).toList();
         _pfp = responseData.map((user) => user["profilepic"] as String).toList();
         _followers = responseData.map((user) => user["followers"]["followerAmount"] as int).toList();
+        print(responseData);
+        print("Coins: $_coins");
+        print("Usernames: $_username");
+        print("Profile Pictures: $_pfp");
+        print("Followers: $_followers");
       } else {
         print('Error fetching leaderboard: ${response.statusCode}');
       }
