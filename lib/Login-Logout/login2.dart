@@ -526,7 +526,8 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.only(
                         top: 20), // Adjust the margin as needed
                     child: TextButton(
-                      onPressed: _login, // Call _forgotPassword to navigate
+                      onPressed:
+                          _forgotPassword, // Call _forgotPassword to navigate
                       child: const Text(
                         'Forgot Password?',
                         style: TextStyle(
