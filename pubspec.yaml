@@ -334,3 +334,5 @@ flutter:
     - assets/sounds/coin_drop.mp3
     - assets/sounds/confetti.mp3
     - assets/world.png
+    - assets/weekstreakback.png
+    - assets/streakpopback.png
