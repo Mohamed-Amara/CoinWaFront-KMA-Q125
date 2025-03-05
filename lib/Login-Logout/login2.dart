@@ -433,20 +433,24 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 150),
                   const Text(
-                    'Welcome Back!',
+                    'Log in',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: 'SourceSans',
-                      color: Colors.white,
-                      fontSize: 25,
+                      fontFamily: 'Source',
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 10),
+                  Image.asset(
+                    'assets/signupwawa.png',
+                    height: 200,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 0, top: 40),
+                    padding: const EdgeInsets.only(left: 0, top: 20),
                     child: Container(
                       height: 85,
                       width: 420,
@@ -517,23 +521,76 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 60.0),
-                  SizedBox(
-                    height: 60,
-                    width: 220,
-                    child: ElevatedButton(
-                      onPressed: _login,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 94, 24, 235),
+                  const SizedBox(height: 15.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20), // Adjust the margin as needed
+                    child: TextButton(
+                      onPressed: _login, // Call _forgotPassword to navigate
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Color(0xFF5D2F8E), // Dark purple color
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          decoration:
+                              TextDecoration.underline, // Adds underline
+                          decorationColor: Color(
+                              0xFF5D2F8E), // (Optional) Change underline color
+                          decorationThickness:
+                              1.0, // (Optional) Adjust thickness
                         ),
                       ),
-                      child: const Text(
-                        'Ready To Learn!',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontFamily: 'Source',
+                    ),
+                  ),
+                  const SizedBox(height: 30.0),
+                  Container(
+                    padding:
+                        EdgeInsets.zero, // Remove padding to avoid misalignment
+                    width: 250,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(45, 72, 51, 166),
+                        width: 1,
+                      ),
+                      color: const Color.fromARGB(255, 94, 24, 235),
+                      borderRadius: BorderRadius.circular(30), // Rounded edges
+                      boxShadow: const [
+                        BoxShadow(
+                          color:
+                              Color.fromARGB(255, 88, 53, 158), // Shadow color
+                          offset: Offset(0, 8), // Shadow position
+                          blurRadius: 0, // No blur
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      // Ensures button content is centered
+                      child: ElevatedButton(
+                        onPressed: _login,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(
+                              100, 50), // Adjusted height for better centering
+                          backgroundColor: Colors
+                              .transparent, // Transparent to show background
+                          shadowColor:
+                              Colors.transparent, // Remove default shadow
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Center(
+                          // Ensures text is centered
+                          child: Text(
+                            "Ready to Learn!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Source',
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -546,23 +603,6 @@ class _LoginPageState extends State<LoginPage> {
                         style: const TextStyle(color: Colors.red),
                       ),
                     ),
-                  // Forgot password button
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20), // Adjust the margin as needed
-                    child: TextButton(
-                      onPressed:
-                          _forgotPassword, // Call _forgotPassword to navigate
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: Color(0xFF5D2F8E), // Dark purple color
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
