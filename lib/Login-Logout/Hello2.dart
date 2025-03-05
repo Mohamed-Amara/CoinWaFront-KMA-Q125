@@ -75,7 +75,8 @@ class hello extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        extendBodyBehindAppBar: true, // Enables the background image behind the AppBar
+        extendBodyBehindAppBar:
+            true, // Enables the background image behind the AppBar
         appBar: AppBar(
           backgroundColor: Colors.transparent, // Makes AppBar transparent
           elevation: 0,
@@ -105,32 +106,28 @@ class hello extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const SizedBox(height: 50),
-                    const Text(
-                      'We want to get to know \n You!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'SourceSans',
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     const SizedBox(height: 60),
                     Container(
-                      height: 260,
+                      height: 475,
                       width: 450,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16.0,
                         vertical: 16.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 94, 24, 235),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/hello2frame.png'),
+                          fit: BoxFit.cover,
+                        ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Image.asset(
+                            'assets/signupwawa.png',
+                            height: 200,
+                          ),
                           const Text.rich(
                             TextSpan(
                               children: [
@@ -139,7 +136,8 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 55,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: Color.fromARGB(
+                                        255, 89, 21, 226), //rgb(89, 21, 226)
                                   ),
                                 ),
                                 TextSpan(
@@ -147,7 +145,8 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: Color.fromARGB(
+                                        255, 89, 21, 226), //rgb(89, 21, 226)
                                   ),
                                 ),
                               ],
@@ -161,9 +160,12 @@ class hello extends StatelessWidget {
                               horizontal: 16.0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 255, 241, 219),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                                color: const Color.fromARGB(255, 255, 241, 219),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 94, 24, 235),
+                                  width: 3,
+                                )),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: TextFormField(
@@ -175,7 +177,7 @@ class hello extends StatelessWidget {
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: const InputDecoration(
-                                  hintText: 'Full Name',
+                                  hintText: 'Your Full Name',
                                   hintStyle: TextStyle(
                                     fontFamily: 'Source',
                                     fontSize: 20,
@@ -189,7 +191,7 @@ class hello extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 30),
                     Stack(
                       children: [
                         Container(
@@ -240,7 +242,7 @@ class hello extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 30),
                     Stack(
                       children: [
                         Container(
@@ -350,7 +352,7 @@ class hello extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 30),
                     SizedBox(
                       height: 60,
                       width: 220,
