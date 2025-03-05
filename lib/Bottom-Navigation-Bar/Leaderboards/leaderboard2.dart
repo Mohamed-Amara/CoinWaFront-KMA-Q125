@@ -78,6 +78,8 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Ranking number inside a dark blue circle
+
+            //add an image of assets/world.png
             Container(
               width: 34,
               height: 34,
@@ -85,16 +87,21 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
               decoration: BoxDecoration(
                 color: Colors.indigo[800],
                 shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/world.png'),
+                  fit: BoxFit.cover, // Adjust based on how you want the image to appear
+                ),
               ),
               child: Text(
                 '$position',
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
             const SizedBox(width: 14),
 
             // Profile picture (circular, no border)
