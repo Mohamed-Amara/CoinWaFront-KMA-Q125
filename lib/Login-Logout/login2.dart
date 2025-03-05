@@ -186,260 +186,170 @@ class _LoginPageState extends State<LoginPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? lastDay = prefs.getInt('lastDay');
       int today = DateTime.now().day;
-      showDialog(
-          // ignore: use_build_context_synchronously
-          context: context,
-          barrierDismissible: true,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: const Color(0x00000000),
-              contentPadding: EdgeInsets.zero,
-              content: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      width: 400,
-                      height: 525,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xff8483e4),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "assets/streakpopback.png"), // Change to your image path
-                          fit: BoxFit.fitWidth,
-                        ),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0xff8483e4),
-                            blurRadius: 0,
-                            offset: Offset(10, 10),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            // Access ProfileProvider using Provider.of(context)
-                            Consumer<ProfileProvider>(
-                              builder: (context, profileProvider, child) {
-                                // Determine the image based on the streak value
-                                String imageAsset = profileProvider.streak >= 30
-                                    ? 'assets/very_fire_wawa.png' // 1 month streak
-                                    : profileProvider.streak >= 7
-                                        ? 'assets/fire_wawa.png' // 1 week streak
-                                        : profileProvider.streak >= 5
-                                            ? 'assets/slight_fire_wawa.png' // 5 day streak
-                                            : profileProvider.streak >= 3
-                                                ? 'assets/wawa.png' // 3 day streak
-                                                : profileProvider.streak >= 1
-                                                    ? 'assets/ice_wawa.png' // 1 day streak
-                                                    : 'assets/ice_wawa.png'; // Default for no streak
-                                return Column(
-                                  children: [
-                                    getStreakMessage(profileProvider.streak),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color:
-                                              const Color.fromARGB(0, 0, 0, 0),
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      child: Image.asset(
-                                        imageAsset,
-                                        width: 200,
-                                      ),
-                                    ),
-                                    _weeklyStreakIndicator(
-                                        profileProvider.streakDays),
-                                    Container(
-                                      padding: EdgeInsets
-                                          .zero, // Remove padding to avoid misalignment
-                                      width: 175,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color.fromARGB(
-                                              45, 72, 51, 166),
-                                          width: 1,
-                                        ),
-                                        gradient: const LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Color.fromARGB(255, 140, 82, 255),
-                                              Color.fromARGB(255, 81, 51, 211),
-                                            ]), // Background color
-                                        borderRadius: BorderRadius.circular(
-                                            30), // Rounded edges
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Color.fromARGB(255, 73, 51,
-                                                166), // Shadow color
-                                            offset:
-                                                Offset(2, 4), // Shadow position
-                                            blurRadius: 0, // No blur
-                                          ),
-                                        ],
-                                      ),
-                                      child: Center(
-                                        // Ensures button content is centered
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(100,
-                                                50), // Adjusted height for better centering
-                                            backgroundColor: Colors
-                                                .transparent, // Transparent to show background
-                                            shadowColor: Colors
-                                                .transparent, // Remove default shadow
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                          ),
-                                          child: const Center(
-                                            // Ensures text is centered
-                                            child: Text(
-                                              "Continue",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: IconButton(
-                      icon: const Icon(Icons.close,
-                          color: Color.fromARGB(255, 0, 0, 0)),
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          });
       if (lastDay == null || lastDay != today) {
         if (kDebugMode) {
           print("worked");
         }
-        //Show the dialog
-        // showDialog(
-        //     // ignore: use_build_context_synchronously
-        //     context: context,
-        //     barrierDismissible: true,
-        //     builder: (context) {
-        //       return AlertDialog(
-        //         backgroundColor: const Color(0xff8483e4),
-        //         contentPadding: EdgeInsets.zero,
-        //         content: Stack(
-        //           alignment: Alignment.center,
-        //           children: [
-        //             Padding(
-        //               padding: const EdgeInsets.all(10.0),
-        //               child: Container(
-        //                 width: 300,
-        //                 height: 400,
-        //                 decoration: BoxDecoration(
-        //                   borderRadius: BorderRadius.circular(20),
-        //                   color: const Color.fromARGB(255, 240, 229, 255),
-        //                   boxShadow: const [
-        //                     BoxShadow(
-        //                       color: Colors.black26,
-        //                       blurRadius: 10,
-        //                       offset: Offset(0, 10),
-        //                     ),
-        //                   ],
-        //                 ),
-        //                 child: Center(
-        //                   child: Column(
-        //                     children: [
-        //                       // Access ProfileProvider using Provider.of(context)
-        //                       Consumer<ProfileProvider>(
-        //                         builder: (context, profileProvider, child) {
-        //                           // Determine the image based on the streak value
-        //                           String imageAsset = profileProvider.streak >=
-        //                                   30
-        //                               ? 'assets/very_fire_wawa.png' // 1 month streak
-        //                               : profileProvider.streak >= 7
-        //                                   ? 'assets/fire_wawa.png' // 1 week streak
-        //                                   : profileProvider.streak >= 5
-        //                                       ? 'assets/slight_fire_wawa.png' // 5 day streak
-        //                                       : profileProvider.streak >= 3
-        //                                           ? 'assets/wawa.png' // 3 day streak
-        //                                           : profileProvider.streak >= 1
-        //                                               ? 'assets/ice_wawa.png' // 1 day streak
-        //                                               : 'assets/ice_wawa.png'; // Default for no streak
-
-        //                           return Column(
-        //                             children: [
-        //                               Padding(
-        //                                 padding: const EdgeInsets.symmetric(
-        //                                     vertical: 10.0),
-        //                                 child: Image.asset(
-        //                                   imageAsset,
-        //                                   width: 150,
-        //                                 ),
-        //                               ),
-        //                               _weeklyStreakIndicator(
-        //                                   profileProvider.streakDays),
-        //                               Padding(
-        //                                 padding: const EdgeInsets.all(8.0),
-        //                                 child: Text(
-        //                                   '${profileProvider.streak}',
-        //                                   style: const TextStyle(
-        //                                     fontWeight: FontWeight.bold,
-        //                                     fontSize: 25,
-        //                                   ),
-        //                                 ),
-        //                               ),
-        //                             ],
-        //                           );
-        //                         },
-        //                       ),
-        //                     ],
-        //                   ),
-        //                 ),
-        //               ),
-        //             ),
-        //             Positioned(
-        //               top: 10,
-        //               right: 10,
-        //               child: IconButton(
-        //                 icon: const Icon(Icons.close, color: Colors.red),
-        //                 onPressed: () {
-        //                   Navigator.of(context).pop(); // Close the dialog
-        //                 },
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     });
+        showDialog(
+            // ignore: use_build_context_synchronously
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: const Color(0x00000000),
+                contentPadding: EdgeInsets.zero,
+                content: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        width: 400,
+                        height: 525,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color(0xff8483e4),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          image: const DecorationImage(
+                            image: AssetImage(
+                                "assets/streakpopback.png"), // Change to your image path
+                            fit: BoxFit.fitWidth,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xff8483e4),
+                              blurRadius: 0,
+                              offset: Offset(10, 10),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              // Access ProfileProvider using Provider.of(context)
+                              Consumer<ProfileProvider>(
+                                builder: (context, profileProvider, child) {
+                                  // Determine the image based on the streak value
+                                  String imageAsset = profileProvider.streak >=
+                                          30
+                                      ? 'assets/very_fire_wawa.png' // 1 month streak
+                                      : profileProvider.streak >= 7
+                                          ? 'assets/fire_wawa.png' // 1 week streak
+                                          : profileProvider.streak >= 5
+                                              ? 'assets/slight_fire_wawa.png' // 5 day streak
+                                              : profileProvider.streak >= 3
+                                                  ? 'assets/wawa.png' // 3 day streak
+                                                  : profileProvider.streak >= 1
+                                                      ? 'assets/ice_wawa.png' // 1 day streak
+                                                      : 'assets/ice_wawa.png'; // Default for no streak
+                                  return Column(
+                                    children: [
+                                      getStreakMessage(profileProvider.streak),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                0, 0, 0, 0),
+                                            borderRadius:
+                                                BorderRadius.circular(100)),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Image.asset(
+                                          imageAsset,
+                                          width: 200,
+                                        ),
+                                      ),
+                                      _weeklyStreakIndicator(
+                                          profileProvider.streakDays),
+                                      Container(
+                                        padding: EdgeInsets
+                                            .zero, // Remove padding to avoid misalignment
+                                        width: 175,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: const Color.fromARGB(
+                                                45, 72, 51, 166),
+                                            width: 1,
+                                          ),
+                                          gradient: const LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color.fromARGB(
+                                                    255, 140, 82, 255),
+                                                Color.fromARGB(
+                                                    255, 81, 51, 211),
+                                              ]), // Background color
+                                          borderRadius: BorderRadius.circular(
+                                              30), // Rounded edges
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Color.fromARGB(255, 73, 51,
+                                                  166), // Shadow color
+                                              offset: Offset(
+                                                  2, 4), // Shadow position
+                                              blurRadius: 0, // No blur
+                                            ),
+                                          ],
+                                        ),
+                                        child: Center(
+                                          // Ensures button content is centered
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(100,
+                                                  50), // Adjusted height for better centering
+                                              backgroundColor: Colors
+                                                  .transparent, // Transparent to show background
+                                              shadowColor: Colors
+                                                  .transparent, // Remove default shadow
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                            ),
+                                            child: const Center(
+                                              // Ensures text is centered
+                                              child: Text(
+                                                "Continue",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: IconButton(
+                        icon: const Icon(Icons.close,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            });
         prefs.setInt('lastDay', today);
       }
 
