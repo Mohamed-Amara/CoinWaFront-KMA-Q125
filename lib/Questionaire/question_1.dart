@@ -8,7 +8,6 @@ class Question1Page extends StatefulWidget {
   const Question1Page({super.key, required this.answerModel});
 
   @override
-  // ignore: library_private_types_in_public_api
   _Question1PageState createState() => _Question1PageState();
 }
 
@@ -30,47 +29,59 @@ class _Question1PageState extends State<Question1Page> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/welcome_background.png"),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 40), // Adjusted for top padding
-              const Text(
-                "Question 1",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
+          child: IntrinsicHeight(
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/welcome_background.png"),
+                  fit: BoxFit.cover,
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'How comfortable are you with managing money?',
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenHeight * 0.03,
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Column(
+                      children: [
+                        SizedBox(height: screenHeight * 0.05),
+                        Text(
+                          "Question 1",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.05,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        Text(
+                          'How comfortable are you with managing money?',
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.06,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: screenHeight * 0.03),
+                      ],
+                    ),
                     Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
+                      spacing: screenWidth * 0.03,
+                      runSpacing: screenHeight * 0.02,
                       alignment: WrapAlignment.center,
                       children: [
                         GestureDetector(
@@ -80,8 +91,7 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'beginner',
                             label:
                                 'I have no experience and want to learn from scratch',
-                            color: const Color.fromARGB(
-                                255, 140, 82, 255), // #CDE5FF
+                            color: Colors.deepPurple,
                             isSelected: selectedValue == 'beginner',
                           ),
                         ),
@@ -91,8 +101,7 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'medium',
                             label:
                                 'I know a little but want to improve my skills',
-                            color: const Color.fromARGB(
-                                255, 140, 82, 255), // #F1C3FF
+                            color: Colors.purple,
                             isSelected: selectedValue == 'medium',
                           ),
                         ),
@@ -102,40 +111,45 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'expert',
                             label:
                                 'I feel confident but want to learn advanced strategies',
-                            color: const Color.fromARGB(
-                                255, 140, 82, 255), // #C3FFFD
+                            color: Colors.indigo,
                             isSelected: selectedValue == 'expert',
                           ),
                         ),
                       ],
                     ),
-                    const Spacer(),
+                    SizedBox(height: screenHeight * 0.02),
                     Image.asset(
                       "assets/wawaTalk.png",
-                      width: screenWidth * 0.5,
+                      width: screenWidth * 0.3,
+                      height: screenHeight * 0.12,
+                      fit: BoxFit.contain,
                     ),
-                    const SizedBox(height: 20),
+                    if (selectedValue != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.02),
+                        child: ElevatedButton(
+                          onPressed: () => _navigateToQuestion2(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple,
+                            minimumSize:
+                                Size(screenWidth * 0.8, screenHeight * 0.06),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text(
+                            'Next',
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.05,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    SizedBox(height: screenHeight * 0.03),
                   ],
                 ),
               ),
-              if (selectedValue != null)
-                Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => _navigateToQuestion2(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        minimumSize: const Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      child: const Text('Next',
-                          style: TextStyle(fontSize: 18, color: Colors.white)),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-            ],
+            ),
           ),
         ),
       ),
@@ -159,12 +173,12 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double size = MediaQuery.of(context).size.width * 0.4; // Square size
+    double size = MediaQuery.of(context).size.shortestSide * 0.35;
 
     return Container(
       width: size,
       height: size,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(size * 0.08),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
@@ -172,19 +186,16 @@ class OptionCard extends StatelessWidget {
             ? Border.all(color: Colors.purpleAccent, width: 3)
             : null,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Removed Icon, keeping only text
-          const SizedBox(height: 10),
-          Text(
-            label,
-            style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold), // Increased font size
-            textAlign: TextAlign.center, // Center aligned the text
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: size * 0.08,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+          textAlign: TextAlign.center,
+          softWrap: true,
+        ),
       ),
     );
   }

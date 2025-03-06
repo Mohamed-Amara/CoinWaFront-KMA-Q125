@@ -1,4 +1,3 @@
-// question1.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Questionaire/question_5.dart';
 import 'answer_model.dart';
@@ -6,7 +5,7 @@ import 'answer_model.dart';
 class Question4Page extends StatefulWidget {
   final AnswerModel answerModel;
 
-  Question4Page({Key? key, required this.answerModel}) : super(key: key);
+  const Question4Page({super.key, required this.answerModel});
 
   @override
   _Question4PageState createState() => _Question4PageState();
@@ -17,9 +16,7 @@ class _Question4PageState extends State<Question4Page> {
 
   void _navigateToQuestion5(BuildContext context) {
     if (selectedValue != null) {
-
       widget.answerModel.question4Answer = selectedValue;
-      print("Current answerModel: ${widget.answerModel.toJson()}");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -29,9 +26,10 @@ class _Question4PageState extends State<Question4Page> {
     }
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,102 +38,115 @@ class _Question4PageState extends State<Question4Page> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context); // Handle back navigation
+            Navigator.pop(context);
           },
         ),
         title: Text(
           "Question 4",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-          ),
+          style: TextStyle(color: Colors.black, fontSize: 15),
         ),
         centerTitle: false,
       ),
       extendBodyBehindAppBar: true,
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/welcome_background.png"),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: AppBar().preferredSize.height + 40), // Adjusted for lower app bar
-              Text(
-                'If you received \$100 right now, what would you do with it?',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
-                textAlign: TextAlign.center,
+          child: IntrinsicHeight(
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/welcome_background.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-              SizedBox(height: 20),
-              Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenHeight * 0.03,
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(height: screenHeight * 0.05),
+                    Text(
+                      'If you received \$100 right now, what would you do with it?',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.06,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
                     Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
+                      spacing: screenWidth * 0.03,
+                      runSpacing: screenHeight * 0.02,
                       alignment: WrapAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'Beginner'),
+                          onTap: () =>
+                              setState(() => selectedValue = 'spend_all'),
                           child: OptionCard(
-                            value: 'option1',
-                            label: "Spend it on something I want",
-                            color: Colors.blue[200]!,
-                            isSelected: selectedValue == 'option1',
+                            value: 'spend_all',
+                            label: 'Spend it on something I want',
+                            color: Colors.blue,
+                            isSelected: selectedValue == 'spend_all',
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'Medium'),
+                          onTap: () =>
+                              setState(() => selectedValue = 'save_some'),
                           child: OptionCard(
-                            value: 'option2',
-                            label: "Save a portion and spend the rest",
-                            color: Colors.purple[200]!,
-                            isSelected: selectedValue == 'option2',
+                            value: 'save_some',
+                            label: 'Save a portion and spend the rest',
+                            color: Colors.pink,
+                            isSelected: selectedValue == 'save_some',
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => setState(() => selectedValue = 'Expert'),
+                          onTap: () =>
+                              setState(() => selectedValue = 'invest_it'),
                           child: OptionCard(
-                            value: 'option3',
-                            label: "Invest it or use it to grow my money",
-                            color: Colors.teal[200]!,
-                            isSelected: selectedValue == 'option3',
+                            value: 'invest_it',
+                            label: 'Invest it or use it to grow my money',
+                            color: Colors.teal,
+                            isSelected: selectedValue == 'invest_it',
                           ),
                         ),
                       ],
                     ),
-                    Spacer(), // Pushes the image towards the bottom
+                    Spacer(),
                     Image.asset(
-                      "assets/wawaConfused.png", // Updated image path
-                      width: screenWidth * 0.5, // Responsive image size
+                      "assets/wawaTalk.png",
+                      width: screenWidth * 0.3,
+                      height: screenHeight * 0.12,
+                      fit: BoxFit.contain,
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: screenHeight * 0.02),
+                    if (selectedValue != null)
+                      ElevatedButton(
+                        onPressed: () => _navigateToQuestion5(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          minimumSize:
+                              Size(screenWidth * 0.8, screenHeight * 0.06),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        child: Text('Continue',
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.05,
+                                color: Colors.white)),
+                      ),
+                    SizedBox(height: screenHeight * 0.03),
                   ],
                 ),
               ),
-              if (selectedValue != null) // Show button only after selection
-                Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => _navigateToQuestion5(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      ),
-                      child: Text('Continue', style: TextStyle(fontSize: 18, color: Colors.white)),
-                    ),
-                    SizedBox(height: 20),
-                  ],
-                ),
-            ],
+            ),
           ),
         ),
       ),

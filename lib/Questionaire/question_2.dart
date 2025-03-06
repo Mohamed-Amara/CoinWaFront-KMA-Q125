@@ -26,7 +26,9 @@ class _Question2PageState extends State<Question2Page> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select at least one option before submitting.')),
+        SnackBar(
+            content:
+                Text('Please select at least one option before submitting.')),
       );
     }
   }
@@ -50,7 +52,8 @@ class _Question2PageState extends State<Question2Page> {
             fontSize: 15,
           ),
         ),
-        centerTitle: false, // Ensures the title is left-aligned next to the back arrow
+        centerTitle:
+            false, // Ensures the title is left-aligned next to the back arrow
       ),
       extendBodyBehindAppBar: true,
       body: Container(
@@ -68,10 +71,14 @@ class _Question2PageState extends State<Question2Page> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 60.0), // Adjusted padding to bring the title lower
+                  padding: const EdgeInsets.only(
+                      top: 60.0), // Adjusted padding to bring the title lower
                   child: Text(
                     'What financial topics interest you the most? (Select all that apply)',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,27 +91,41 @@ class _Question2PageState extends State<Question2Page> {
                     crossAxisSpacing: 10,
                     shrinkWrap: true,
                     children: [
-                      OptionCard(value: 'Budget', label: 'Budgeting & saving', color: Colors.blue[200]!),
-                      OptionCard(value: 'invest', label: 'Earning & investing', color: Colors.purple[200]!),
-                      OptionCard(value: 'Credit Card', label: 'Credit cards & loans', color: Colors.teal[200]!),
-                      OptionCard(value: 'Spending', label: 'Smart spending & shopping hacks', color: Colors.pink[200]!),
-                    ].map((card) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (selectedValues.contains(card.value)) {
-                            selectedValues.remove(card.value);
-                          } else {
-                            selectedValues.add(card.value);
-                          }
-                        });
-                      },
-                      child: OptionCard(
-                        value: card.value,
-                        label: card.label,
-                        color: card.color,
-                        isSelected: selectedValues.contains(card.value),
-                      ),
-                    )).toList(),
+                      OptionCard(
+                          value: 'Budget',
+                          label: 'Budgeting & saving',
+                          color: Colors.blue[200]!),
+                      OptionCard(
+                          value: 'invest',
+                          label: 'Earning & investing',
+                          color: Colors.purple[200]!),
+                      OptionCard(
+                          value: 'Credit Card',
+                          label: 'Credit cards & loans',
+                          color: Colors.teal[200]!),
+                      OptionCard(
+                          value: 'Spending',
+                          label: 'Smart spending & shopping hacks',
+                          color: Colors.pink[200]!),
+                    ]
+                        .map((card) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (selectedValues.contains(card.value)) {
+                                    selectedValues.remove(card.value);
+                                  } else {
+                                    selectedValues.add(card.value);
+                                  }
+                                });
+                              },
+                              child: OptionCard(
+                                value: card.value,
+                                label: card.label,
+                                color: card.color,
+                                isSelected: selectedValues.contains(card.value),
+                              ),
+                            ))
+                        .toList(),
                   ),
                 ),
                 Padding(
@@ -119,9 +140,11 @@ class _Question2PageState extends State<Question2Page> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                       ),
-                      child: Text('Continue', style: TextStyle(fontSize: 18, color: Colors.white)),
+                      child: Text('Continue',
+                          style: TextStyle(fontSize: 18, color: Colors.white)),
                     ),
                   ),
               ],
@@ -148,6 +171,18 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double getFontSize() {
+      double baseSize = 16; // Default font size
+      double scaleFactor = (screenWidth + screenHeight) /
+          1000; // Adjust based on total screen size
+      return baseSize *
+          scaleFactor.clamp(
+              0.8, 1.5); // Keep font size within a reasonable range
+    }
+
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -161,7 +196,11 @@ class OptionCard extends StatelessWidget {
           SizedBox(height: 10),
           Text(
             label,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              // fontSize: getFontSize(), // Apply dynamic font size
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
         ],

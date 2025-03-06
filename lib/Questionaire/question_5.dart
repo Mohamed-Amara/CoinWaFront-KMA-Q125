@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'answer_model.dart';  // Ensure this is correctly defined and imported
+import 'answer_model.dart';
 import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:flutter_application_1/lobby.dart';
 import 'package:provider/provider.dart';
@@ -15,21 +15,16 @@ class Question5Page extends StatefulWidget {
 }
 
 class _Question5PageState extends State<Question5Page> {
-  // Use a single value for the selected answer
   String? selectedValue;
-
-  // Create an instance of the AuthService
   final AuthService authService = AuthService();
 
-  // Function to handle the submission of answers
   void _submitAnswers(BuildContext context) async {
     if (selectedValue != null) {
-      // Map the selected option to an AnswerModel
       widget.answerModel.question5Answer = selectedValue;
       print("Current answerModel: ${widget.answerModel.toJson()}");
 
-      // Submit the answers to the server
-      bool success = await authService.submitAnswers(context,widget.answerModel);// this line has error
+      bool success =
+          await authService.submitAnswers(context, widget.answerModel);
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -38,14 +33,15 @@ class _Question5PageState extends State<Question5Page> {
         Provider.of<ProfileProvider>(context, listen: false)
             .updateUserBadge(context, "welcome");
 
-        // Navigate to the next page (for example, LobbyPage)
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LobbyPage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to submit answers. Please try again later.')),
+          SnackBar(
+              content:
+                  Text('Failed to submit answers. Please try again later.')),
         );
       }
     } else {
@@ -57,6 +53,9 @@ class _Question5PageState extends State<Question5Page> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -74,79 +73,113 @@ class _Question5PageState extends State<Question5Page> {
         centerTitle: false,
       ),
       extendBodyBehindAppBar: true,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/welcome_background.png"),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: screenHeight,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Text(
-                  'What’s your financial goal right now?',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
-                  textAlign: TextAlign.center,
+          child: IntrinsicHeight(
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/welcome_background.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
-
-              SizedBox(height: 15),
-
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  shrinkWrap: true,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenHeight * 0.03,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    OptionCard(value: 'money', label: 'Learning how to manage money better', color: Colors.blue[200]!),
-                    OptionCard(value: 'saving', label: 'Saving up for something big', color: Colors.purple[200]!),
-                    OptionCard(value: 'investing', label: 'Making my money work for me (investing, earning more)', color: Colors.teal[200]!),
-                    OptionCard(value: 'financial-idependence', label: 'Building financial independence early', color: Colors.pink[200]!),
-                  ].map((card) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        // Set the selected value to the one tapped
-                        selectedValue = card.value;
-                      });
-                    },
-                    child: OptionCard(
-                      value: card.value,
-                      label: card.label,
-                      color: card.color,
-                      isSelected: selectedValue == card.value, // Highlight the selected option
+                    SizedBox(height: screenHeight * 0.05),
+                    Text(
+                      'What’s your financial goal right now?',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.06,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  )).toList(),
+                    SizedBox(height: screenHeight * 0.03),
+                    Wrap(
+                      spacing: screenWidth * 0.03,
+                      runSpacing: screenHeight * 0.02,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => setState(() => selectedValue = 'money'),
+                          child: OptionCard(
+                            value: 'money',
+                            label: 'Learning how to manage money better',
+                            color: Colors.blue[200]!,
+                            isSelected: selectedValue == 'money',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => setState(() => selectedValue = 'saving'),
+                          child: OptionCard(
+                            value: 'saving',
+                            label: 'Saving up for something big',
+                            color: Colors.purple[200]!,
+                            isSelected: selectedValue == 'saving',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () =>
+                              setState(() => selectedValue = 'investing'),
+                          child: OptionCard(
+                            value: 'investing',
+                            label:
+                                'Making my money work for me (investing, earning more)',
+                            color: Colors.teal[200]!,
+                            isSelected: selectedValue == 'investing',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => setState(
+                              () => selectedValue = 'financial-independence'),
+                          child: OptionCard(
+                            value: 'financial-independence',
+                            label: 'Building financial independence early',
+                            color: Colors.pink[200]!,
+                            isSelected:
+                                selectedValue == 'financial-independence',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Image.asset(
+                      "assets/pigdollarsave.png",
+                      height: screenHeight * 0.2,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    if (selectedValue != null)
+                      ElevatedButton(
+                        onPressed: () => _submitAnswers(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          minimumSize:
+                              Size(screenWidth * 0.8, screenHeight * 0.06),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        child: Text('Submit',
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.white)),
+                      ),
+                    SizedBox(height: screenHeight * 0.03),
+                  ],
                 ),
               ),
-
-              SizedBox(height: 15),
-
-              Image.asset(
-                "assets/pigdollarsave.png",
-                height: MediaQuery.of(context).size.height * 0.25,
-                fit: BoxFit.contain,
-              ),
-
-              SizedBox(height: 20),
-
-              // Show submit button if a value is selected
-              if (selectedValue != null)
-                ElevatedButton(
-                  onPressed: () => _submitAnswers(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    minimumSize: Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  child: Text('Submit', style: TextStyle(fontSize: 18, color: Colors.white)),
-                ),
-            ],
+            ),
           ),
         ),
       ),
@@ -154,7 +187,6 @@ class _Question5PageState extends State<Question5Page> {
   }
 }
 
-// Option Card Widget
 class OptionCard extends StatelessWidget {
   final String value;
   final String label;
@@ -170,18 +202,30 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double size = screenWidth < 400
+        ? screenWidth * 0.42
+        : screenWidth * 0.4; // Adjust for smaller screens
+
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      width: size,
+      constraints: BoxConstraints(minHeight: 100), // Ensures a minimum height
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected ? Border.all(color: Colors.blue, width: 2) : null,
+        border: isSelected ? Border.all(color: Colors.blue, width: 3) : null,
       ),
       child: Center(
         child: Text(
           label,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize:
+                screenWidth < 400 ? 14 : 18, // Adjust font size dynamically
+            fontWeight: FontWeight.bold,
+          ),
           textAlign: TextAlign.center,
+          softWrap: true, // Ensures text wraps instead of overflowing
         ),
       ),
     );
