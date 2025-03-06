@@ -137,7 +137,7 @@ class _SavingsAccountPageState extends State<SavingsAccountPage> {
                   textStyle:
                       TextStyle(fontWeight: FontWeight.bold), // Added this line
                 ),
-                series: <ChartSeries>[
+                series: <CartesianSeries>[
                   LineSeries<SavingsData, int>(
                     dataSource: compoundingData,
                     xValueMapper: (SavingsData data, _) => data.year,
