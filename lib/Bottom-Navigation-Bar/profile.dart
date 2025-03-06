@@ -47,8 +47,6 @@ class _ProfilePageState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.purple.shade50,
       body: Consumer<ProfileProvider>(
@@ -78,8 +76,8 @@ class _ProfilePageState extends State<Profile> {
                                   left: 0,
                                   right: 0,
                                   child: Container(
-                                    width: screenWidth,
-                                    height: 100,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 150,
                                     decoration: const BoxDecoration(
                                       color: Color.fromARGB(255, 91, 24, 233),
                                       borderRadius: BorderRadius.only(
@@ -90,8 +88,8 @@ class _ProfilePageState extends State<Profile> {
                                   ),
                                 ),
                                 Container(
-                                  width: screenWidth,
-                                  height: 100,
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 150,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
                                   decoration: const BoxDecoration(
@@ -104,15 +102,17 @@ class _ProfilePageState extends State<Profile> {
                                   child: const Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(height: 25),
+                                      SizedBox(height: 30),
                                       Text(
                                         "Profile",
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 24,
+                                          fontSize: 35,
                                           fontWeight: FontWeight.bold,
+                                          fontFamily: "Source",
                                         ),
                                       ),
+                                      SizedBox(height: 20),
                                     ],
                                   ),
                                 ),
@@ -210,7 +210,7 @@ class _ProfilePageState extends State<Profile> {
                         Consumer<ProgressProvider>(
                           builder: (context, progressProvider, child) {
                             return _goalSection("Your Current Level",
-                                progressProvider.currentLevelInt as double, 15);
+                                progressProvider.currentLevelInt as double, 20);
                           },
                         ),
                         Consumer<ProgressProvider>(
@@ -222,7 +222,7 @@ class _ProfilePageState extends State<Profile> {
                             return _goalSection(
                               "Your Current Unit",
                               unitProgress,
-                              3,
+                              4,
                             );
                           },
                         ),
@@ -378,7 +378,8 @@ class _ProfilePageState extends State<Profile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(7, (index) {
-                  bool isActive = streakDays.length > index ? streakDays[index] : false;
+                  bool isActive =
+                      streakDays.length > index ? streakDays[index] : false;
                   return Column(
                     children: [
                       Icon(
@@ -389,7 +390,8 @@ class _ProfilePageState extends State<Profile> {
                             : const Color.fromARGB(255, 167, 152, 196),
                       ),
                       const SizedBox(height: 5),
-                      Text(weekDays[index], style: const TextStyle(fontSize: 12)),
+                      Text(weekDays[index],
+                          style: const TextStyle(fontSize: 12)),
                     ],
                   );
                 }),
@@ -400,6 +402,4 @@ class _ProfilePageState extends State<Profile> {
       ),
     );
   }
-
-
 }
