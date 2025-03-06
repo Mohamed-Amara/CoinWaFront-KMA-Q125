@@ -75,7 +75,8 @@ class hello extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        extendBodyBehindAppBar: true, // Enables the background image behind the AppBar
+        extendBodyBehindAppBar:
+            true, // Enables the background image behind the AppBar
         appBar: AppBar(
           backgroundColor: Colors.transparent, // Makes AppBar transparent
           elevation: 0,
@@ -105,32 +106,28 @@ class hello extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const SizedBox(height: 50),
-                    const Text(
-                      'We want to get to know \n You!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'SourceSans',
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     const SizedBox(height: 60),
                     Container(
-                      height: 260,
+                      height: 475,
                       width: 450,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16.0,
                         vertical: 16.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 94, 24, 235),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/hello2frame.png'),
+                          fit: BoxFit.cover,
+                        ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Image.asset(
+                            'assets/signupwawa.png',
+                            height: 200,
+                          ),
                           const Text.rich(
                             TextSpan(
                               children: [
@@ -139,7 +136,8 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 55,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: Color.fromARGB(
+                                        255, 89, 21, 226), //rgb(89, 21, 226)
                                   ),
                                 ),
                                 TextSpan(
@@ -147,7 +145,8 @@ class hello extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'SourceSans',
                                     fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: Color.fromARGB(
+                                        255, 89, 21, 226), //rgb(89, 21, 226)
                                   ),
                                 ),
                               ],
@@ -161,9 +160,12 @@ class hello extends StatelessWidget {
                               horizontal: 16.0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 255, 241, 219),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                                color: const Color.fromARGB(255, 255, 241, 219),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 94, 24, 235),
+                                  width: 3,
+                                )),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: TextFormField(
@@ -175,7 +177,7 @@ class hello extends StatelessWidget {
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: const InputDecoration(
-                                  hintText: 'Full Name',
+                                  hintText: 'Your Full Name',
                                   hintStyle: TextStyle(
                                     fontFamily: 'Source',
                                     fontSize: 20,
@@ -189,7 +191,7 @@ class hello extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 30),
                     Stack(
                       children: [
                         Container(
@@ -240,7 +242,7 @@ class hello extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 30),
                     Stack(
                       children: [
                         Container(
@@ -350,60 +352,92 @@ class hello extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 60),
-                    SizedBox(
+                    const SizedBox(height: 30),
+                    Container(
+                      padding: EdgeInsets
+                          .zero, // Remove padding to avoid misalignment
+                      width: 250,
                       height: 60,
-                      width: 220,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          String name = _nameController.text.trim();
-                          String birthday = _birthdayController.text.trim();
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color.fromARGB(45, 72, 51, 166),
+                          width: 1,
+                        ),
+                        color: const Color.fromARGB(255, 94, 24, 235),
+                        borderRadius:
+                            BorderRadius.circular(30), // Rounded edges
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(
+                                255, 88, 53, 158), // Shadow color
+                            offset: Offset(0, 8), // Shadow position
+                            blurRadius: 0, // No blur
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        // Ensures button content is centered
+                        child: ElevatedButton(
+                          onPressed: () {
+                            String name = _nameController.text.trim();
+                            String birthday = _birthdayController.text.trim();
 
-                          // Check if the date is valid
-                          if (!_isValidDate(birthday)) {
-                            // Show the error dialog if the date is invalid
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Invalid Date'),
-                                content:
-                                    const Text('Please enter a valid date.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(
-                                          context); // Close the dialog
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
+                            // Check if the date is valid
+                            if (!_isValidDate(birthday)) {
+                              // Show the error dialog if the date is invalid
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Invalid Date'),
+                                  content:
+                                      const Text('Please enter a valid date.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                            context); // Close the dialog
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return; // Don't proceed if the date is invalid
+                            }
+
+                            // Proceed with navigation if the date is valid
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(
+                                  name: name,
+                                  birthday: birthday,
+                                ),
                               ),
                             );
-                            return; // Don't proceed if the date is invalid
-                          }
-
-                          // Proceed with navigation if the date is valid
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(
-                                name: name,
-                                birthday: birthday,
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100,
+                                50), // Adjusted height for better centering
+                            backgroundColor: Colors
+                                .transparent, // Transparent to show background
+                            shadowColor:
+                                Colors.transparent, // Remove default shadow
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: const Center(
+                            // Ensures text is centered
+                            child: Text(
+                              "What's Next?",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Source',
                               ),
                             ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all<Color>(
-                            const Color.fromARGB(255, 94, 24, 235),
-                          ),
-                        ),
-                        child: const Text(
-                          'What\'s Next?',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21,
-                            fontFamily: 'Source',
                           ),
                         ),
                       ),
