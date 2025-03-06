@@ -91,7 +91,7 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
 
     var progressProvider = Provider.of<ProgressProvider>(context, listen: false);
 
-  if (progressProvider.level == 10) {
+  if (progressProvider.level == 15) {
       Provider.of<CoinProvider>(context, listen: false).incrementCoin(context);
       progressProvider.incrementProgress(context);
       progressProvider.setSublevel(context,1);
