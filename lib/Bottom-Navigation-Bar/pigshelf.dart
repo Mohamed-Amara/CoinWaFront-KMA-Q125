@@ -34,9 +34,10 @@ class _BookshelfPageState extends State<BookshelfPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/trophy_background.png'), // Add your image here
+          image:
+              AssetImage('assets/trophy_background.png'), // Add your image here
           fit: BoxFit.cover, // Ensure the image covers the whole screen
         ),
       ),
@@ -53,10 +54,12 @@ class _BookshelfPageState extends State<BookshelfPage> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width, // Get screen width dynamically
+                  width: MediaQuery.of(context)
+                      .size
+                      .width, // Get screen width dynamically
                   height: 150, // Increased height for a longer banner
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 141, 51, 230), // rgb(118, 121, 185)
+                    color: Color.fromARGB(255, 132, 24, 233),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
@@ -65,11 +68,15 @@ class _BookshelfPageState extends State<BookshelfPage> {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width, // Get screen width dynamically
-                height: 150, // Increased height for the banner to match the first container
+                width: MediaQuery.of(context)
+                    .size
+                    .width, // Get screen width dynamically
+                height:
+                    150, // Increased height for the banner to match the first container
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 203, 82, 255), // rgb(160, 161, 251)
+                  color:
+                      Color.fromARGB(255, 163, 82, 255), // rgb(160, 161, 251)
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -90,13 +97,14 @@ class _BookshelfPageState extends State<BookshelfPage> {
                         fontFamily: "Source",
                       ),
                     ),
-                    SizedBox(height: 20), // Extra space between the text and the bottom
+                    SizedBox(
+                        height:
+                            20), // Extra space between the text and the bottom
                   ],
                 ),
               ),
             ],
           ),
-
           Expanded(
             child: Stack(
               alignment: Alignment.center,
@@ -106,7 +114,7 @@ class _BookshelfPageState extends State<BookshelfPage> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 500,
-                    color: Color.fromARGB(255, 203, 82, 255),
+                    color: const Color.fromARGB(255, 141, 79, 221),
                   ),
                 ),
                 SingleChildScrollView(
@@ -136,40 +144,42 @@ class _BookshelfPageState extends State<BookshelfPage> {
     );
   }
 
-
   Widget buildShelfRow(BuildContext context, int startIndex) {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Center(
           child: Container(
-            color: const Color.fromARGB(255, 107, 108, 126),
+            color: const Color.fromARGB(255, 243, 201, 143),
             width: 280,
             height: 100,
-
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(3, (index) {
             int pigIndex = startIndex + index;
-            Color pigColor = Colors.grey; // Default color
+            Color pigColor =
+                const Color.fromARGB(255, 146, 146, 146); // Default color
 
-            int completedLevels = Provider.of<ProgressProvider>(context, listen: false).level;
+            int completedLevels =
+                Provider.of<ProgressProvider>(context, listen: false).level;
             if (pigIndex == 0 && completedLevels > 5) {
               print(pigIndex);
               print(completedLevels);
-              pigColor = Color(0xFF3CB371); // Turn the first piggy bank green
+              pigColor = const Color.fromRGBO(33, 148, 92, 1);
+              ; // Turn the first piggy bank green
             } else if (pigIndex == 1 && completedLevels > 10) {
               print(pigIndex);
               print(completedLevels);
-              pigColor = const Color(0xFFFFD64B); // Turn the second piggy bank purple
-            }else if (pigIndex == 2 && completedLevels >= 15) {
+              pigColor = const Color.fromRGBO(
+                  120, 112, 222, 1); // Turn the second piggy bank purple
+            } else if (pigIndex == 2 && completedLevels >= 15) {
               print(pigIndex);
               print(completedLevels);
-              pigColor = const Color(0xFF8BE1D9); // Turn the third piggy bank blue
+              pigColor = const Color.fromARGB(
+                  255, 61, 121, 231); // Turn the third piggy bank blue
             }
-
 
             return ColorFiltered(
               colorFilter: ColorFilter.mode(pigColor, BlendMode.srcIn),
@@ -193,7 +203,7 @@ class _BookshelfPageState extends State<BookshelfPage> {
         Stack(
           children: [
             Container(
-              color: const Color.fromARGB(255, 107, 108, 126),
+              color: const Color.fromARGB(255, 243, 201, 143),
               width: 135,
               height: 135,
             ),
@@ -201,8 +211,8 @@ class _BookshelfPageState extends State<BookshelfPage> {
               right: 10,
               top: 52,
               child: Container(
-                color: const Color(0xff915831),
-                width: 5,
+                color: const Color(0xFFF9AE45),
+                width: 7,
                 height: 30,
               ),
             ),
@@ -212,17 +222,16 @@ class _BookshelfPageState extends State<BookshelfPage> {
         Stack(
           children: [
             Container(
-              color: const Color.fromARGB(255, 107, 108, 126),
+              color: const Color.fromARGB(255, 243, 201, 143),
               width: 135,
               height: 135,
-
             ),
             Positioned(
               left: 10,
               top: 52,
               child: Container(
-                color: const Color(0xff915831),
-                width: 5,
+                color: const Color(0xFFF9AE45),
+                width: 7,
                 height: 30,
               ),
             ),

@@ -29,13 +29,13 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
       length: 2,
       initialIndex: 0,
     )..addListener(() {
-      // When the tab changes, fetch new data based on the selected tab
-      setState(() {
-        _futureFetch = context
-            .read<LeaderProvider>()
-            .fetchUserData(context, _tabBarController.index == 0);
+        // When the tab changes, fetch new data based on the selected tab
+        setState(() {
+          _futureFetch = context
+              .read<LeaderProvider>()
+              .fetchUserData(context, _tabBarController.index == 0);
+        });
       });
-    });
 
     // Fetch initial data for the Global leaderboard
     _futureFetch = context.read<LeaderProvider>().fetchUserData(context, true);
@@ -49,7 +49,8 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
 
   @override
   void dispose() {
-    _tabBarController.dispose(); // Dispose the TabController to avoid memory leaks
+    _tabBarController
+        .dispose(); // Dispose the TabController to avoid memory leaks
     super.dispose();
   }
 
@@ -67,6 +68,7 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.grey.withOpacity(0.15),
               blurRadius: 6,
               spreadRadius: 1,
@@ -87,9 +89,10 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
               decoration: BoxDecoration(
                 color: Colors.indigo[800],
                 shape: BoxShape.circle,
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: AssetImage('assets/world.png'),
-                  fit: BoxFit.cover, // Adjust based on how you want the image to appear
+                  fit: BoxFit
+                      .cover, // Adjust based on how you want the image to appear
                 ),
               ),
               child: Text(
@@ -145,183 +148,171 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor:
-      const Color.fromARGB(255, 255, 255, 255), // Set background color
+          const Color.fromARGB(255, 232, 237, 255), // Set background color
       body: SafeArea(
         top: true,
-          child: Column(
-            children: [
-              // Custom App Bar with Curved Bottom
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.topCenter,
-                children: [
-                  Positioned(
-                    top: 15,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      width: screenWidth,
-                      height: 150, // Increased height for a longer banner
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(
-                            255, 118, 121, 185), //rgb(118, 121, 185)
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: screenWidth,
-                    height:
-                    150, // Increased height for the banner to match the first container
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: const BoxDecoration(
-                      color:
-                      Color.fromARGB(255, 160, 161, 251), //rgb(160, 161, 251)
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                      ),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // Custom App Bar with Curved Bottom
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.topCenter,
                       children: [
-                        SizedBox(height: 30), // Increased space before the text
-                        Text(
-                          "Leaderboard",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
+                        Positioned(
+                          top: 15,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 150,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 118, 121, 185),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30),
+                              ),
+                            ),
                           ),
                         ),
-                        SizedBox(
-                            height:
-                            20), // Extra space between the text and the bottom
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 160, 161, 251),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                          ),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 30),
+                              Text(
+                                "Leaderboard",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Source",
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
 
-              const SizedBox(height: 20), // Adds spacing below the header
+                    const SizedBox(height: 20),
 
-              // Tab Bar for Global & Friends Leaderboard
-              // Smaller Tab Bar Container
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
-                child: Container(
-                  height: 25, // Same height as the button
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFDAD6F8), // Light purple background
-                    borderRadius: BorderRadius.circular(8), // Same shape as the button
-                  ),
-                  padding: const EdgeInsets.all(2), // Slight padding for spacing
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEAEAF5), // Inner background (consistent with buttons)
-                      borderRadius: BorderRadius.circular(8), // Same rounded corners as the button
+                    // Tab Bar for Global & Friends Leaderboard
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 40),
+                      child: Container(
+                        height: 25,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 233, 233, 233),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.all(2),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _buildTabButton('Global', 0),
+                              _buildTabButton('Friends', 1),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _buildTabButton('Global', 0),
-                        _buildTabButton('Friends', 1),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
 
-
-  // TabBarView for Leaderboard Content
-              Expanded(
-                child: IndexedStack(
-                  index: _selectedTab, // Show the selected tab's content
-                  children: [
-                    _buildTabView(true), // Global leaderboard
-                    _buildTabView(false), // Friends leaderboard
+                    // **Leaderboard Content (Scrolls within the main scroll view)**
+                    _buildTabView(_selectedTab == 0),
                   ],
                 ),
               ),
+            ),
 
-              // Bottom Section for Current User's Rank
-              Consumer<ProfileProvider>(
-                builder: (context, profileProvider, child) {
-                  if (profileProvider.username.isEmpty ||
-                      profileProvider.profilepic.isEmpty) {
-                    return const CircularProgressIndicator(); // Show loading indicator if data is not ready
-                  }
-                  return Container(
-                    color: _tabBarController.index == 0
-                        ? const Color.fromARGB(255, 168, 160, 243)
-                        : const Color.fromARGB(255, 168, 160, 243),
-                    padding: const EdgeInsets.all(10),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // User Rank
-                          Text(
-                            '${context.watch<LeaderProvider>().position}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+            // **Bottom Section for Current User's Rank (Fixed)**
+            Consumer<ProfileProvider>(
+              builder: (context, profileProvider, child) {
+                if (profileProvider.username.isEmpty ||
+                    profileProvider.profilepic.isEmpty) {
+                  return const CircularProgressIndicator();
+                }
+                return Container(
+                  color: _tabBarController.index == 0
+                      ? const Color.fromARGB(255, 168, 160, 243)
+                      : const Color.fromARGB(255, 168, 160, 243),
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${context.watch<LeaderProvider>().position}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
-                          const SizedBox(width: 20),
-                          // Profile Picture
-                          ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(40), // Make it round
-                            child: Image.asset(profileProvider.profilepic,
-                                width: 40, height: 40, fit: BoxFit.cover),
-                          ),
-                          const SizedBox(width: 20),
-                          // Username & Followers
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                profileProvider.username,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
+                        ),
+                        const SizedBox(width: 20),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.asset(profileProvider.profilepic,
+                              width: 40, height: 40, fit: BoxFit.cover),
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              profileProvider.username,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
-                              Text(
-                                '${profileProvider.followerNum} followers',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 20),
-                          // Coin Count
-                          Text(
-                            context.watch<CoinProvider>().coin.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
                             ),
+                            Text(
+                              '${profileProvider.followerNum} followers',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          context.watch<CoinProvider>().coin.toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
-                          Image.asset('assets/flatcoin.png', width: 24),
-                        ],
-                      ),
+                        ),
+                        Image.asset('assets/flatcoin.png', width: 24),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
 
       // Bottom Navigation Bar
@@ -337,8 +328,11 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
         height: 25, // Reduce height
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _selectedTab == index ? const Color(0xFF7870DE) : Colors.transparent,
-          borderRadius: BorderRadius.circular(8), // Less rounded for a rectangular look
+          color: _selectedTab == index
+              ? const Color(0xFF7870DE)
+              : Colors.transparent,
+          borderRadius:
+              BorderRadius.circular(8), // Less rounded for a rectangular look
         ),
         child: Text(
           text,
@@ -351,7 +345,6 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
       ),
     );
   }
-
 
 // Function to handle tab selection change
   void _onTabChanged(int index) {
@@ -368,111 +361,103 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
       future: _futureFetch,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-              child:
-              CircularProgressIndicator()); // Show loading indicator while fetching data
+          return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasError) {
-          return Center(
-              child: Text(
-                  'Error: ${snapshot.error}')); // Show error message if data fetching fails
+          return Center(child: Text('Error: ${snapshot.error}'));
         }
 
-        return Container(
-          color: isGlobal ? Colors.transparent : Colors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                // Display the top 3 users in the leaderboard
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Consumer<LeaderProvider>(
-                        builder: (context, leaderProvider, child) {
-                          if (leaderProvider.username.isEmpty) {
-                            return const CircularProgressIndicator(); // Show loading indicator if data is not ready
-                          }
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              // First Place
-                              _buildLeaderboardPodium(
-                                leaderProvider.pfp[1],
-                                leaderProvider.username[1],
-                                leaderProvider.followers[1],
-                                leaderProvider.coins[1],
-                                2, // 2nd place
-                              ),
-                              _buildLeaderboardPodium(
-                                leaderProvider.pfp[0],
-                                leaderProvider.username[0],
-                                leaderProvider.followers[0],
-                                leaderProvider.coins[0],
-                                1, // 1st place
-                              ),
-                              _buildLeaderboardPodium(
-                                leaderProvider.pfp[2],
-                                leaderProvider.username[2],
-                                leaderProvider.followers[2],
-                                leaderProvider.coins[2],
-                                3, // 3rd place
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 15),
-                // Display the rest of the users in a list
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color(0xff4c4b39ef),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(0),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                    ),
-                    child: Consumer<LeaderProvider>(
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              // Top 3 Leaderboard Podium
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Consumer<LeaderProvider>(
                       builder: (context, leaderProvider, child) {
-                        final userCount = leaderProvider.username.length;
-
-                        if (userCount <= 3) {
-                          return const Center(
-                              child: Text(
-                                  'No more users to display')); // Show message if no more users are available
+                        if (leaderProvider.username.isEmpty) {
+                          return const CircularProgressIndicator();
                         }
-
-                        return ListView.builder(
-                          itemCount: userCount - 3, // Adjusting for the top 3
-                          itemBuilder: (context, index) {
-                            final adjustedIndex = index + 3; // Skip the top 3
-                            return leaderblock(
-                              leaderProvider.pfp[adjustedIndex],
-                              leaderProvider.username[adjustedIndex],
-                              leaderProvider.coins[adjustedIndex],
-                              adjustedIndex+1,
-                              adjustedIndex,
-                            );
-                          },
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            _buildLeaderboardPodium(
+                              leaderProvider.pfp[1],
+                              leaderProvider.username[1],
+                              leaderProvider.followers[1],
+                              leaderProvider.coins[1],
+                              2, // 2nd place
+                            ),
+                            _buildLeaderboardPodium(
+                              leaderProvider.pfp[0],
+                              leaderProvider.username[0],
+                              leaderProvider.followers[0],
+                              leaderProvider.coins[0],
+                              1, // 1st place
+                            ),
+                            _buildLeaderboardPodium(
+                              leaderProvider.pfp[2],
+                              leaderProvider.username[2],
+                              leaderProvider.followers[2],
+                              leaderProvider.coins[2],
+                              3, // 3rd place
+                            ),
+                          ],
                         );
                       },
                     ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15),
+
+              // Scrollable Leaderboard List
+              SizedBox(
+                height: 500, // Adjust this height as needed
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    top: 5,
+                  ),
+                  width: 400,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(75, 57, 239, 0.298),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    ),
+                  ),
+                  child: Consumer<LeaderProvider>(
+                    builder: (context, leaderProvider, child) {
+                      final userCount = leaderProvider.username.length;
+                      if (userCount <= 3) {
+                        return const Center(
+                            child: Text('No more users to display'));
+                      }
+                      return ListView.builder(
+                        itemCount: userCount - 3,
+                        itemBuilder: (context, index) {
+                          final adjustedIndex = index + 3;
+                          return leaderblock(
+                            leaderProvider.pfp[adjustedIndex],
+                            leaderProvider.username[adjustedIndex],
+                            leaderProvider.coins[adjustedIndex],
+                            adjustedIndex + 1,
+                            adjustedIndex,
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 15),
+            ],
           ),
         );
       },
@@ -501,7 +486,7 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
       podiumColor = const Color.fromARGB(
           255, 153, 165, 248); // Bronze for 3rd place rgb(153, 165, 248)
       borderColor =
-      const Color.fromARGB(255, 112, 114, 179); //rgb(112, 114, 179)
+          const Color.fromARGB(255, 112, 114, 179); //rgb(112, 114, 179)
       fontSize1 = 40;
     }
 
@@ -514,6 +499,7 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
           width: 100,
           height: 100,
           decoration: BoxDecoration(
+            // ignore: deprecated_member_use
             color: podiumColor.withOpacity(0.8),
             shape: BoxShape.circle,
           ),
@@ -521,11 +507,11 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
             child: imagepath.isEmpty
                 ? const Text("")
                 : Image.asset(
-              imagepath,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
+                    imagepath,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
         const SizedBox(height: 8), // Space between the avatar and the podium
@@ -535,8 +521,8 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
           height: position == 1
               ? 220 // First place is taller
               : position == 2
-              ? 170 // Second place is a bit taller
-              : 150, // Third place is the same height
+                  ? 170 // Second place is a bit taller
+                  : 150, // Third place is the same height
           decoration: BoxDecoration(
             color: podiumColor,
             borderRadius: const BorderRadius.only(
@@ -555,7 +541,7 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
                 8.0), // Adjust padding for text positioning
             child: Column(
               mainAxisAlignment:
-              MainAxisAlignment.end, // Align text to the bottom
+                  MainAxisAlignment.end, // Align text to the bottom
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Display the position
