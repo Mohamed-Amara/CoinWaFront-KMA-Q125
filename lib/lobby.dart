@@ -51,6 +51,7 @@ List<String> titles = [
   "Saving",
   "Assets/Liabilities",
   "Credit Cards",
+  "Taxes",
   "This Isn't the End!"
 ];
 
@@ -64,6 +65,8 @@ Color _getColorForUnit(int unit) {
     case 2:
       return const Color.fromARGB(255, 61, 121, 231);
     case 3:
+      return const Color.fromARGB(255, 231, 61, 61);
+    case 4:
       return const Color(0xFF7B73DF); // Gradient takes over when unit == 3
     default:
       return const Color(0xff21945C);
@@ -96,6 +99,7 @@ class _LobbyPageState extends State<LobbyPage> {
     const Color(0xff21945C),
     const Color(0xFF7870DE),
     const Color.fromARGB(255, 61, 121, 231),
+    const Color.fromARGB(255, 231, 61, 61),
     const Color(0xFF7B73DF)
   ];
 
@@ -129,12 +133,15 @@ class _LobbyPageState extends State<LobbyPage> {
     final scrollPosition = _scrollController.position.pixels;
     const changeColorPosition1 = 550;
     const changeColorPosition2 = 1100;
-    const changeColorPositionEnd = 1600; // Position for End Coin
+    const changeColorPosition3 = 1650;
+    const changeColorPositionEnd = 2200; // Position for End Coin
 
     int newUnit = 0;
 
     if (scrollPosition >= changeColorPositionEnd) {
       newUnit = titles.length - 1; // Special case for End Coin
+    } else if (scrollPosition >= changeColorPosition3) {
+      newUnit = 3;
     } else if (scrollPosition >= changeColorPosition2) {
       newUnit = 2;
     } else if (scrollPosition > changeColorPosition1) {
@@ -176,6 +183,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       _buildUnit2(context),
                       _buildHorizontalLine(titles[2]),
                       _buildUnit3(context),
+                      _buildHorizontalLine(titles[3]),
+                      _buildUnit4(context),
                       _buildHorizontalLine(titles[titles.length - 1]),
                       _buildEnd(context),
                       const SizedBox(height: 200),
@@ -499,6 +508,29 @@ class _LobbyPageState extends State<LobbyPage> {
       ),
     );
   }
+  Widget _buildUnit4(BuildContext context) {
+    return CustomPaint(
+      painter: PathPainter(),
+      child: Column(
+        children: <Widget>[
+          _buildCoinLevel(
+              context, Alignment.centerLeft, "TAX",
+              index: 15, isFirst: true),
+          _buildCoinLevel(
+              context, Alignment.centerRight, "MORE TAX",
+              index: 16),
+          _buildCoinLevel(
+              context, Alignment.centerLeft, "TAX",
+              index: 17, isFirst: true),
+          _buildCoinLevel(
+              context, Alignment.centerRight, "How to Get a Credit Card",
+              index: 18),
+          _buildCoinLevel(context, Alignment.centerLeft, "Piggy Bank 4 End",
+              index: 19, isFirst: true),
+        ],
+      ),
+    );
+  }
 
   Widget _buildEnd(BuildContext context) {
     return Padding(
@@ -506,7 +538,7 @@ class _LobbyPageState extends State<LobbyPage> {
       child: Consumer<ProgressProvider>(
         builder: (context, progressProvider, child) {
           bool canAccessEndCoin =
-              progressProvider.level >= 15; // Ensure all levels are completed
+              progressProvider.level >= 20; // Ensure all levels are completed
 
           return Column(
             children: <Widget>[
@@ -1008,7 +1040,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
   @override
   Widget build(BuildContext context) {
     // Only animate when unit == 3
-    bool shouldAnimate = widget.currentUnit == 3;
+    bool shouldAnimate = widget.currentUnit == 4;
 
     return AnimatedBuilder(
       animation: _colorAnimation,
@@ -1052,9 +1084,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
                 ),
               ),
               Text(
-                widget.currentUnit == 3
-                    ? "This Isn't the End!"
-                    : titles[widget.currentUnit],
+                titles[widget.currentUnit],
                 style: const TextStyle(
                   fontFamily: "Serif",
                   fontSize: 35,
