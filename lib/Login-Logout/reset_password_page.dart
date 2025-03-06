@@ -111,11 +111,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           },
         ),
       ),
-      backgroundColor: Colors.transparent, // Make background transparent to show the image
+      backgroundColor:
+          Colors.transparent, // Make background transparent to show the image
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Im_Not_New.png'), // Set your background image here
+            image: AssetImage(
+                'assets/Im_Not_New.png'), // Set your background image here
             fit: BoxFit.cover,
           ),
         ),
@@ -198,27 +200,52 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   const CircularProgressIndicator()
                 else
                   Container(
-                    width: 300,
-                    height: 50,
+                    padding:
+                        EdgeInsets.zero, // Remove padding to avoid misalignment
+                    width: 250,
+                    height: 60,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 62, 47, 196),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: _resetPassword,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
+                      border: Border.all(
+                        color: const Color.fromARGB(45, 72, 51, 166),
+                        width: 1,
                       ),
-                      child: const Text(
-                        'Reset Password',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontFamily: 'Source',
+                      color: const Color.fromARGB(255, 94, 24, 235),
+                      borderRadius: BorderRadius.circular(30), // Rounded edges
+                      boxShadow: const [
+                        BoxShadow(
+                          color:
+                              Color.fromARGB(255, 88, 53, 158), // Shadow color
+                          offset: Offset(0, 8), // Shadow position
+                          blurRadius: 0, // No blur
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      // Ensures button content is centered
+                      child: ElevatedButton(
+                        onPressed: _resetPassword,
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(
+                              100, 50), // Adjusted height for better centering
+                          backgroundColor: Colors
+                              .transparent, // Transparent to show background
+                          shadowColor:
+                              Colors.transparent, // Remove default shadow
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Center(
+                          // Ensures text is centered
+                          child: Text(
+                            "Reset Password",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Source',
+                            ),
+                          ),
                         ),
                       ),
                     ),
