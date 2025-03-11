@@ -15,6 +15,11 @@ import 'package:flutter_application_1/Unit2/Unit2Coin4/coin9-intro.dart';
 import 'package:flutter_application_1/Unit3/Coin11/coin11-intro.dart';
 import 'package:flutter_application_1/Unit3/Coin12/coin12-intro.dart';
 import 'package:flutter_application_1/Unit3/Coin14/coin14-intro.dart';
+import 'package:flutter_application_1/Unit4/Coin16/coin16-intro.dart';
+import 'package:flutter_application_1/Unit4/Coin17/coin17-intro.dart';
+import 'package:flutter_application_1/Unit4/Coin18/coin18-intro.dart';
+import 'package:flutter_application_1/Unit4/Coin19/coin19-intro.dart';
+import 'package:flutter_application_1/Unit4/coin20.dart';
 import 'package:flutter_application_1/Unit3/coin15.dart';
 import 'package:flutter_application_1/Unit2/coin10.dart';
 import 'package:flutter_application_1/Unit3/Coin13/coin13-limit.dart';
@@ -514,16 +519,16 @@ class _LobbyPageState extends State<LobbyPage> {
       child: Column(
         children: <Widget>[
           _buildCoinLevel(
-              context, Alignment.centerLeft, "TAX",
+              context, Alignment.centerLeft, "What are Taxes",
               index: 15, isFirst: true),
           _buildCoinLevel(
-              context, Alignment.centerRight, "MORE TAX",
+              context, Alignment.centerRight, "Income Tax",
               index: 16),
           _buildCoinLevel(
-              context, Alignment.centerLeft, "TAX",
+              context, Alignment.centerLeft, "Tax Deductions",
               index: 17, isFirst: true),
           _buildCoinLevel(
-              context, Alignment.centerRight, "How to Get a Credit Card",
+              context, Alignment.centerRight, "Your Taxes",
               index: 18),
           _buildCoinLevel(context, Alignment.centerLeft, "Piggy Bank 4 End",
               index: 19, isFirst: true),
@@ -537,8 +542,8 @@ class _LobbyPageState extends State<LobbyPage> {
       padding: const EdgeInsets.symmetric(vertical: 40.0),
       child: Consumer<ProgressProvider>(
         builder: (context, progressProvider, child) {
-          bool canAccessEndCoin =
-              progressProvider.level >= 20; // Ensure all levels are completed
+          bool canAccessEndCoin = progressProvider.level >= 20;
+          bool isSelected = progressProvider.level == 21;
 
           return Column(
             children: <Widget>[
@@ -551,23 +556,7 @@ class _LobbyPageState extends State<LobbyPage> {
                         MaterialPageRoute(builder: (context) => CoinEnd()),
                       );
                     } else {
-                      // Show a message if user hasn't completed all coins
                       showDialog(
-                        // context: context,
-                        // builder: (context) => AlertDialog(
-                        //   title: const Text('Complete All Coins First!'),
-                        //   content: const Text(
-                        //     'You need to finish all previous levels before accessing this message.',
-                        //   ),
-                        //   actions: [
-                        //     TextButton(
-                        //       onPressed: () {
-                        //         Navigator.of(context).pop();
-                        //       },
-                        //       child: const Text('OK'),
-                        //     ),
-                        //   ],
-                        // ),
                         context: context,
                         builder: (context) => DismissibleDialog(),
                       );
@@ -576,10 +565,18 @@ class _LobbyPageState extends State<LobbyPage> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // CustomPaint(
-                      //   size: const Size(100, 100),
-                      //   painter: DaVinci(),
-                      // ),
+                      if (isSelected)
+                        ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            Color.fromARGB(255, 61, 121, 231),
+                            BlendMode.srcIn,
+                          ),
+                          child: Image.asset(
+                            'assets/hexagon.png',
+                            width: 300,
+                            height: 300,
+                          ),
+                        ),
                       Column(
                         children: [
                           const Text(
@@ -591,9 +588,7 @@ class _LobbyPageState extends State<LobbyPage> {
                             ),
                           ),
                           Opacity(
-                            opacity: canAccessEndCoin
-                                ? 1.0
-                                : 0.5, // Dim the coin if locked
+                            opacity: canAccessEndCoin ? 1.0 : 0.5,
                             child: Image.asset(
                               'assets/confet_coin.png',
                               width: 300,
@@ -613,6 +608,7 @@ class _LobbyPageState extends State<LobbyPage> {
       ),
     );
   }
+
 
   //These are the intro pages to every coin
   final List<Widget> _pages = [
@@ -691,6 +687,31 @@ class _LobbyPageState extends State<LobbyPage> {
       levelNumber: 14,
     ),
     Coin15(),
+    const CoinStackTemplate(
+      title: "Coin 16: What are Taxes",
+      transfer: Coin16Intro(),
+      sublevelCount: 10, // need to change
+      levelNumber: 16,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 12: What is a Credit Card",
+      transfer: Coin17Intro(),
+      sublevelCount: 10,//need to change
+      levelNumber: 17,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 13: Types of Credit Cards",
+      transfer: Coin18Intro(),
+      sublevelCount: 10, //need to change
+      levelNumber: 18,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 14: How to Use Credit Cards",
+      transfer: Coin19Intro(), //need to change
+      sublevelCount: 7,
+      levelNumber: 19,
+    ),
+    Coin20(),
     const CoinEnd()
   ];
 

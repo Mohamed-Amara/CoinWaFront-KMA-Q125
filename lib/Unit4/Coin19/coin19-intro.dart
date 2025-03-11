@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Unit3/Coin11/coin11-page2.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 
@@ -39,17 +38,19 @@ Widget SpeechBubble(String description, bool isLeft) {
   );
 }
 
-class Coin11Intro extends StatelessWidget {
-  const Coin11Intro({super.key});
+
+class Coin19Intro extends StatelessWidget {
+  const Coin19Intro({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Coin11Page2()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const Coin11Page2()),
+        // );
+        print("hi");
       },
       child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
