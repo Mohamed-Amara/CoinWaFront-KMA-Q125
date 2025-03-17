@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Unit4/Coin17/coin17-page2.dart';
 
 Widget SpeechBubble(String description, bool isLeft) {
   return Stack(
@@ -16,7 +17,7 @@ Widget SpeechBubble(String description, bool isLeft) {
         width: 320,
         decoration: BoxDecoration(
           color: const Color(0xff7870DE),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Padding(
@@ -25,11 +26,11 @@ Widget SpeechBubble(String description, bool isLeft) {
               description,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                height: 1.2,
-                color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+                  height: 1.2,
+                  color: Color.fromARGB(255, 248, 248, 248),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Source'),
             ),
           ),
         ),
@@ -45,10 +46,10 @@ class Coin17Intro extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const Coin11Page2()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin17Page2()),
+        );
         print("hi");
       },
       child: Scaffold(
@@ -63,21 +64,21 @@ class Coin17Intro extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: const Text(
-                      "To start off, let's first explore what debt is!",
+                      "So let me get this straight… I owe money for making money? If I stop making money, do they pay me??",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xff5e17eb),
+                        color: Colors.transparent,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 60),
-                  SpeechBubble('Debt is when you owe something (usually money) to someone else!', true),
+                  const SizedBox(height: 30),
+                  SpeechBubble(
+                      'So let me get this straight… I owe money for making money? If I stop making money, do they pay me??',
+                      true),
                   const SizedBox(height: 20),
-                  SpeechBubble('It is money that is borrowed for a certain period of time and has to be returned', false),
-                  const SizedBox(height: 20),
-                  Image.asset('assets/wawaTalk.png', width: 150),
+                  Image.asset('assets/wawaConfused.png', width: 300),
                 ],
               ),
               ExitButton(),
@@ -100,5 +101,4 @@ class Coin17Intro extends StatelessWidget {
       ),
     );
   }
-
 }
