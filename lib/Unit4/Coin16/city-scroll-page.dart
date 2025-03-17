@@ -1,0 +1,304 @@
+import 'package:flutter/material.dart';
+import './pie-chart.dart';
+
+class CityScrollPage extends StatefulWidget {
+  @override
+  _CityScrollPageState createState() => _CityScrollPageState();
+}
+
+class _CityScrollPageState extends State<CityScrollPage> {
+  final List<String> _visitedBuildings = [];
+  final List<String> _allBuildings = [
+    'Health Services',
+    'Education',
+    'Development',
+    'Public Safety',
+    'Public Transit',
+    'The Government',
+  ];
+
+  // ✅ Popup Function
+  void _showPopup(BuildContext context, String title, String description) {
+    if (!_visitedBuildings.contains(title)) {
+      _visitedBuildings.add(title);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: const Color(0xffeae9ff),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 🏷️ Title
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // 📝 Description
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // 🏢 Right Image
+                Image.asset(
+                  "assets/suprisedwawa.png", // Added correct file extension
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 20),
+
+                // ✅ Continue Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      if (_visitedBuildings.length == _allBuildings.length) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TaxPieChartPage(),
+                          ),
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 91, 24, 233),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: Text(
+                      _visitedBuildings.length == _allBuildings.length
+                          ? 'Finish'
+                          : 'Continue',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal, // Enables horizontal scrolling
+            child:Stack(
+              children: [
+                Image.asset(
+                  "assets/cityroad.png", // Fixed path syntax
+                  width: 2800, // Adjust to match total row width
+                  height: MediaQuery.of(context).size.height,
+                  fit: BoxFit.cover, // Ensures the background covers the area
+                ),
+                Positioned(
+                  bottom: 0, // Align at the bottom
+                  child: SizedBox(
+                    width: 2800, // Adjust to fit all buildings horizontally
+                    height: MediaQuery.of(context).size.height, //this line
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        _buildBuilding(
+                            context,
+                            'Health Services',
+                            'assets/hospital.png',
+                            'Health services provide medical care and support to improve well-being.'
+                        ),
+                        _buildBuilding(
+                            context,
+                            'Education',
+                            'assets/school.png',
+                            'Education helps individuals gain knowledge and develop skills for the future.'
+                        ),
+                        _buildBuilding(
+                            context,
+                            'Development',
+                            'assets/house.png',
+                            'Development includes building infrastructure and improving living standards.'
+                        ),
+                        _buildBuilding(
+                            context,
+                            'Public Safety',
+                            'assets/police.png',
+                            'Public safety ensures protection and security for citizens.'
+                        ),
+                        _buildBuilding(
+                            context,
+                            'Public Transit',
+                            'assets/busstop.png',
+                            'Public transit allows efficient transportation within the city.'
+                        ),
+                        _buildBuilding(
+                            context,
+                            'The Government',
+                            'assets/government.png',
+                            'The government manages laws and policies to serve the public.'
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // 🚗 Static Car with Character (Always Visible)
+          Positioned(
+            bottom: 20,
+            left: 0,// Centers the car
+            right: 0,
+            child: Center(
+              child: CarWithCharacter(),
+            ),
+          ),
+          Positioned(
+            top: 0, // Fix header to the top of the screen
+            left: 0,
+            right: 0,
+            child: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  top: 15,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 180,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 91, 24, 233),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 180,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 140, 82, 255),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    "Let's Take a Trip Down Tax Road",
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Source",
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 🏢 Function to Build Each Building with Label
+  Widget _buildBuilding(BuildContext context, String label, String assetPath,String description) {
+    return GestureDetector(
+      onTap: () {
+        _showPopup(context, label, description);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Spacer(),
+          // 📍 Purple Label for Each Building
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.purple,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              label,
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 40), // Space between label and building
+          // 🏢 Building Image
+          Container(
+            width: 350,
+            height: 250,
+            margin: EdgeInsets.symmetric(horizontal: 50), // Spacing between buildings
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(assetPath), // Building image from assets
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          SizedBox(height:170)//5/27*screen height
+        ],
+      ),
+    );
+  }
+}
+
+// 🚗 Character and Car Widget (Always in Center)
+class CarWithCharacter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center, // Align character on top of car
+      children: [
+        // 🚗 Car Image
+        Image.asset(
+          'assets/wawadriving.png',
+          width: 300,
+          height: 200,
+        ),
+      ],
+    );
+  }
+}

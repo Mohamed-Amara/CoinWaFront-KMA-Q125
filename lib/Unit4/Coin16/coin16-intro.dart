@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import './city-scroll-page.dart';
 
 Widget SpeechBubble(String description, bool isLeft) {
   return Stack(
     clipBehavior: Clip.none, // Allow the triangle to overflow
     children: [
       Positioned(
-        bottom: -15,
-        left: isLeft ? 80 : null, // Conditionally set left
-        right: !isLeft ? 80 : null, // Conditionally set right
-        child: Image.asset('assets/triangle.png', width: 35),
+        bottom: -30, // Lower the triangle for better alignment
+        left: isLeft ? 120 : null, // Adjust position for larger size
+        right: !isLeft ? 120 : null,
+        child: Image.asset('assets/triangle.png', width: 70), // Larger triangle
       ),
       Container(
-        width: 320,
+        width: double.infinity, // Use full width for consistent padding
+        margin: const EdgeInsets.symmetric(horizontal: 40), // Add spacing from edges
+        padding: const EdgeInsets.all(30), // Increased padding for better spacing
         decoration: BoxDecoration(
           color: const Color(0xff7870DE),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(40), // Increased rounding for larger size
         ),
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                height: 1.2,
-                color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              height: 1.5,
+              color: Color.fromARGB(255, 248, 248, 248),
+              fontSize: 50, // Larger font size
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -45,11 +45,10 @@ class Coin16Intro extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const Coin11Page2()),
-        // );
-        print("hi");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CityScrollPage()),
+        );
       },
       child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
@@ -60,24 +59,13 @@ class Coin16Intro extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 100),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: const Text(
-                      "To start off, let's first explore what debt is!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff5e17eb),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 5), // Add padding from screen edges
+                    child: SpeechBubble('Hmm....... I wonder what taxes are', true),
                   ),
-                  const SizedBox(height: 60),
-                  SpeechBubble('Debt is when you owe something (usually money) to someone else!', true),
                   const SizedBox(height: 20),
-                  SpeechBubble('It is money that is borrowed for a certain period of time and has to be returned', false),
-                  const SizedBox(height: 20),
-                  Image.asset('assets/wawaTalk.png', width: 150),
+                  Image.asset('assets/wawatax.png', width: 150), // Keep image size unchanged
                 ],
               ),
               ExitButton(),
@@ -100,5 +88,4 @@ class Coin16Intro extends StatelessWidget {
       ),
     );
   }
-
 }

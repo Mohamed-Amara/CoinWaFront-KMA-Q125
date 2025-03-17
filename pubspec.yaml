@@ -28,6 +28,10 @@ dependencies:
   shared_preferences: ^2.2.2
   audioplayers: ^6.2.0
   vibration: ^3.1.3
+  fl_chart: ^0.70.2
+  get: ^4.6.5
+  flutter_fortune_wheel: ^1.2.0
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
@@ -340,3 +344,24 @@ flutter:
     - assets/signupwawa.png
     - assets/hello2frame.png
     - assets/forgotwawa.png
+    - assets/mystery_box.png
+    - assets/wawahand.png
+    - assets/cityroad.png
+    - assets/books.png
+    - assets/building.png
+    - assets/wawadriving.png
+    - assets/wawasale.png
+    - assets/wawatax.png
+    - assets/hospital.png
+    - assets/school.png
+    - assets/police.png
+    - assets/busstop.png
+    - assets/tax.png
+    - assets/heart.png
+    - assets/police_badge.png
+    - assets/house.png
+    - assets/government.png
+    - assets/plant.png
+    - assets/mystery.png
+    - assets/corporatewawa.png
+    - assets/globe.png
