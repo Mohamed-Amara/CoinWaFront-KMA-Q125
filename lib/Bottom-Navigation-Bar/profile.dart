@@ -134,7 +134,7 @@ class _ProfilePageState extends State<Profile> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal: 21),
                           color: Colors
                               .transparent, // Make sure the Card does not have a white background
                           elevation: 0, // Remove shadow if needed
@@ -222,7 +222,7 @@ class _ProfilePageState extends State<Profile> {
                             return _goalSection(
                               "Your Current Unit",
                               unitProgress,
-                              4,
+                              5,
                             );
                           },
                         ),
