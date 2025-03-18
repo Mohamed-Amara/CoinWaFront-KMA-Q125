@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/coin_ending-template.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 
 class SummaryPage extends StatelessWidget {
   const SummaryPage({super.key});
@@ -21,7 +23,9 @@ class SummaryPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
         body: SafeArea(
-          child: Column(
+          child: Stack(
+            children: [
+              Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // 🏷️ Header
@@ -137,6 +141,22 @@ class SummaryPage extends StatelessWidget {
               const SizedBox(height: 40),
             ],
           ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 6,
+                        totalPages: 6,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+          ],
+          )
         ),
       ),
     );

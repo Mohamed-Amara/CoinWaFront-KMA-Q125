@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './pie-chart.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 
 class CityScrollPage extends StatefulWidget {
   @override
@@ -237,6 +239,20 @@ class _CityScrollPageState extends State<CityScrollPage> {
                 ),
               ],
             ),
+          ),
+          ExitButton(),
+          const Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: TopBar(
+                    currentPage: 2,
+                    totalPages: 6,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

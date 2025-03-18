@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import './summary.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 
 class QuizWheelPage extends StatefulWidget {
   const QuizWheelPage({super.key});
@@ -212,7 +214,9 @@ class _QuizWheelPageState extends State<QuizWheelPage>
     return Scaffold(
       backgroundColor: const Color(0xfffff1db),
       body: SafeArea(
-        child: Column(
+        child: Stack(
+        children: [
+          Column(
           children: [
             // Header section
             Stack(
@@ -354,6 +358,22 @@ class _QuizWheelPageState extends State<QuizWheelPage>
               ),
             )
                 : const SizedBox(), // ✅ Use SizedBox() to hide it when canSubmit is false
+          ],
+        ),
+          ExitButton(),
+          const Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: TopBar(
+                    currentPage: 5,
+                    totalPages: 6,
+                  ),
+                ),
+              ),
+            ],
+          ),
           ],
         ),
       ),
