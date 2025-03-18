@@ -210,7 +210,7 @@ class _ProfilePageState extends State<Profile> {
                         Consumer<ProgressProvider>(
                           builder: (context, progressProvider, child) {
                             return _goalSection("Your Current Level",
-                                progressProvider.currentLevelInt as double, 20);
+                                progressProvider.currentLevelInt as double, 21);
                           },
                         ),
                         Consumer<ProgressProvider>(
