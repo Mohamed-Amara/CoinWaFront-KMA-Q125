@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './wheel.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 
 class MysteryGiftPage extends StatefulWidget {
   const MysteryGiftPage({super.key});
@@ -303,6 +305,20 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                     ),
                   ],
                 ),
+              ),
+              ExitButton(),
+              const Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: TopBar(
+                        currentPage: 4,
+                        totalPages: 6,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

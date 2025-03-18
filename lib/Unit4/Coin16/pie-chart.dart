@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import './mystery-gift.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 
 class TaxPieChartPage extends StatefulWidget {
   const TaxPieChartPage({super.key});
@@ -147,7 +149,10 @@ class _TaxPieChartPageState extends State<TaxPieChartPage> {
     return Scaffold(
       backgroundColor: const Color(0xfffff1db),
       body: SafeArea(
-        child: Column(
+
+        child:Stack(
+        children: [
+          Column(
           children: [
             // Header Section
             Stack(
@@ -369,6 +374,22 @@ class _TaxPieChartPageState extends State<TaxPieChartPage> {
                       color: Colors.white),
                 ),
               ),
+             ],
+            ),
+            ExitButton(),
+            const Row(
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: TopBar(
+                      currentPage: 3,
+                      totalPages: 6,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
