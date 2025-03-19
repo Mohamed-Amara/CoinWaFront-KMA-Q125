@@ -124,7 +124,7 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
                   padding: EdgeInsets.only(top: 150, right: 6, left: 6),
                   child: Text(
                     textAlign: TextAlign.center,
-                    'Congratulations! You filled Piggy Bank 3: Credit Cards!',
+                    'Congratulations! You filled Piggy Bank 4: Taxes!',
                     style: TextStyle(
                       color: Color.fromARGB(255, 120, 112, 222),
                       fontSize: 37,
