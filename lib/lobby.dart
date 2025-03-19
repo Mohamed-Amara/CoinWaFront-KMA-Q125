@@ -706,9 +706,9 @@ class _LobbyPageState extends State<LobbyPage> {
       levelNumber: 18,
     ),
     const CoinStackTemplate(
-      title: "Coin 14: How to Use Credit Cards",
+      title: "Coin 19: Taxes and You",
       transfer: Coin19Intro(), //need to change
-      sublevelCount: 7,
+      sublevelCount: 11,
       levelNumber: 19,
     ),
     Coin20(),
