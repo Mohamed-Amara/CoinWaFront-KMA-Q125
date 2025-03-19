@@ -120,7 +120,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal, // Enables horizontal scrolling
-            child:Stack(
+            child: Stack(
               children: [
                 Image.asset(
                   "assets/cityroad.png", // Fixed path syntax
@@ -140,38 +140,32 @@ class _CityScrollPageState extends State<CityScrollPage> {
                             context,
                             'Health Services',
                             'assets/hospital.png',
-                            'Health services provide medical care and support to improve well-being.'
-                        ),
+                            ' Taxes help fund hospitals, doctors, nurses, and medical equipment, ensuring everyone has access to essential healthcare services.'),
                         _buildBuilding(
                             context,
                             'Education',
                             'assets/school.png',
-                            'Education helps individuals gain knowledge and develop skills for the future.'
-                        ),
+                            'Schools, teachers, supplies, and learning resources are all supported by taxes, helping students get a quality education.'),
                         _buildBuilding(
                             context,
                             'Development',
                             'assets/house.png',
-                            'Development includes building infrastructure and improving living standards.'
-                        ),
+                            'Taxes help fund the construction and maintenance of roads, bridges, parks, and other public infrastructure, ensuring communities stay safe, functional, and growing.'),
                         _buildBuilding(
                             context,
                             'Public Safety',
                             'assets/police.png',
-                            'Public safety ensures protection and security for citizens.'
-                        ),
+                            'Police, firefighters, and emergency services are funded by taxes to keep communities safe, respond to emergencies, and protect citizens in times of need.'),
                         _buildBuilding(
                             context,
                             'Public Transit',
                             'assets/busstop.png',
-                            'Public transit allows efficient transportation within the city.'
-                        ),
+                            'Taxes help support buses, subways, and trains, making transportation more accessible, reliable, and affordable for everyone.'),
                         _buildBuilding(
                             context,
                             'The Government',
                             'assets/government.png',
-                            'The government manages laws and policies to serve the public.'
-                        ),
+                            ' Taxes pay for government operations, including lawmakers, public programs, and essential services that keep the country running smoothly.'),
                       ],
                     ),
                   ),
@@ -182,7 +176,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
           // 🚗 Static Car with Character (Always Visible)
           Positioned(
             bottom: 20,
-            left: 0,// Centers the car
+            left: 0, // Centers the car
             right: 0,
             child: Center(
               child: CarWithCharacter(),
@@ -260,7 +254,8 @@ class _CityScrollPageState extends State<CityScrollPage> {
   }
 
   // 🏢 Function to Build Each Building with Label
-  Widget _buildBuilding(BuildContext context, String label, String assetPath,String description) {
+  Widget _buildBuilding(BuildContext context, String label, String assetPath,
+      String description) {
     return GestureDetector(
       onTap: () {
         _showPopup(context, label, description);
@@ -273,12 +268,12 @@ class _CityScrollPageState extends State<CityScrollPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.purple,
+              color: Colors.indigo,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               label,
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
           SizedBox(height: 40), // Space between label and building
@@ -286,7 +281,8 @@ class _CityScrollPageState extends State<CityScrollPage> {
           Container(
             width: 350,
             height: 250,
-            margin: EdgeInsets.symmetric(horizontal: 50), // Spacing between buildings
+            margin: EdgeInsets.symmetric(
+                horizontal: 50), // Spacing between buildings
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(assetPath), // Building image from assets
@@ -294,7 +290,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
               ),
             ),
           ),
-          SizedBox(height:170)//5/27*screen height
+          SizedBox(height: 170) //5/27*screen height
         ],
       ),
     );

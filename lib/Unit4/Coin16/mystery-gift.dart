@@ -32,7 +32,7 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
 
     _handTopPosition = Tween<double>(
       begin: -MediaQuery.of(context).size.height * 0.1,
-      end: MediaQuery.of(context).size.height * 0.23,
+      end: MediaQuery.of(context).size.height * 0.2,
     ).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
@@ -49,36 +49,41 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
         _controller.reset();
         _giftCount++;
         if (_giftCount == 1) {
-          String title ="Income Tax";
-          String description = "YAP yap yap yap yap yap ayp";
-          String imgUrl ="assets/wawaTalk.png";
-          _showPopup(title,description,imgUrl); // For gift count 1
+          String title = "Income Tax";
+          String description =
+              "When you earn money from a job, a portion of it is taken as income tax before you even get paid. The amount depends on how much you make—higher incomes pay more tax. This money goes toward important services like healthcare, schools, public transportation, and government programs that support the country.";
+          String imgUrl = "assets/wawaTalk.png";
+          _showPopup(title, description, imgUrl); // For gift count 1
         } else if (_giftCount == 2) {
-          String title ="Sales Tax";
-          String description = "YAP yap yap yap yap yap ayp";
-          String imgUrl ="assets/wawasale.png";
-          _showPopup(title,description,imgUrl);// For gift count 2
+          String title = "Sales Tax";
+          String description =
+              "Every time you buy something, like clothes, electronics, or even a meal at a restaurant, a percentage of the price is added as sales tax. In Canada, this includes the Goods and Services Tax (GST) and, in some provinces, the Provincial Sales Tax (PST) or Harmonized Sales Tax (HST). This tax helps fund public services, infrastructure, and government programs.";
+          String imgUrl = "assets/wawasale.png";
+          _showPopup(title, description, imgUrl); // For gift count 2
         } else if (_giftCount == 3) {
-          String title ="Corporate Tax";
-          String description = "YAP yap yap yap yap yap ayp";
-          String imgUrl ="assets/corporatewawa.png";
-          _showPopup(title,description,imgUrl); // For gift count 3
+          String title = "Corporate Tax";
+          String description =
+              "Businesses don’t just keep all the money they make—they have to pay corporate tax on their profits. This tax helps fund public services, government programs, and infrastructure, ensuring that companies also contribute to the economy just like individuals do.";
+          String imgUrl = "assets/corporatewawa.png";
+          _showPopup(title, description, imgUrl); // For gift count 3
         } else if (_giftCount == 4) {
-          String title ="Property Tax";
-          String description = "YAP yap yap yap yap yap ayp";
-          String imgUrl ="assets/building.png";
-          _showPopup(title,description,imgUrl); // For gift count 4
+          String title = "Property Tax";
+          String description =
+              "Homeowners and landowners pay property taxes based on the value of their property. This money is used at the local level to fund schools, road maintenance, emergency services, parks, and other community services that improve neighborhoods and cities.";
+          String imgUrl = "assets/building.png";
+          _showPopup(title, description, imgUrl); // For gift count 4
         } else if (_giftCount == 5) {
-          String title ="Tariffs";
-          String description = "YAP yap yap yap yap yap ayp";
-          String imgUrl ="assets/globe.png";
-          _showPopup(title,description,imgUrl); // For gift count 5
+          String title = "Tariffs";
+          String description =
+              "When products are imported from other countries, the government charges a tax called a tariff. These taxes help protect Canadian businesses by making foreign goods more expensive and generating revenue that can be used for public services and economic development.";
+          String imgUrl = "assets/globe.png";
+          _showPopup(title, description, imgUrl); // For gift count 5
         }
       });
     }
   }
 
-  void _showPopup(String title,String description,imgUrl) {
+  void _showPopup(String title, String description, imgUrl) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -110,20 +115,19 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                   children: [
                     // Left bubble placeholder
                     Container(
+                      padding: const EdgeInsets.all(15),
                       width: 300,
-                      height: 100,
                       decoration: BoxDecoration(
                         color: Color(0xff7870de), // Match color from image
                         borderRadius: BorderRadius.circular(20),
                       ),
                       alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
                         description,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color.fromARGB(255, 248, 248, 248),
-                          fontSize: 12,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -132,7 +136,8 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                       right: -15,
                       top: 30,
                       child: Transform.rotate(
-                        angle: 90 * (3.1415926535 / 180), // Convert degrees to radians
+                        angle: 90 *
+                            (3.1415926535 / 180), // Convert degrees to radians
                         child: Image.asset(
                           'assets/triangle.png',
                           width: 10,
@@ -226,10 +231,10 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                       onTap: grabGift,
                       child: Container(
                         width: handWidth,
-                        height: MediaQuery.of(context).size.height*0.55,
+                        height: MediaQuery.of(context).size.height * 0.55,
                         child: Image.asset(
                           'assets/wawahand.png',
-                            fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
@@ -251,7 +256,6 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                   ),
                 ),
               ),
-
 
               // Header Section at the Top
               Positioned(
@@ -282,7 +286,8 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                       width: MediaQuery.of(context).size.width,
                       height: 180, // Increased height for better alignment
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      alignment: Alignment.center, // Center vertically and horizontally
+                      alignment: Alignment
+                          .center, // Center vertically and horizontally
                       decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 140, 82, 255),
                         borderRadius: BorderRadius.only(
@@ -326,5 +331,4 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
       ),
     );
   }
-
 }
