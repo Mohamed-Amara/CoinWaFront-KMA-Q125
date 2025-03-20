@@ -58,7 +58,8 @@ class _TaxPieChartPageState extends State<TaxPieChartPage> {
     showDialog(
       context: context,
       barrierColor:
-          Colors.black.withOpacity(0.7), // Transparent black background
+          Colors.black.withOpacity(0.7),
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(

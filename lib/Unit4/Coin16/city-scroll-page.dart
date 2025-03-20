@@ -27,6 +27,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -149,7 +150,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
                         _buildBuilding(
                             context,
                             'Development',
-                            'assets/house.png',
+                            'assets/construction.png',
                             'Taxes help fund the construction and maintenance of roads, bridges, parks, and other public infrastructure, ensuring communities stay safe, functional, and growing.'),
                         _buildBuilding(
                             context,
@@ -164,7 +165,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
                         _buildBuilding(
                             context,
                             'The Government',
-                            'assets/government.png',
+                            'assets/govern.png',
                             ' Taxes pay for government operations, including lawmakers, public programs, and essential services that keep the country running smoothly.'),
                       ],
                     ),
@@ -290,7 +291,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
               ),
             ),
           ),
-          SizedBox(height: 170) //5/27*screen height
+          SizedBox(height: (5 / 27.5) * MediaQuery.of(context).size.height)
         ],
       ),
     );
