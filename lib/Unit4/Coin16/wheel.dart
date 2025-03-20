@@ -5,6 +5,10 @@ import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import './summary.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Providers/lives_provider.dart';
+import 'package:flutter_application_1/Providers/progress_provider.dart';
+import 'package:provider/provider.dart';
+import '../../Templates/animation_util.dart';
 
 class QuizWheelPage extends StatefulWidget {
   const QuizWheelPage({super.key});
@@ -18,6 +22,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
   StreamController<int> controller = StreamController<int>();
 
   int correctAnswers = 0;
+  bool clicked = false;
   bool canSubmit = false;
 
   Map<int, Map<String, dynamic>> questions = {
@@ -122,6 +127,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
       context: context,
       barrierColor:
           Colors.black.withOpacity(0.7), // Transparent black background
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -231,9 +237,100 @@ class _QuizWheelPageState extends State<QuizWheelPage>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Wrong! ❌')),
       );
+      _onWrongAnswer(context);
+    }
+    if (correctAnswers < 3) {
+      setState(() {
+        clicked = false;
+      });
     }
   }
+  void _onWrongAnswer(BuildContext context) {
+    Provider.of<LivesProvider>(context, listen: false).loseLife(context);
+    if (Provider.of<ProgressProvider>(context, listen: false).level == 16) {
+      Provider.of<ProgressProvider>(context, listen: false)
+          .addIncorrectQuestion(context);
+    }
+    showLifeLossAnimation(context);
+  }
+  void _clickMessage(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: const Color(0xffeae9ff),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 🏷️ Title
+                Text(
+                  "Error",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20),
 
+                // 📝 Description
+                Text(
+                  correctAnswers < 3?"Please wait before clicking":"Please hit continue",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // 🏢 Right Image
+                Image.asset(
+                  "assets/yellingwawa.png", // Added correct file extension
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 20),
+
+                // ✅ Continue Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 91, 24, 233),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -339,9 +436,24 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                         ),
                       ),
                       GestureDetector(
-                        onTap: spinWheel,
-                        onVerticalDragEnd: (_) =>
-                            spinWheel(), // ✅ Spin when swiped
+                        onTap: () {
+                          if (!clicked) {
+                            setState(() {
+                              clicked = true;
+                            });
+                            spinWheel();
+                          } else {
+                            _clickMessage();
+                          }
+                        },
+                        onVerticalDragEnd: (_) {
+                          if (!clicked) {
+                            clicked = true;
+                            spinWheel();
+                          } else {
+                            _clickMessage();
+                          }
+                        },
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           height: MediaQuery.of(context).size.width * 0.9,
@@ -362,14 +474,11 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                             ],
                             items: [
                               for (int i = 0; i < questions.length; i++)
-                                if (questions.containsKey(
-                                    i)) // ✅ Check if the key exists
+                                if (questions.containsKey(i))
                                   FortuneItem(
                                     child: Text("Q${i + 1}"),
                                     style: FortuneItemStyle(
-                                      color: questions[i]?['color'] ??
-                                          Colors
-                                              .transparent, // ✅ Use fallback color if null
+                                      color: questions[i]?['color'] ?? Colors.transparent,
                                       borderColor: Colors.black,
                                       borderWidth: 2.0,
                                     ),
@@ -377,7 +486,8 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                             ],
                           ),
                         ),
-                      ),
+                      )
+
                     ],
                   ),
                 ),

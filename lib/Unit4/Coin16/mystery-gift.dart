@@ -86,11 +86,13 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
   void _showPopup(String title, String description, imgUrl) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
+
           backgroundColor: const Color(0xffeae9ff), // Purple background
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -145,7 +147,7 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                       ),
                     ),
 
-                    const SizedBox(width: 20),
+                    const SizedBox(height: 25),
 
                     // Right image placeholder
                     Image.asset(
@@ -157,7 +159,7 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
 
                 // Continue button
                 SizedBox(
