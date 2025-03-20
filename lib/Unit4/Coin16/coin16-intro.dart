@@ -15,11 +15,14 @@ Widget SpeechBubble(String description, bool isLeft) {
       ),
       Container(
         width: double.infinity, // Use full width for consistent padding
-        margin: const EdgeInsets.symmetric(horizontal: 40), // Add spacing from edges
-        padding: const EdgeInsets.all(30), // Increased padding for better spacing
+        margin: const EdgeInsets.symmetric(
+            horizontal: 40), // Add spacing from edges
+        padding:
+            const EdgeInsets.all(30), // Increased padding for better spacing
         decoration: BoxDecoration(
           color: const Color(0xff7870DE),
-          borderRadius: BorderRadius.circular(40), // Increased rounding for larger size
+          borderRadius:
+              BorderRadius.circular(40), // Increased rounding for larger size
         ),
         child: Center(
           child: Text(
@@ -61,11 +64,14 @@ class Coin16Intro extends StatelessWidget {
                 children: [
                   const SizedBox(height: 100),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5), // Add padding from screen edges
-                    child: SpeechBubble('Hmm....... I wonder what taxes are', true),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5), // Add padding from screen edges
+                    child: SpeechBubble(
+                        'Hmm....... I wonder what taxes are', true),
                   ),
                   const SizedBox(height: 20),
-                  Image.asset('assets/wawatax.png', width: 150), // Keep image size unchanged
+                  Image.asset('assets/wawatax.png',
+                      width: 150), // Keep image size unchanged
                 ],
               ),
               ExitButton(),
