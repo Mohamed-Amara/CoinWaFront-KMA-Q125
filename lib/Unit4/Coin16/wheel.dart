@@ -245,6 +245,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
       });
     }
   }
+
   void _onWrongAnswer(BuildContext context) {
     Provider.of<LivesProvider>(context, listen: false).loseLife(context);
     if (Provider.of<ProgressProvider>(context, listen: false).level == 16) {

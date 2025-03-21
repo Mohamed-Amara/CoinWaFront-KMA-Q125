@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin19/summary.dart';
+import 'package:provider/provider.dart';
+import '../../Providers/lives_provider.dart';
+import '../../Providers/progress_provider.dart';
+import '../../Templates/animation_util.dart';
 
 class TaxJeopardy extends StatefulWidget {
   const TaxJeopardy({super.key});
@@ -116,6 +120,7 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
   void _showClicked(){
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -292,9 +297,14 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
       setState(() {
         _personValue += value;
       });
-      print('Correct! +$value points');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Correct! ✅')),
+      );
     } else {
-      print('Wrong answer!');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Wrong! ❌')),
+      );
+      _onWrongAnswer(context);
     }
 
     // Check if player has reached 600 points
@@ -302,7 +312,7 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
       setState(() {
         _continue = true;
       });
-      print('Congratulations! You reached 600 points.');
+
     }
     if(_clickCount>9&& _personValue<600){
       if (_clickCount > 9 && _personValue < 600) {
@@ -321,6 +331,14 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
     }
   }
 
+  void _onWrongAnswer(BuildContext context) {
+    Provider.of<LivesProvider>(context, listen: false).loseLife(context);
+    if (Provider.of<ProgressProvider>(context, listen: false).level == 16) {
+      Provider.of<ProgressProvider>(context, listen: false)
+          .addIncorrectQuestion(context);
+    }
+    showLifeLossAnimation(context);
+  }
 
 
   @override
@@ -407,11 +425,10 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
                 children: _jeopardy.values.expand((questions) => questions).map((question) {
                   return GestureDetector(
                     onTap: () {
-                      if (question["clicked"] == true){
+                      if (question["clicked"] == true) {
                         _showClicked();
                         return;
                       }
-                         // Prevent clicking again
 
                       setState(() {
                         question["clicked"] = true;
@@ -425,22 +442,34 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
                         question["answer"],
                       );
                     },
-
-                    child: Container(
-                      margin: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: question["color"],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "\$${question["value"]}",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: question["color"],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "\$${question["value"]}",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        // Overlay for clicked effect
+                        if (question["clicked"] == true)
+                          Container(
+                            margin: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.3), // Semi-transparent overlay
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                      ],
                     ),
                   );
                 }).toList(),
