@@ -21,6 +21,7 @@ class _taxFormState extends State<taxForm>{
     increment();
     showDialog(
       context: context,
+      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.7), // Transparent black background
       builder: (BuildContext context) {
         return Dialog(

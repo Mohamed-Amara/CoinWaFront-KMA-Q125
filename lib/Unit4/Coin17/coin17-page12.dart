@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page13.dart';
+import 'package:provider/provider.dart';
+import '../../Providers/lives_provider.dart';
+import '../../Providers/progress_provider.dart';
+import '../../Templates/animation_util.dart';
 
 Widget SpeechBubble(String description, bool isLeft) {
   return Stack(
@@ -80,6 +84,7 @@ class _QuizPageState extends State<QuizPage> {
   void _showPopup(int outcome) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.7),
       builder: (BuildContext context) {
         return Dialog(
@@ -174,7 +179,18 @@ class _QuizPageState extends State<QuizPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Wrong! ❌')),
       );
+      _onWrongAnswer(context);
     }
+  }
+
+
+  void _onWrongAnswer(BuildContext context) {
+    Provider.of<LivesProvider>(context, listen: false).loseLife(context);
+    if (Provider.of<ProgressProvider>(context, listen: false).level == 16) {
+      Provider.of<ProgressProvider>(context, listen: false)
+          .addIncorrectQuestion(context);
+    }
+    showLifeLossAnimation(context);
   }
 
   @override
