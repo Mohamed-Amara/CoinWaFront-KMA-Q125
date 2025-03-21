@@ -384,13 +384,7 @@ class _TaxJeopardyState extends State<TaxJeopardy>{
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Image beside the text
-                      Image.asset(
-                        'assets/controller.png',
-                        width: 90, // Increased size for better balance
-                      ),
-                      const SizedBox(width: 10), // Space between image and text
+                    children: [ // Space between image and text
                       Flexible(
                         child: Text(
                           "Tax Jeopardy",

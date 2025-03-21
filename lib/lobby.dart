@@ -111,7 +111,8 @@ class _LobbyPageState extends State<LobbyPage> {
 //The coin itself has an imprint that changes based on level. Add more to the list if you want to add more levels
   final List<String> _coinImage = [
     "assets/wallet_coin.png",
-    "assets/coin_level.png"
+    "assets/coin_level.png",
+    //add here
   ];
   final ScrollController _scrollController =
       ScrollController(); //Let's you observe scrolling information on the page
@@ -818,6 +819,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                 }
                               },
                               icon: Image.asset(
+                                //coin image need to change
                                 (index < 5) ? _coinImage[0] : _coinImage[1],
                                 width: 80,
                                 height: 80,
