@@ -170,7 +170,7 @@ class _LobbyPageState extends State<LobbyPage> {
     final double containerWidth = min(MediaQuery.of(context).size.width,
         500); //MediaQuery.of(context).size.width basically fetches the width of the screen you are using the app on
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 241, 219),
+      backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           SingleChildScrollView(
@@ -292,8 +292,8 @@ class _LobbyPageState extends State<LobbyPage> {
                                       return 'assets/ice_wawa.png';
                                     }
                                   }(),
-                                  width: 100,
-                                  height: 100,
+                                  width: 80,
+                                  height: 80,
                                 ),
                               ),
                               const SizedBox(
