@@ -74,9 +74,9 @@ class _QuizPageState extends State<QuizPage> {
       'color': const Color.fromARGB(255, 45, 59, 139),
     },
     2: {
-      'question': 'What is your favourite fruit?',
-      'options': ['apol', 'banan', 'orang', 'strobary'],
-      'answer': 'banan',
+      'question': 'Which of the following statements about income tax is false?',
+      'options': ['Your income is taxed in brackets, meaning different portions are taxed at different rates', 'Everyone pays the same amount of tax regardless of their income', 'The government collects income tax to fund public services', 'Higher income earners usually pay a higher percentage of their income in taxes'],
+      'answer': 'Everyone pays the same amount of tax',
       'color': const Color.fromARGB(255, 79, 99, 214),
     },
   };
@@ -84,7 +84,6 @@ class _QuizPageState extends State<QuizPage> {
   void _showPopup(int outcome) {
     showDialog(
       context: context,
-      barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.7),
       builder: (BuildContext context) {
         return Dialog(
@@ -93,11 +92,11 @@ class _QuizPageState extends State<QuizPage> {
           ),
           backgroundColor: const Color(0xffeae9ff),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 10),
+              const SizedBox(height: 10),
                 Text(
                   'Question ${outcome + 1}',
                   style: const TextStyle(
@@ -107,21 +106,27 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  questions[outcome]?["question"],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    height: 1.5,
+                const SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    questions[outcome]?["question"],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: questions[outcome]?["options"]
-                          .expand<Widget>((option) => [
-                                SizedBox(
+                          .map<Widget>((option) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
@@ -133,8 +138,8 @@ class _QuizPageState extends State<QuizPage> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12),
+                                      padding:
+                                          const EdgeInsets.symmetric(vertical: 12),
                                     ),
                                     child: Text(
                                       option,
@@ -143,11 +148,11 @@ class _QuizPageState extends State<QuizPage> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 20),
-                              ])
+                              ))
                           .toList() ??
                       [],
                 ),
@@ -158,6 +163,7 @@ class _QuizPageState extends State<QuizPage> {
       },
     );
   }
+
 
   void checkAnswer(int questionKey, String selectedAnswer) {
     Map<String, dynamic> question = questions[questionKey]!;
