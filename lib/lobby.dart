@@ -112,6 +112,8 @@ class _LobbyPageState extends State<LobbyPage> {
   final List<String> _coinImage = [
     "assets/wallet_coin.png",
     "assets/coin_level.png",
+    "assets/creditCardCoin.png",
+    "assets/TaxCoin.png",
     //add here
   ];
   final ScrollController _scrollController =
@@ -820,7 +822,8 @@ class _LobbyPageState extends State<LobbyPage> {
                               },
                               icon: Image.asset(
                                 //coin image need to change
-                                (index < 5) ? _coinImage[0] : _coinImage[1],
+
+                                _coinImage[index ~/ 5],
                                 width: 80,
                                 height: 80,
                               ),
@@ -914,7 +917,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                 }
                               },
                               icon: Image.asset(
-                                (index < 5) ? _coinImage[0] : _coinImage[1],
+                                _coinImage[index ~/ 5],
                                 width: 80,
                                 height: 80,
                               ),
