@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import './city-scroll-page.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 
 Widget SpeechBubble(String description) {
   return Padding(
@@ -30,18 +31,16 @@ Widget SpeechBubble(String description) {
               vertical: 16,
               horizontal: 32,
             ),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
+            child: TypingText(
+              text: description,
               style: const TextStyle(
                 height: 1.4,
                 color: Color.fromARGB(255, 248, 248, 248),
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
-              softWrap: true,
-              overflow: TextOverflow.visible,
             ),
+
           ),
         ),
       ],

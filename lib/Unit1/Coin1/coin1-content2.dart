@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Unit1/Coin1/coin1-content3.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 
 void main() {
   runApp(const Coin1Cont2());
@@ -103,58 +104,3 @@ class SpeechBubble extends StatelessWidget {
   }
 }
 
-class TypingText extends StatefulWidget {
-  final String text;
-  const TypingText({super.key, required this.text});
-
-  @override
-  _TypingTextState createState() => _TypingTextState();
-}
-
-class _TypingTextState extends State<TypingText> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<int> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-    _animation = IntTween(begin: 0, end: widget.text.length)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
-    _controller.forward();
-  }
-
-  @override
-  void didUpdateWidget(TypingText oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
-      _controller.reset();
-      _animation = IntTween(begin: 0, end: widget.text.length)
-          .animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
-      _controller.forward();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        String typedText = widget.text.substring(0, _animation.value);
-        return Text(
-          typedText,
-          style: const TextStyle(fontSize: 18, fontFamily: 'Source', color: Colors.white),
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-}
