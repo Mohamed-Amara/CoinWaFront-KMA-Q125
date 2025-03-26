@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/coin_ending-template.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 
 class SummaryPage extends StatelessWidget {
   const SummaryPage({super.key});
@@ -129,13 +130,14 @@ class SummaryPage extends StatelessWidget {
                         color: const Color.fromARGB(255, 122, 72, 230),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Taxes in Canada fund services like healthcare, education, public safety, and infrastructure. Key types include income tax (from paychecks), sales tax (on purchases), corporate tax (on business profits), property tax (on property value), and tariffs (on imports). Taxes provide essential resources for public services and community development.',
+                      child: const TypingText(
+                        text:'Taxes in Canada fund services like healthcare, education, public safety, and infrastructure. Key types include income tax (from paychecks), sales tax (on purchases), corporate tax (on business profits), property tax (on property value), and tariffs (on imports). Taxes provide essential resources for public services and community development.',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18, // Slightly larger font
                         ),
-                        softWrap: true, // Ensures text wraps when it's too long
+                        softWrap: true,
+                        animationSpeed: const Duration(milliseconds: 7000),// Ensures text wraps when it's too long
                       ),
                     ),
                   ],

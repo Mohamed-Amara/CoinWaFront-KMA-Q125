@@ -2,7 +2,8 @@ import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page11.dart';
-import 'package:flutter_application_1/Unit4/Coin17/coin17-page11.dart';
+
+import '../../Templates/typing_text.dart';
 
 class TaxBracketGame extends StatefulWidget {
   @override
@@ -183,14 +184,15 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
                     ),
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      taxBrackets[index]["description"],
+                    child: TypingText(
+                      text:taxBrackets[index]["description"],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color.fromARGB(255, 248, 248, 248),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'SourceSans'),
+                      animationSpeed: const Duration(milliseconds: 5000),
                     ),
                   ),
                   Image.asset('assets/wawaTalk.png',
@@ -338,6 +340,20 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
                 ],
               ),
             ),
+          ),
+          ExitButton(),
+          const Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: TopBar(
+                    currentPage: 2,
+                    totalPages: 6,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

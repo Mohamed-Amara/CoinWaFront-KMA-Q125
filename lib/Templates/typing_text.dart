@@ -3,7 +3,19 @@ import 'package:flutter/material.dart';
 class TypingText extends StatefulWidget {
   final String text;
   final TextStyle? style;
-  const TypingText({super.key, required this.text, this.style});
+  final TextAlign? textAlign;
+  final bool? softWrap;
+  final Duration animationSpeed;
+
+  const TypingText({
+    super.key,
+    required this.text,
+    this.style,
+    this.textAlign,
+    this.softWrap,
+    this.animationSpeed = const Duration(milliseconds: 1500),
+  });
+
 
   @override
   _TypingTextState createState() => _TypingTextState();
@@ -17,7 +29,7 @@ class _TypingTextState extends State<TypingText> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: widget.animationSpeed,
       vsync: this,
     );
     _animation = IntTween(begin: 0, end: widget.text.length)
@@ -45,6 +57,8 @@ class _TypingTextState extends State<TypingText> with SingleTickerProviderStateM
         return Text(
           typedText,
           style: widget.style ?? const TextStyle(fontSize: 18, fontFamily: 'Source', color: Colors.white),
+          textAlign: widget.textAlign,
+          softWrap: widget.softWrap,
         );
       },
     );

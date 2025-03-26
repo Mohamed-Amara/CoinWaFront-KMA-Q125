@@ -2,44 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page10.dart';
+import 'package:flutter_application_1/Unit4/Coin17/speech-bubble.dart';
 
-// ignore: non_constant_identifier_names
-Widget SpeechBubble(String description, bool isLeft) {
-  return Stack(
-    clipBehavior: Clip.none, // Allow the triangle to overflow
-    children: [
-      Positioned(
-        bottom: -15,
-        left: isLeft ? 80 : null, // Conditionally set left
-        right: !isLeft ? 80 : null, // Conditionally set right
-        child: Image.asset('assets/richtextriangle.png', width: 35),
-      ),
-      Container(
-        width: 320,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 87, 87, 87),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                height: 1.2,
-                color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Source',
-              ),
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
 
 class Coin17Page9 extends StatelessWidget {
   const Coin17Page9({super.key});

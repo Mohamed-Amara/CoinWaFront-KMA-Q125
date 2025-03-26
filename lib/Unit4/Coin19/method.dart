@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import '../../Templates/typing_text.dart';
 import './tax-form.dart';
 
 class Method extends StatefulWidget {
@@ -54,8 +55,8 @@ class _MethodPageState extends State<Method> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  description, // Use the description parameter
+                TypingText(
+                  text:description, // Use the description parameter
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
