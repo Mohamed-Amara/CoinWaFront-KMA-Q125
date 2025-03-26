@@ -28,7 +28,7 @@ Widget Bubble(String description) {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: TypingText(
-              text:description,
+              text: description,
               textAlign: TextAlign.center,
               animationSpeed: const Duration(milliseconds: 3000),
               style: const TextStyle(
@@ -45,8 +45,6 @@ Widget Bubble(String description) {
     ],
   );
 }
-
-
 
 class Coin17Page6 extends StatelessWidget {
   const Coin17Page6({super.key});
@@ -141,7 +139,7 @@ class Coin17Page6 extends StatelessWidget {
                       children: [
                         SizedBox(width: 12.5),
                         Bubble(
-                            'Silly WaWa, of Course! Everyone who makes money pays income tax. Its only Fair!'),
+                            'Silly WaWa, of course! Everyone who makes money pays income tax. It’s only fair!'),
                         const SizedBox(width: 10),
                         Image.asset('assets/richwawa.png', width: 150),
                       ]),
@@ -156,8 +154,8 @@ class Coin17Page6 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 3,
-                        totalPages: 6,
+                        currentPage: 6,
+                        totalPages: 13,
                       ),
                     ),
                   ),

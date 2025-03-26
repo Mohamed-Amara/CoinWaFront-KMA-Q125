@@ -103,7 +103,7 @@ class Coin17Page5 extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   SpeechBubble(
-                      'So Income Tax is actually good! My money is going back to my community and my family! Wait does everyone pay income tax?',
+                      'So income tax is actually good! My money is going back to my community and my family! Wait… does everyone pay income tax?',
                       true),
                   const SizedBox(height: 20),
                   Image.asset('assets/wawaandrichwawa.png',
@@ -117,8 +117,8 @@ class Coin17Page5 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 2,
-                        totalPages: 6,
+                        currentPage: 5,
+                        totalPages: 13,
                       ),
                     ),
                   ),

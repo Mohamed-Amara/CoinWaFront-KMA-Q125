@@ -103,7 +103,7 @@ class Coin17Page7 extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   SpeechBubble(
-                      'Wait! This is all so confusing! If Im gonna pay taxes one day how do I know how much Im supposed to pay?',
+                      'Wait! This is all so confusing! If I’m going to pay taxes one day, how do I know how much I’m supposed to pay?',
                       false),
                   const SizedBox(height: 20),
                   Image.asset('assets/wawaconfused.png',
@@ -117,8 +117,8 @@ class Coin17Page7 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 3,
-                        totalPages: 6,
+                        currentPage: 7,
+                        totalPages: 13,
                       ),
                     ),
                   ),

@@ -4,7 +4,6 @@ import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page9.dart';
 import 'package:flutter_application_1/Unit4/Coin17/speech-bubble.dart';
 
-
 class Coin17Page8 extends StatelessWidget {
   const Coin17Page8({super.key});
 
@@ -107,7 +106,7 @@ class Coin17Page8 extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
                       SpeechBubble(
-                          'Ahh Great Question! For that You’ll have to climb the Corporate Ladder and  Learn about Tax Brackets!',
+                          'Ahh, great question! For that, you’ll have to climb the Corporate Ladder and learn about tax brackets!',
                           false),
                       const SizedBox(height: 20),
                       Image.asset('assets/richwawa.png',
@@ -123,8 +122,8 @@ class Coin17Page8 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 3,
-                        totalPages: 6,
+                        currentPage: 8,
+                        totalPages: 13,
                       ),
                     ),
                   ),

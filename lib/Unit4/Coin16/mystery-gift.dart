@@ -58,13 +58,13 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
         } else if (_giftCount == 2) {
           String title = "Sales Tax";
           String description =
-              "Every time you buy something, like clothes, electronics, or even a meal at a restaurant, a percentage of the price is added as sales tax. In Canada, this includes the Goods and Services Tax (GST) and, in some provinces, the Provincial Sales Tax (PST) or Harmonized Sales Tax (HST). This tax helps fund public services, infrastructure, and government programs.";
+              "Every time you buy something, like clothes, electronics, or even a meal at a restaurant, a percentage of the price is added as sales tax. In Canada, this includes the Goods and Services Tax (GST) and, in some provinces, the Provincial Sales Tax (PST) or the Harmonized Sales Tax (HST). This tax helps fund public services, infrastructure, and government programs.";
           String imgUrl = "assets/wawasale.png";
           _showPopup(title, description, imgUrl); // For gift count 2
         } else if (_giftCount == 3) {
           String title = "Corporate Tax";
           String description =
-              "Businesses don’t just keep all the money they make—they have to pay corporate tax on their profits. This tax helps fund public services, government programs, and infrastructure, ensuring that companies also contribute to the economy just like individuals do.";
+              "Businesses don’t just keep all the money they make—they have to pay corporate tax on their profits. This tax helps fund public services, government programs, and infrastructure, ensuring that companies contribute to the economy just like individuals do.";
           String imgUrl = "assets/corporatewawa.png";
           _showPopup(title, description, imgUrl); // For gift count 3
         } else if (_giftCount == 4) {

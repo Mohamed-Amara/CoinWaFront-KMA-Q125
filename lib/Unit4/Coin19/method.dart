@@ -56,7 +56,7 @@ class _MethodPageState extends State<Method> {
                 ),
                 const SizedBox(height: 10),
                 TypingText(
-                  text:description, // Use the description parameter
+                  text: description, // Use the description parameter
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,

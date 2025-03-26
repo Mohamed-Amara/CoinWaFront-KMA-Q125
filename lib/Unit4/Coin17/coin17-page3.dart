@@ -103,7 +103,7 @@ class Coin17Page3 extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   SpeechBubble(
-                      'Income Tax might seem like a waste but they help pay for a lot of the things you use everyday!',
+                      'Income tax might seem like a waste, but it helps pay for many of the things you use every day!',
                       true),
                   const SizedBox(height: 20),
                   Image.asset('assets/richwawahandmoney.png',
@@ -117,8 +117,8 @@ class Coin17Page3 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 2,
-                        totalPages: 6,
+                        currentPage: 3,
+                        totalPages: 13,
                       ),
                     ),
                   ),

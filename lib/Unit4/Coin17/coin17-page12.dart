@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Templates/exit_button.dart';
+import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page13.dart';
 import 'package:provider/provider.dart';
 import '../../Providers/lives_provider.dart';
@@ -38,9 +40,15 @@ class _QuizPageState extends State<QuizPage> {
       'color': const Color.fromARGB(255, 45, 59, 139),
     },
     2: {
-      'question': 'Which of the following statements about income tax is false?',
-      'options': ['Your income is taxed in brackets, meaning different portions are taxed at different rates', 'Everyone pays the same amount of tax regardless of their income', 'The government collects income tax to fund public services', 'Higher income earners usually pay a higher percentage of their income in taxes'],
-      'answer': 'Everyone pays the same amount of tax regardless of their income',
+      'question':
+          'Which of the following statements about income tax is false?',
+      'options': [
+        'Your income is taxed in brackets, meaning different portions are taxed at different rates',
+        'Everyone pays the same amount of tax regardless of their income',
+        'The government collects income tax to fund public services',
+        'Higher-income earners usually pay a higher percentage of their income in taxes'
+      ],
+      'answer': 'Everyone pays the same amount of tax',
       'color': const Color.fromARGB(255, 79, 99, 214),
     },
   };
@@ -59,8 +67,9 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   'Question ${outcome + 1}',
                   style: const TextStyle(
@@ -74,7 +83,8 @@ class _QuizPageState extends State<QuizPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    questions[outcome]?["question"],
+                    questions[outcome]?["question"] ??
+                        "", // Make sure there's no null
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
@@ -102,8 +112,8 @@ class _QuizPageState extends State<QuizPage> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      padding:
-                                          const EdgeInsets.symmetric(vertical: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
                                     ),
                                     child: Text(
                                       option,
@@ -127,7 +137,6 @@ class _QuizPageState extends State<QuizPage> {
       },
     );
   }
-
 
   void checkAnswer(int questionKey, String selectedAnswer) {
     Map<String, dynamic> question = questions[questionKey]!;
@@ -153,7 +162,6 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-
   void _onWrongAnswer(BuildContext context) {
     Provider.of<LivesProvider>(context, listen: false).loseLife(context);
     if (Provider.of<ProgressProvider>(context, listen: false).level == 16) {
@@ -168,7 +176,8 @@ class _QuizPageState extends State<QuizPage> {
     return Scaffold(
       backgroundColor: const Color(0xfffff1db),
       body: SafeArea(
-        child: Column(
+          child: Stack(children: [
+        Column(
           children: [
             Stack(
               clipBehavior: Clip.none,
@@ -290,7 +299,21 @@ class _QuizPageState extends State<QuizPage> {
                 : const SizedBox(),
           ],
         ),
-      ),
+        ExitButton(),
+        const Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: TopBar(
+                  currentPage: 13,
+                  totalPages: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ])),
     );
   }
 }

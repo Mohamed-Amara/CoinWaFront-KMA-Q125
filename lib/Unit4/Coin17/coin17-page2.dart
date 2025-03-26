@@ -103,7 +103,7 @@ class Coin17Page2 extends StatelessWidget {
                   ),
                   const SizedBox(height: 60),
                   SpeechBubble(
-                      'Hey, I’m Rich WaWa. See, once you get rich like me, you have to pay a LOT of Taxes.',
+                      'Hey, I’m Rich WaWa! See, once you get rich like me, you have to pay a LOT of taxes.',
                       true),
                   const SizedBox(height: 30),
                   Image.asset('assets/richwawa.png',
@@ -118,7 +118,7 @@ class Coin17Page2 extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: TopBar(
                         currentPage: 2,
-                        totalPages: 6,
+                        totalPages: 13,
                       ),
                     ),
                   ),

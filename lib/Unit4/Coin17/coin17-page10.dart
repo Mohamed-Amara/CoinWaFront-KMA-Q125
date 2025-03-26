@@ -24,7 +24,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
       "tax": 17500,
       "image": "assets/bracket5coin.png",
       "description":
-          "You have made it to the final tax bracket! Welcome to tax bracket 5, where any money you earn over \$200k is taxed at around 35%! You are among the top earners and therefore you are able to contribute a great amount society with your tax dollars which help lots of people!"
+          "You have made it to the final tax bracket! Welcome to tax bracket 5, where any money you earn over \$200k is taxed at around 35%! You are among the top earners and therefore you are able to contribute a great amount to society with your tax dollars, which help lots of people!"
     },
     {
       "title": "Bracket 4",
@@ -34,7 +34,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
       "tax": 15000,
       "image": "assets/bracket4coin.png",
       "description":
-          "Welcome to the fourth tax bracket! You have earned an additional \$50k! This new \$50k you have earned is taxed at around 30%! Dont worry though just because your taxes are getting higher isnt all bad. Higher taxes also means higher deductions which you will learn about later!"
+          "Welcome to the fourth tax bracket! You have earned an additional \$50k! This new \$50k you have earned is taxed at around 30%! Don’t worry though—just because your taxes are getting higher doesn’t mean it’s all bad. Higher taxes also mean higher deductions, which you will learn about later!"
     },
     {
       "title": "Bracket 3",
@@ -44,7 +44,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
       "tax": 12500,
       "image": "assets/bracket3coin.png",
       "description":
-          "Wow you're on a roll! You have earned \$50k! Welcome to the third tax bracket where your income is taxed at around 25%. Youll notice that as you make more, you start to pay more tax on your higher income!"
+          "Wow, you're on a roll! You have earned \$50k! Welcome to the third tax bracket, where your income is taxed at around 25%. You’ll notice that as you make more, you start to pay more tax on your higher income!"
     },
     {
       "title": "Bracket 2",
@@ -54,7 +54,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
       "tax": 10000,
       "image": "assets/bracket2coin.png",
       "description":
-          "Youve made another \$50k! Income from \$50k-\$100k is taxed at around 20%. Youll notice that this tax only applies to the money you make over \$50k, not the intial \$50k you made which is still taxed at 15%!"
+          "You’ve made another \$50k! Income from \$50k-\$100k is taxed at around 20%. You’ll notice that this tax only applies to the money you make over \$50k, not the initial \$50k you made, which is still taxed at 15%!"
     },
     {
       "title": "Bracket 1",
@@ -64,7 +64,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
       "tax": 7500,
       "image": "assets/bracket1coin.png",
       "description":
-          "Youve Collected your first Income! Any income starting from \$0-\$50k is taxed at around 15%! This is the first  \$50k you have earned and it is the first step in your journey to learning about the tax brackets!"
+          "You’ve collected your first income! Any income from \$0-\$50k is taxed at around 15%! This is the first \$50k you have earned, and it is the first step in your journey to learning about tax brackets!"
     },
   ];
 
@@ -185,7 +185,7 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: TypingText(
-                      text:taxBrackets[index]["description"],
+                      text: taxBrackets[index]["description"],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color.fromARGB(255, 248, 248, 248),
@@ -348,8 +348,8 @@ class _TaxBracketGameState extends State<TaxBracketGame> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: TopBar(
-                    currentPage: 2,
-                    totalPages: 6,
+                    currentPage: 10,
+                    totalPages: 13,
                   ),
                 ),
               ),

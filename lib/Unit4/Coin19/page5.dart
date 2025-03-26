@@ -12,7 +12,7 @@ Widget SpeechBubble(String description) {
       children: [
         Positioned(
           bottom: -15,
-          left:40,
+          left: 40,
           child: Image.asset(
             'assets/triangle.png',
             width: 30,
@@ -50,9 +50,6 @@ Widget SpeechBubble(String description) {
   );
 }
 
-
-
-
 class Page5 extends StatelessWidget {
   const Page5({super.key});
 
@@ -73,10 +70,10 @@ class Page5 extends StatelessWidget {
             children: [
               Positioned(
                 top: 150, // Adjust vertical position of speech bubble
-                left: MediaQuery.of(context).size.width / 2 - 210, // Center the bubble
+                left: MediaQuery.of(context).size.width / 2 -
+                    210, // Center the bubble
                 child: SpeechBubble(
-                    "That makes sense! But i still don't know how to actually file them. I gotta find out quick!"
-                ),
+                    "That makes sense! But I still don't know how to actually file them. I gotta find out quick!"),
               ),
               Positioned(
                 top: 320, // Adjust vertical position of the image
