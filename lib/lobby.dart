@@ -697,13 +697,13 @@ class _LobbyPageState extends State<LobbyPage> {
       levelNumber: 16,
     ),
     const CoinStackTemplate(
-      title: "Coin 12: What is a Credit Card",
+      title: "Coin 17: Income Tax",
       transfer: Coin17Intro(),
-      sublevelCount: 10,//need to change
+      sublevelCount: 13,//need to change
       levelNumber: 17,
     ),
     const CoinStackTemplate(
-      title: "Coin 13: Types of Credit Cards",
+      title: "Coin 18: Tax Deducations",
       transfer: Coin18Intro(),
       sublevelCount: 10, //need to change
       levelNumber: 18,
