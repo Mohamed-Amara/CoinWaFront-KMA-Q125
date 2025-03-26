@@ -356,7 +356,7 @@ class SuccessScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Image.asset(
-              'assets/half_piggy.png', // Make sure this image actually exists
+              'assets/half_piggy.png', 
               width: 200,
               height: 200,
             ),
