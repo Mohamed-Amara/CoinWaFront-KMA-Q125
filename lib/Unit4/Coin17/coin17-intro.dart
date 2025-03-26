@@ -28,19 +28,18 @@ class Coin17Intro extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: const Text(
-                       "So let me get this straight… I owe money for making money? If I stop making money, do they pay me??",
+                      "So let me get this straight… I owe money for making money? If I stop making money, do they pay me??",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.transparent,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
-
                     ),
                   ),
                   const SizedBox(height: 30),
                   SpeechBubble(
-                      'So let me get this straight… I owe money for making money? If I stop making money, do they pay me??',
+                      'So let me get this straight… I owe money for making money? If I stop making money, do they pay me?',
                       true),
                   const SizedBox(height: 20),
                   Image.asset('assets/wawaConfused.png', width: 300),
@@ -54,7 +53,7 @@ class Coin17Intro extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: TopBar(
                         currentPage: 1,
-                        totalPages: 6,
+                        totalPages: 13,
                       ),
                     ),
                   ),

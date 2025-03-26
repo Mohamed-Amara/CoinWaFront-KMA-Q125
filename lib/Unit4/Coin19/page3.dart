@@ -12,7 +12,7 @@ Widget SpeechBubble(String description) {
       children: [
         Positioned(
           bottom: -15,
-          left:40,
+          left: 40,
           child: Image.asset(
             'assets/triangle.png',
             width: 30,
@@ -32,7 +32,7 @@ Widget SpeechBubble(String description) {
               horizontal: 32,
             ),
             child: TypingText(
-              text:description,
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 height: 1.4,
@@ -49,9 +49,6 @@ Widget SpeechBubble(String description) {
     ),
   );
 }
-
-
-
 
 class Page3 extends StatelessWidget {
   const Page3({super.key});
@@ -73,10 +70,10 @@ class Page3 extends StatelessWidget {
             children: [
               Positioned(
                 top: 150, // Adjust vertical position of speech bubble
-                left: MediaQuery.of(context).size.width / 2 - 210, // Center the bubble
+                left: MediaQuery.of(context).size.width / 2 -
+                    210, // Center the bubble
                 child: SpeechBubble(
-                    'WHAT!? How do I even pay my Taxes? I don’t wanna go to jail! I gotta figure out what to do! ASAP! Let me look through the Internet'
-                ),
+                    'WHAT!? How do I even pay my Taxes? I don’t wanna go to jail! I gotta figure out what to do! ASAP! Let me look through the Internet.'),
               ),
               Positioned(
                 top: 400, // Adjust vertical position of the image
@@ -96,7 +93,7 @@ class Page3 extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: TopBar(
                         currentPage: 3,
-                        totalPages:11,
+                        totalPages: 11,
                       ),
                     ),
                   ),

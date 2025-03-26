@@ -4,7 +4,6 @@ import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page10.dart';
 import 'package:flutter_application_1/Unit4/Coin17/speech-bubble.dart';
 
-
 class Coin17Page9 extends StatelessWidget {
   const Coin17Page9({super.key});
 
@@ -115,7 +114,7 @@ class Coin17Page9 extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
                       SpeechBubble(
-                          'Thats all the time I have, my businesses need my attention!! Goodbye for now WaWa. Good luck on your Journey!',
+                          'That’s all the time I have. My businesses need my attention! Goodbye for now, WaWa. Good luck on your journey!',
                           false),
                       const SizedBox(height: 20),
                       Image.asset('assets/richwawahandmoney.png',
@@ -131,8 +130,8 @@ class Coin17Page9 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 3,
-                        totalPages: 6,
+                        currentPage: 9,
+                        totalPages: 13,
                       ),
                     ),
                   ),

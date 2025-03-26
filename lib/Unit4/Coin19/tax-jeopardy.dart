@@ -254,7 +254,7 @@ class _TaxJeopardyState extends State<TaxJeopardy> {
       List<String> options, String answer) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.7),
+      barrierColor: Colors.black.withOpacity(0.7), // Transparent background
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
@@ -265,6 +265,8 @@ class _TaxJeopardyState extends State<TaxJeopardy> {
             padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Center everything
               children: [
                 const SizedBox(height: 10),
                 Text(
@@ -286,14 +288,17 @@ class _TaxJeopardyState extends State<TaxJeopardy> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  question,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    height: 1.5,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    question,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 Image.asset(
@@ -303,12 +308,13 @@ class _TaxJeopardyState extends State<TaxJeopardy> {
                 ),
                 const SizedBox(height: 20),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: options
                       .map((option) => Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: SizedBox(
-                              width: double
-                                  .infinity, // ✅ Fill the whole card width
+                              width:
+                                  double.infinity, // Fill the whole card width
                               child: ElevatedButton(
                                 onPressed: () {
                                   checkAnswer(option, answer, value);
@@ -329,12 +335,13 @@ class _TaxJeopardyState extends State<TaxJeopardy> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
                           ))
                       .toList(),
-                )
+                ),
               ],
             ),
           ),

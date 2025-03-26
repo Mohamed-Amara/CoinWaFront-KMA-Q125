@@ -131,13 +131,16 @@ class SummaryPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const TypingText(
-                        text:'Taxes in Canada fund services like healthcare, education, public safety, and infrastructure. Key types include income tax (from paychecks), sales tax (on purchases), corporate tax (on business profits), property tax (on property value), and tariffs (on imports). Taxes provide essential resources for public services and community development.',
+                        text:
+                            'Taxes in Canada fund services like healthcare, education, public safety, and infrastructure. Key types include income tax (from paychecks), sales tax (on purchases), corporate tax (on business profits), property tax (on property value), and tariffs (on imports). Taxes provide essential resources for public services and community development.',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18, // Slightly larger font
                         ),
                         softWrap: true,
-                        animationSpeed: const Duration(milliseconds: 7000),// Ensures text wraps when it's too long
+                        animationSpeed: const Duration(
+                            milliseconds:
+                                7000), // Ensures text wraps when it's too long
                       ),
                     ),
                   ],

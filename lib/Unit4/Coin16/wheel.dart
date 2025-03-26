@@ -61,7 +61,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
     },
     5: {
       'question':
-          'Which category gets the biggest share of tax money in Canada?',
+          'Which category receives the largest share of tax money in Canada?',
       'options': ['Education', 'Healthcare', 'Government', 'Public Safety'],
       'answer': 'Healthcare',
       'color': Colors.grey,
@@ -89,8 +89,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
       'color': Colors.orange,
     },
     8: {
-      'question':
-          'Which tax is often charged at the checkout when you buy things?',
+      'question': 'Which tax is often charged at checkout when you buy things?',
       'options': ['Income Tax', 'Corporate Tax', 'Sales Tax', 'Property Tax'],
       'answer': 'Sales Tax',
       'color': Colors.green,
@@ -139,6 +138,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
             padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 10),
                 Text(
@@ -151,15 +151,18 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  questions[outcome]
-                      ?["question"], // Use the description parameter
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    height: 1.5,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Text(
+                    questions[outcome]?["question"] ??
+                        "", // Use the description parameter
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 Image.asset(
@@ -171,39 +174,43 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                 Column(
                   children: questions[outcome]?["options"]
                           .expand<Widget>((option) => [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      checkAnswer(outcome, option);
-                                      Navigator.of(context).pop();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff2f008d),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        checkAnswer(outcome, option);
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xff2f008d),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12),
                                       ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                    ),
-                                    child: Text(
-                                      option,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white, // White text color
-                                        fontWeight: FontWeight.bold,
+                                      child: Text(
+                                        option,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color:
+                                              Colors.white, // White text color
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                    height:
-                                        20), // ✅ Add spacing after each button
                               ])
                           .toList() ??
                       [],
-                )
+                ),
               ],
             ),
           ),
@@ -256,7 +263,8 @@ class _QuizWheelPageState extends State<QuizWheelPage>
     }
     showLifeLossAnimation(context);
   }
-  void _clickMessage(){
+
+  void _clickMessage() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -284,7 +292,9 @@ class _QuizWheelPageState extends State<QuizWheelPage>
 
                 // 📝 Description
                 Text(
-                  correctAnswers < 3?"Please wait before clicking":"Please hit continue",
+                  correctAnswers < 3
+                      ? "Please wait before clicking"
+                      : "Please hit continue",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 20,
@@ -334,6 +344,7 @@ class _QuizWheelPageState extends State<QuizWheelPage>
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -481,7 +492,8 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                                   FortuneItem(
                                     child: Text("Q${i + 1}"),
                                     style: FortuneItemStyle(
-                                      color: questions[i]?['color'] ?? Colors.transparent,
+                                      color: questions[i]?['color'] ??
+                                          Colors.transparent,
                                       borderColor: Colors.black,
                                       borderWidth: 2.0,
                                     ),
@@ -490,7 +502,6 @@ class _QuizWheelPageState extends State<QuizWheelPage>
                           ),
                         ),
                       )
-
                     ],
                   ),
                 ),

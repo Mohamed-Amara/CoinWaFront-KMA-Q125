@@ -241,19 +241,18 @@ class _CityScrollPageState extends State<CityScrollPage> {
             top: (250 / 932) * MediaQuery.of(context).size.height,
             left: 0,
             right: 0,
-              child: const Text(
-                "Ride with wawa done Tax Road, click on all the building to continue",
-                softWrap: true,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Source",
-                  height: 1.3,
-                ),
+            child: const Text(
+              "Ride with wawa done Tax Road, click on all the building to continue",
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Source",
+                height: 1.3,
               ),
-
+            ),
           ),
           ExitButton(),
           const Row(

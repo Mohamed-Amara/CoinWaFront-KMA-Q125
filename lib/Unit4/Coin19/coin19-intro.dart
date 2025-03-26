@@ -12,7 +12,7 @@ Widget SpeechBubble(String description) {
       children: [
         Positioned(
           bottom: -15,
-          left:40,
+          left: 40,
           child: Image.asset(
             'assets/triangle.png',
             width: 30,
@@ -50,9 +50,6 @@ Widget SpeechBubble(String description) {
   );
 }
 
-
-
-
 class Coin19Intro extends StatelessWidget {
   const Coin19Intro({super.key});
 
@@ -73,10 +70,10 @@ class Coin19Intro extends StatelessWidget {
             children: [
               Positioned(
                 top: 150, // Adjust vertical position of speech bubble
-                left: MediaQuery.of(context).size.width / 2 - 210, // Center the bubble
+                left: MediaQuery.of(context).size.width / 2 -
+                    210, // Center the bubble
                 child: SpeechBubble(
-                    'OOO I’ve got mail. Let me see what it is. It says its from the Revenue Agency? What the heck?!'
-                ),
+                    'OOO I’ve got mail. Let me see what it is. It says it’s from the Revenue Agency? What the heck?!'),
               ),
               Positioned(
                 top: 320, // Adjust vertical position of the image
