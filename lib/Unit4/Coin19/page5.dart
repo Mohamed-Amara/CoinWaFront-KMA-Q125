@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import '../../Templates/typing_text.dart';
 import "./page6.dart";
 
 Widget SpeechBubble(String description) {
@@ -30,8 +31,8 @@ Widget SpeechBubble(String description) {
               vertical: 16,
               horizontal: 32,
             ),
-            child: Text(
-              description,
+            child: TypingText(
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 height: 1.4,
@@ -40,7 +41,7 @@ Widget SpeechBubble(String description) {
                 fontWeight: FontWeight.bold,
               ),
               softWrap: true,
-              overflow: TextOverflow.visible,
+              // overflow: TextOverflow.visible,
             ),
           ),
         ),

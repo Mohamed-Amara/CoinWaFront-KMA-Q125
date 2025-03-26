@@ -3,8 +3,9 @@ import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page7.dart';
 
-// ignore: non_constant_identifier_names
-Widget SpeechBubble(String description) {
+import '../../Templates/typing_text.dart';
+
+Widget Bubble(String description) {
   return Stack(
     clipBehavior: Clip.none, // Allow the triangle to overflow
     children: [
@@ -26,9 +27,10 @@ Widget SpeechBubble(String description) {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
+            child: TypingText(
+              text:description,
               textAlign: TextAlign.center,
+              animationSpeed: const Duration(milliseconds: 3000),
               style: const TextStyle(
                 height: 1.2,
                 color: Color.fromARGB(255, 248, 248, 248),
@@ -43,6 +45,8 @@ Widget SpeechBubble(String description) {
     ],
   );
 }
+
+
 
 class Coin17Page6 extends StatelessWidget {
   const Coin17Page6({super.key});
@@ -136,7 +140,7 @@ class Coin17Page6 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(width: 12.5),
-                        SpeechBubble(
+                        Bubble(
                             'Silly WaWa, of Course! Everyone who makes money pays income tax. Its only Fair!'),
                         const SizedBox(width: 10),
                         Image.asset('assets/richwawa.png', width: 150),

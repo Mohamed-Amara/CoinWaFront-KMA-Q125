@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../Templates/typing_text.dart';
 import './pie-chart.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
@@ -52,14 +53,15 @@ class _CityScrollPageState extends State<CityScrollPage> {
                 const SizedBox(height: 20),
 
                 // 📝 Description
-                Text(
-                  description,
+                TypingText(
+                  text: description,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
+                  animationSpeed: const Duration(milliseconds: 5000),
                 ),
                 const SizedBox(height: 20),
 

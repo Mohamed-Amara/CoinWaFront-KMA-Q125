@@ -3,6 +3,8 @@ import 'package:flutter_application_1/Templates/coin_ending-template.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 
+import '../../Templates/typing_text.dart';
+
 class SummaryPage extends StatelessWidget {
   const SummaryPage({super.key});
 
@@ -127,8 +129,8 @@ class SummaryPage extends StatelessWidget {
                             color: const Color.fromARGB(255, 91, 24, 233),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Text(
-                            'Yap yap yap',
+                          child: const TypingText(
+                            text:'Yap yap yap',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16, // Slightly larger font

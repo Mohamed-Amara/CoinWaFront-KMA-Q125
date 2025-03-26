@@ -5,43 +5,7 @@ import 'package:provider/provider.dart';
 import '../../Providers/lives_provider.dart';
 import '../../Providers/progress_provider.dart';
 import '../../Templates/animation_util.dart';
-
-Widget SpeechBubble(String description, bool isLeft) {
-  return Stack(
-    clipBehavior: Clip.none, // Allow the triangle to overflow
-    children: [
-      Positioned(
-        bottom: -15,
-        left: isLeft ? 80 : null, // Conditionally set left
-        right: !isLeft ? 80 : null, // Conditionally set right
-        child: Image.asset('assets/triangle.png', width: 35),
-      ),
-      Container(
-        width: 320,
-        decoration: BoxDecoration(
-          color: const Color(0xff7870DE),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                height: 1.2,
-                color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Source',
-              ),
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
+import 'package:flutter_application_1/Unit4/Coin17/speech-bubble.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -76,7 +40,7 @@ class _QuizPageState extends State<QuizPage> {
     2: {
       'question': 'Which of the following statements about income tax is false?',
       'options': ['Your income is taxed in brackets, meaning different portions are taxed at different rates', 'Everyone pays the same amount of tax regardless of their income', 'The government collects income tax to fund public services', 'Higher income earners usually pay a higher percentage of their income in taxes'],
-      'answer': 'Everyone pays the same amount of tax',
+      'answer': 'Everyone pays the same amount of tax regardless of their income',
       'color': const Color.fromARGB(255, 79, 99, 214),
     },
   };

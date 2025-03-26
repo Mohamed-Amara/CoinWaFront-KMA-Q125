@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../Templates/typing_text.dart';
 import './mystery-gift.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
@@ -98,14 +99,15 @@ class _TaxPieChartPageState extends State<TaxPieChartPage> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  description, // Use the description parameter
+                TypingText(
+                  text: description,
+                  textAlign: TextAlign.center,
+                  animationSpeed: const Duration(milliseconds: 5000),
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
                     height: 1.5,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

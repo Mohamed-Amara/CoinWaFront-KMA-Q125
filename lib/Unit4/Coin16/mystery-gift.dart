@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../Templates/typing_text.dart';
 import './wheel.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
@@ -124,14 +125,15 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                         borderRadius: BorderRadius.circular(20),
                       ),
                       alignment: Alignment.center,
-                      child: Text(
-                        description,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                      child: TypingText(
+                        text: description,
+                        style: const TextStyle(
                           color: Color.fromARGB(255, 248, 248, 248),
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
+                        animationSpeed: const Duration(milliseconds: 8000),
                       ),
                     ),
                     Positioned(
