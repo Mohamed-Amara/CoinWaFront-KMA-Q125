@@ -157,8 +157,8 @@ class SummaryPage extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topRight,
                     child: TopBar(
-                      currentPage: 6,
-                      totalPages: 6,
+                      currentPage: 11,
+                      totalPages: 11,
                     ),
                   ),
                 ),
