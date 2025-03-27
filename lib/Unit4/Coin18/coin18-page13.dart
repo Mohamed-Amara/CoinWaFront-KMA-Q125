@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 import 'package:flutter_application_1/Unit4/Coin18/coin18-page14.dart';
 
 class Coin18Page13 extends StatefulWidget {
@@ -12,24 +13,24 @@ class Coin18Page13 extends StatefulWidget {
 
 class _Coin18Page13State extends State<Coin18Page13> {
   final List<String> options = [
-    'Insurance',
-    'Groceries',
+    'Business',
+    'Personal',
     'Charity',
-    'Snacks',
+    'Life Insurance',
     'Medical',
-    'Vacation',
+    'Political',
   ];
 
   final List<String> deductibleAnswers = [
-    'Insurance',
+    'Business',
     'Charity',
     'Medical',
   ];
 
   final List<String> nonDeductibleAnswers = [
-    'Groceries',
-    'Snacks',
-    'Vacation',
+    'Personal',
+    'Life Insurance',
+    'Political',
   ];
 
   List<String> placedDeductibles = [];
@@ -132,8 +133,9 @@ class _Coin18Page13State extends State<Coin18Page13> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: const Center(
-                                child: Text(
-                                  "Why don't you try\nsorting these, Wawa",
+                                child: TypingText(
+                                  text:
+                                      "Why don't you try\nsorting these, Wawa",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,

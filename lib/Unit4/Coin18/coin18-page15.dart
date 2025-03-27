@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 import 'package:flutter_application_1/Unit4/Coin18/coin18-page16.dart';
 
 Widget SpeechBubble(String description, bool isLeft) {
@@ -22,8 +23,8 @@ Widget SpeechBubble(String description, bool isLeft) {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
+            child: TypingText(
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 height: 1.2,
@@ -56,32 +57,31 @@ class Coin18Page15_ extends State<Coin18Page15> {
       'question': 'Which of the following is a tax-deductible expense?',
       'options': [
         'Charitable donations',
-        'Daily coffee',
-        'Movie tickets',
-        'New shoes'
+        'Fines and Penalties',
+        'Political Contributions',
+        'Personal Expenses'
       ],
       'answer': 'Charitable donations',
       'color': Colors.indigo,
     },
     1: {
-      'question':
-          'You earned \$60,000 this year. What part of that is taxed at the lowest rate?',
+      'question': 'Which of these is not a tax-deductible expense?',
       'options': [
-        'The first \$15,000',
-        'All of it',
-        'Anything above \$50,000',
-        'Only what you spend'
+        'Medical Expenses',
+        'Retirement Savings',
+        'School Expenses',
+        'Capital Expenses'
       ],
-      'answer': 'The first \$15,000',
+      'answer': 'Capital Expenses',
       'color': Color.fromARGB(255, 45, 59, 139),
     },
     2: {
-      'question': 'What\'s a smart reason to keep your receipts?',
+      'question': 'Which of the following best describes tax deductions',
       'options': [
-        'To enter prize draws',
-        'To track tax-deductible purchases',
-        'To compare snacks later',
-        'To wallpaper your room'
+        'A fixed amount that reduces the total tax owed to the government.',
+        'A penalty imposed for underreporting income',
+        'An amount subtracted from taxable income, reducing the overall tax liability',
+        'A refund given by the government for overpaid taxes'
       ],
       'answer': 'To track tax-deductible purchases',
       'color': Color.fromARGB(255, 79, 99, 214),

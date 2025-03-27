@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 import 'package:flutter_application_1/Unit4/Coin18/coin18-page9.dart';
 
 Widget SpeechBubble(String description) {
@@ -30,8 +31,8 @@ Widget SpeechBubble(String description) {
               vertical: 16,
               horizontal: 32,
             ),
-            child: Text(
-              description,
+            child: TypingText(
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 height: 1.4,
@@ -40,7 +41,6 @@ Widget SpeechBubble(String description) {
                 fontWeight: FontWeight.bold,
               ),
               softWrap: true,
-              overflow: TextOverflow.visible,
             ),
           ),
         ),
@@ -56,7 +56,8 @@ class Coin18Page8 extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double imageSize = screenWidth * 0.6; // Image scales to 40% of screen width
-    String text = "Tax deductions are certain expenses that you can take away from the taxes you owe. ";
+    String text =
+        "Tax deductions are certain expenses that you can take away from the taxes you owe. ";
     text += "This helps reduce the total amount of taxes you pay!";
 
     return GestureDetector(
@@ -77,7 +78,8 @@ class Coin18Page8 extends StatelessWidget {
                 children: [
                   SpeechBubble(text),
                   const SizedBox(height: 20),
-                  Image.asset('assets/wondering_detective_wawa.png', width: imageSize),
+                  Image.asset('assets/wondering_detective_wawa.png',
+                      width: imageSize),
                 ],
               ),
               ExitButton(),
