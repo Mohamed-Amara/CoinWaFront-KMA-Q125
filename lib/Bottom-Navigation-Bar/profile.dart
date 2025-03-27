@@ -352,11 +352,6 @@ class _ProfilePageState extends State<Profile> {
 
   Widget _weeklyStreakIndicator(List<bool> streakDays) {
     List<String> weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    print("streakDays received: $streakDays");
-
-    // // Fetch streakDays safely
-    // final profileProvider = Provider.of<ProfileProvider>(context, listen: true);
-    // final List<bool> streakDays = profileProvider.streakDays ?? List.filled(7, false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
