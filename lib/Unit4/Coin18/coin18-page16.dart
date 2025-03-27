@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/coin_ending-template.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 
 class Coin18Page16 extends StatelessWidget {
   const Coin18Page16({super.key});
@@ -125,8 +126,9 @@ class Coin18Page16 extends StatelessWidget {
                           color: const Color.fromARGB(255, 122, 72, 230),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          'Awesome job, Wawa! You now know what taxes are, what counts as a deduction, and why it’s smart to keep those receipts. Filing taxes might sound scary, but with the right tools and knowledge, it’s totally doable. Keep learning and saving smart!',
+                        child: const TypingText(
+                          text:
+                              'Awesome job, Wawa! You now know what taxes are, what counts as a deduction, and why it’s smart to keep those receipts. Filing taxes might sound scary, but with the right tools and knowledge, it’s totally doable. Keep learning and saving smart!',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,

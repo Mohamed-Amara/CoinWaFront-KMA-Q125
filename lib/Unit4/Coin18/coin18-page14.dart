@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 import 'package:flutter_application_1/Unit4/Coin18/coin18-page15.dart';
 
 Widget SpeechBubble(String description) {
@@ -30,8 +31,8 @@ Widget SpeechBubble(String description) {
               vertical: 16,
               horizontal: 32,
             ),
-            child: Text(
-              description,
+            child: TypingText(
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 height: 1.4,
@@ -40,7 +41,6 @@ Widget SpeechBubble(String description) {
                 fontWeight: FontWeight.bold,
               ),
               softWrap: true,
-              overflow: TextOverflow.visible,
             ),
           ),
         ),
@@ -56,8 +56,10 @@ class Coin18Page14 extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double imageSize = screenWidth * 0.6; // Image scales to 40% of screen width
-    String text = "Alright, it's time to put that detective eye to the test! Let's see if you're";
-    text += " Sherlock Holmes... or just Sherlock Homeless. Here's a little quiz for you!";
+    String text =
+        "Alright, it's time to put that detective eye to the test! Let's see if you're";
+    text +=
+        " Sherlock Holmes... or just Sherlock Homeless. Here's a little quiz for you!";
 
     return GestureDetector(
       onTap: () {
@@ -77,7 +79,8 @@ class Coin18Page14 extends StatelessWidget {
                 children: [
                   SpeechBubble(text),
                   const SizedBox(height: 20),
-                  Image.asset('assets/magnifying_detective_wawa.png', width: imageSize),
+                  Image.asset('assets/magnifying_detective_wawa.png',
+                      width: imageSize),
                 ],
               ),
               ExitButton(),

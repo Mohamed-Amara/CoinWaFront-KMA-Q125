@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Templates/typing_text.dart';
 import 'package:flutter_application_1/Unit4/Coin18/coin18-page12.dart';
 
 class Coin18Page11 extends StatelessWidget {
@@ -84,12 +85,12 @@ class Coin18Page11 extends StatelessWidget {
                   ),
                 ],
               ),
-              
+
               // Center Content
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: screenHeight*0.22),
+                  SizedBox(height: screenHeight * 0.22),
                   // Background Box for the Text
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -98,8 +99,8 @@ class Coin18Page11 extends StatelessWidget {
                       color: const Color.fromARGB(255, 140, 82, 255),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: const Text(
-                      "Find the Hidden Tax Deductions, Click to Begin!",
+                    child: const TypingText(
+                      text: "Find the Hidden Tax Deductions, Click to Begin!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
