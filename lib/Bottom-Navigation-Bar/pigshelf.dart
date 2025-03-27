@@ -164,7 +164,6 @@ class _BookshelfPageState extends State<BookshelfPage> {
 
             int completedLevels =
                 Provider.of<ProgressProvider>(context, listen: false).level;
-            print(completedLevels);
             if (pigIndex == 0 && completedLevels > 5) {
               pigColor = const Color.fromRGBO(33, 148, 92, 1);
               ; // Turn the first piggy bank green
