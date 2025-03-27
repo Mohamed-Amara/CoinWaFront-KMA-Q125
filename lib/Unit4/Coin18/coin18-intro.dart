@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
-import 'package:flutter_application_1/Unit4/Coin18/coin18-page4.dart';
+import 'package:flutter_application_1/Unit4/Coin18/coin18-page2.dart';
 import '../../Templates/typing_text.dart';
 
 Widget SpeechBubble(String description) {
@@ -49,8 +49,8 @@ Widget SpeechBubble(String description) {
   );
 }
 
-class Coin18Page3 extends StatelessWidget {
-  const Coin18Page3({super.key});
+class Coin18Intro extends StatelessWidget {
+  const Coin18Intro({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class Coin18Page3 extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Coin18Page4()),
+          MaterialPageRoute(builder: (context) => const Coin18Page2()),
         );
       },
       child: Scaffold(
@@ -74,7 +74,7 @@ class Coin18Page3 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SpeechBubble(
-                      "RICH WAWA IT'S ME I'M FREAKING OUT! IT'S MY TAXES, THEY ARE TOO HIGH."),
+                      "THESE TAXES ARE TOO HIGH! THIS CAN'T BE RIGHT, LET ME CALL RICH WAWA"),
                   const SizedBox(height: 20),
                   Image.asset('assets/calling_wawa.png', width: imageSize),
                 ],
@@ -86,7 +86,7 @@ class Coin18Page3 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 3,
+                        currentPage: 1,
                         totalPages: 16,
                       ),
                     ),
