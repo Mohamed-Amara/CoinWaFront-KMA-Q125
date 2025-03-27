@@ -118,12 +118,7 @@ class _LobbyPageState extends State<LobbyPage> {
   ];
   final ScrollController _scrollController =
       ScrollController(); //Let's you observe scrolling information on the page
-  // List<String> titles = [
-  //   "Saving",
-  //   "Assets/Liabilities",
-  //   "Credit Cards",
-  //   "This isn't the end!"
-  // ]; //Titles of all the units
+
   Color _titleColor = const Color(0xff21945C);
 
   @override
@@ -789,16 +784,12 @@ class _LobbyPageState extends State<LobbyPage> {
                                       MaterialPageRoute(
                                         builder: (context) {
                                           if (index >= _pages.length) {
-                                            print(
-                                                "🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
                                             return const Scaffold(
                                               body: Center(
                                                   child: Text(
                                                       "Error: Page Not Found")),
                                             );
                                           } else {
-                                            print(
-                                                "✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
                                             return _pages[index];
                                           }
                                         },
@@ -884,17 +875,12 @@ class _LobbyPageState extends State<LobbyPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          if (index >= _pages.length) {
-                                            print(
-                                                "🚨 ERROR: Trying to access _pages[$index] but length is ${_pages.length}");
                                             return const Scaffold(
                                               body: Center(
                                                   child: Text(
                                                       "Error: Page Not Found")),
                                             );
                                           } else {
-                                            print(
-                                                "✅ Navigating to _pages[$index] (Valid range: 0-${_pages.length - 1})");
                                             return _pages[index];
                                           }
                                         },
