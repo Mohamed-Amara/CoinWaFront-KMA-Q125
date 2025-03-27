@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
-import 'package:flutter_application_1/Unit4/Coin18/coin18-page3.dart';
+import 'package:flutter_application_1/Unit4/Coin18/coin18-page4.dart';
 import '../../Templates/typing_text.dart';
 
 Widget SpeechBubble(String description) {
@@ -49,21 +49,19 @@ Widget SpeechBubble(String description) {
   );
 }
 
-class Coin18Page2 extends StatelessWidget {
-  const Coin18Page2({super.key});
+class Coin18Page3 extends StatelessWidget {
+  const Coin18Page3({super.key});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double imageSize = screenWidth * 0.6; // Image scales to 40% of screen width
-    String text =
-        "Hold on, let me check... it's probably my investors. Or my accountant begging me to stop buying Lambos.";
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Coin18Page3()),
+          MaterialPageRoute(builder: (context) => const Coin18Page4()),
         );
       },
       child: Scaffold(
@@ -75,10 +73,10 @@ class Coin18Page2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SpeechBubble(text),
+                  SpeechBubble(
+                      "RICH WAWA IT'S ME I'M FREAKING OUT! IT'S MY TAXES, THEY ARE TOO HIGH."),
                   const SizedBox(height: 20),
-                  Image.asset('assets/supercar_dark_wawa.png',
-                      width: imageSize),
+                  Image.asset('assets/calling_wawa.png', width: imageSize),
                 ],
               ),
               ExitButton(),
@@ -88,7 +86,7 @@ class Coin18Page2 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 2,
+                        currentPage: 3,
                         totalPages: 16,
                       ),
                     ),
