@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Providers/profile_provider.dart';
 import 'package:flutter_application_1/Providers/progress_provider.dart';
 import 'package:flutter_application_1/Login-Logout/login2.dart';
 import 'package:flutter_application_1/Login-Logout/home_screen.dart'; // Ensure you have a home screen
+import 'package:flutter_application_1/aspectratio.dart';
 import 'package:provider/provider.dart';
 import 'Providers/lives_provider.dart'; // Import the LivesProvider
 import 'welcome_page.dart'; // Import the WelcomePage
@@ -43,19 +44,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Financial Literacy App',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      initialRoute: '/welcome',
-      routes: {
-        '/welcome': (context) => const WelcomePage(),
-        '/': (context) => const AppWithOverlay(),
-        '/login': (context) => const Login2App(),
-        '/home': (context) => const HomeScreen(),
-        // Add other routes here
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final aspectRatio = constraints.maxWidth / constraints.maxHeight;
+        if (aspectRatio < 0.36 || aspectRatio > 0.59) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: AspectRatioScreen(),
+          );
+        }
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Financial Literacy App',
+          theme: ThemeData(
+            primarySwatch: Colors.deepPurple,
+          ),
+          initialRoute: '/welcome',
+          routes: {
+            '/welcome': (context) => const WelcomePage(),
+            '/': (context) => const AppWithOverlay(),
+            '/login': (context) => const Login2App(),
+            '/home': (context) => const HomeScreen(),
+            // Add other routes here
+          },
+        );
       },
     );
   }
