@@ -875,6 +875,7 @@ class _LobbyPageState extends State<LobbyPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
+                                            if(index>=_pages.length){
                                             return const Scaffold(
                                               body: Center(
                                                   child: Text(
