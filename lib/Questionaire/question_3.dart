@@ -92,7 +92,7 @@ class _Question3PageState extends State<Question3Page> {
                           child: OptionCard(
                             value: 'manual',
                             label: 'I track expenses manually',
-                            color: Colors.deepPurple,
+                            color: Color(0xFFE4D6F7),
                             isSelected: selectedValue == 'manual',
                           ),
                         ),
@@ -101,7 +101,7 @@ class _Question3PageState extends State<Question3Page> {
                           child: OptionCard(
                             value: 'app',
                             label: 'I use a budgeting app',
-                            color: Colors.purple,
+                            color: Color(0xFFDEC6FF),
                             isSelected: selectedValue == 'app',
                           ),
                         ),
@@ -111,7 +111,7 @@ class _Question3PageState extends State<Question3Page> {
                           child: OptionCard(
                             value: 'no_tracking',
                             label: 'I don’t track expenses at all',
-                            color: Colors.indigo,
+                            color: Color(0xFFCBA5FF),
                             isSelected: selectedValue == 'no_tracking',
                           ),
                         ),

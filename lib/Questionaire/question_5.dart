@@ -117,7 +117,7 @@ class _Question5PageState extends State<Question5Page> {
                           child: OptionCard(
                             value: 'money',
                             label: 'Learning how to manage money better',
-                            color: Colors.blue[200]!,
+                            color: Color(0xFFE4D6F7),
                             isSelected: selectedValue == 'money',
                           ),
                         ),
@@ -126,7 +126,7 @@ class _Question5PageState extends State<Question5Page> {
                           child: OptionCard(
                             value: 'saving',
                             label: 'Saving up for something big',
-                            color: Colors.purple[200]!,
+                            color: Color(0xFFDEC6FF),
                             isSelected: selectedValue == 'saving',
                           ),
                         ),
@@ -137,7 +137,7 @@ class _Question5PageState extends State<Question5Page> {
                             value: 'investing',
                             label:
                                 'Making my money work for me (investing, earning more)',
-                            color: Colors.teal[200]!,
+                            color: Color(0xFFCBA5FF),
                             isSelected: selectedValue == 'investing',
                           ),
                         ),
@@ -147,7 +147,7 @@ class _Question5PageState extends State<Question5Page> {
                           child: OptionCard(
                             value: 'financial-independence',
                             label: 'Building financial independence early',
-                            color: Colors.pink[200]!,
+                            color: Color(0xFFC59AFF),
                             isSelected:
                                 selectedValue == 'financial-independence',
                           ),
@@ -214,7 +214,10 @@ class OptionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected ? Border.all(color: Colors.blue, width: 3) : null,
+        border: Border.all(
+          color: isSelected ? Colors.blue : Colors.white,
+          width: isSelected ? 3 : 0.5,
+        )
       ),
       child: Center(
         child: Text(

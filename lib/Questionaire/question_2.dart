@@ -94,19 +94,19 @@ class _Question2PageState extends State<Question2Page> {
                       OptionCard(
                           value: 'Budget',
                           label: 'Budgeting & saving',
-                          color: Colors.blue[200]!),
+                          color: Color(0xFFE4D6F7)),
                       OptionCard(
                           value: 'invest',
                           label: 'Earning & investing',
-                          color: Colors.purple[200]!),
+                          color: Color(0xFFDEC6FF)),
                       OptionCard(
                           value: 'Credit Card',
                           label: 'Credit cards & loans',
-                          color: Colors.teal[200]!),
+                          color: Color(0xFFCBA5FF)),
                       OptionCard(
                           value: 'Spending',
                           label: 'Smart spending & shopping hacks',
-                          color: Colors.pink[200]!),
+                          color: Color(0xFFC59AFF)),
                     ]
                         .map((card) => GestureDetector(
                               onTap: () {
@@ -188,7 +188,10 @@ class OptionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected ? Border.all(color: Colors.blue, width: 2) : null,
+        border: Border.all(
+          color: isSelected ? Colors.blue : Colors.white,
+          width: isSelected ? 2 : 0.5,
+        )
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
