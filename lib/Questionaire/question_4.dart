@@ -93,7 +93,7 @@ class _Question4PageState extends State<Question4Page> {
                           child: OptionCard(
                             value: 'spend_all',
                             label: 'Spend it on something I want',
-                            color: Colors.blue,
+                            color: Color(0xFFE4D6F7),
                             isSelected: selectedValue == 'spend_all',
                           ),
                         ),
@@ -103,7 +103,7 @@ class _Question4PageState extends State<Question4Page> {
                           child: OptionCard(
                             value: 'save_some',
                             label: 'Save a portion and spend the rest',
-                            color: Colors.pink,
+                            color: Color(0xFFDEC6FF),
                             isSelected: selectedValue == 'save_some',
                           ),
                         ),
@@ -113,7 +113,7 @@ class _Question4PageState extends State<Question4Page> {
                           child: OptionCard(
                             value: 'invest_it',
                             label: 'Invest it or use it to grow my money',
-                            color: Colors.teal,
+                            color: Color(0xFFCBA5FF),
                             isSelected: selectedValue == 'invest_it',
                           ),
                         ),
@@ -178,7 +178,10 @@ class OptionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected ? Border.all(color: Colors.blue, width: 3) : null,
+        border: Border.all(
+          color: isSelected ? Colors.blue : Colors.white,
+          width: isSelected ? 3 : 0.5,
+        )
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
