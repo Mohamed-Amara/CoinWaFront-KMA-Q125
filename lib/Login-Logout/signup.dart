@@ -318,27 +318,29 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 80.0),
-                  SizedBox(
-                    height: 60,
-                    width: 220,
-                    child: ElevatedButton(
-                      onPressed: _register,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 94, 24, 235),
-                        ),
+                SizedBox(
+                  height: 60,
+                  width: 220,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _register();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 94, 24, 235),
                       ),
-                      child: const Text(
-                        'Ready To Learn!',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontFamily: 'Source',
-                        ),
+                    ),
+                    child: const Text(
+                      'Ready To Learn!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontFamily: 'Source',
                       ),
                     ),
                   ),
-                  if (_errorMessage != null)
+                ),
+                if (_errorMessage != null)
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(

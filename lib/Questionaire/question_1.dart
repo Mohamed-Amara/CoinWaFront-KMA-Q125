@@ -91,7 +91,7 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'beginner',
                             label:
                                 'I have no experience and want to learn from scratch',
-                            color: Colors.deepPurple,
+                            color: Color(0xFFE4D6F7),
                             isSelected: selectedValue == 'beginner',
                           ),
                         ),
@@ -101,7 +101,7 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'medium',
                             label:
                                 'I know a little but want to improve my skills',
-                            color: Colors.purple,
+                            color: Color(0xFFDEC6FF),
                             isSelected: selectedValue == 'medium',
                           ),
                         ),
@@ -111,7 +111,7 @@ class _Question1PageState extends State<Question1Page> {
                             value: 'expert',
                             label:
                                 'I feel confident but want to learn advanced strategies',
-                            color: Colors.indigo,
+                            color: Color(0xFFCBA5FF),
                             isSelected: selectedValue == 'expert',
                           ),
                         ),
@@ -182,9 +182,10 @@ class OptionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10),
-        border: isSelected
-            ? Border.all(color: Colors.purpleAccent, width: 3)
-            : null,
+        border: Border.all(
+          color: isSelected ? Colors.purpleAccent : Colors.white,
+          width: isSelected ? 3 : 0.5,
+        )
       ),
       child: Center(
         child: Text(

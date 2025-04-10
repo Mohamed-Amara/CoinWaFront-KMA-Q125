@@ -143,17 +143,17 @@ class _CityScrollPageState extends State<CityScrollPage> {
                             context,
                             'Health Services',
                             'assets/hospital.png',
-                            ' Taxes help fund hospitals, doctors, nurses, and medical equipment, ensuring everyone has access to essential healthcare services.'),
+                            'Taxes help fund hospitals, doctors, nurses, and medical equipment, ensuring that everyone has access to essential healthcare services.'),
                         _buildBuilding(
                             context,
                             'Education',
                             'assets/school.png',
-                            'Schools, teachers, supplies, and learning resources are all supported by taxes, helping students get a quality education.'),
+                            'Schools, teachers, supplies, and learning resources are all supported by taxes, helping students receive a quality education.'),
                         _buildBuilding(
                             context,
                             'Development',
                             'assets/construction.png',
-                            'Taxes help fund the construction and maintenance of roads, bridges, parks, and other public infrastructure, ensuring communities stay safe, functional, and growing.'),
+                            'Taxes help fund the construction and maintenance of roads, bridges, parks, and other public infrastructure, ensuring that communities remain safe, functional, and growing.'),
                         _buildBuilding(
                             context,
                             'Public Safety',
@@ -168,7 +168,7 @@ class _CityScrollPageState extends State<CityScrollPage> {
                             context,
                             'The Government',
                             'assets/govern.png',
-                            ' Taxes pay for government operations, including lawmakers, public programs, and essential services that keep the country running smoothly.'),
+                            'Taxes pay for government operations, including lawmakers, public programs, and essential services that keep the country running smoothly.'),
                       ],
                     ),
                   ),
@@ -241,19 +241,18 @@ class _CityScrollPageState extends State<CityScrollPage> {
             top: (250 / 932) * MediaQuery.of(context).size.height,
             left: 0,
             right: 0,
-              child: const Text(
-                "Ride with wawa done Tax Road, click on all the building to continue",
-                softWrap: true,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Source",
-                  height: 1.3,
-                ),
+            child: const Text(
+              "Ride with wawa done Tax Road, click on all the building to continue",
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Source",
+                height: 1.3,
               ),
-
+            ),
           ),
           ExitButton(),
           const Row(

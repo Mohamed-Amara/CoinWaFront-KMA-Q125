@@ -90,8 +90,6 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print("Register response: $data"); // Log the response
-
       return data; // Do not store token here
     } else {
       final errorMsg = json.decode(response.body)['msg'];
@@ -111,12 +109,10 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print("Verify email response: $data"); // Log the response
 
       // Store the token here after email verification
       final token = data['token'];
       if (token != null) {
-        print(token);
         await _storage.write(key: 'user_token', value: token);
       }
 
@@ -386,8 +382,6 @@ class AuthService {
 
   Future<bool> submitAnswers(BuildContext context, AnswerModel answers) async {
     final token = await getToken();
-    print("Token: $token");
-    print("Answers to submit: ${json.encode(answers.toJson())}");
 
     if (token == null) {
       throw Exception('No token available');
@@ -402,9 +396,6 @@ class AuthService {
         },
         body: json.encode({"responses":answers.toJson()}),  // Send the answers as JSON
       );
-
-      print("Response Status: ${response.statusCode}");
-      print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         return true;

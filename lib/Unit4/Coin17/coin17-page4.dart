@@ -4,7 +4,6 @@ import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Unit4/Coin17/coin17-page5.dart';
 import 'package:flutter_application_1/Unit4/Coin17/speech-bubble.dart';
 
-
 class Coin17Page4 extends StatelessWidget {
   const Coin17Page4({super.key});
 
@@ -104,7 +103,7 @@ class Coin17Page4 extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   SpeechBubble(
-                      'Taxes allow a town to thrive since everyone can contribute equally. Your taxes go back to your community and helps the people in it!',
+                      'Taxes allow a town to thrive since everyone can contribute equally. Your taxes go back to your community and help the people in it!',
                       false),
                   const SizedBox(height: 20),
                   Image.asset('assets/wawaandrichwawa.png',
@@ -118,8 +117,8 @@ class Coin17Page4 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TopBar(
-                        currentPage: 2,
-                        totalPages: 6,
+                        currentPage: 4,
+                        totalPages: 13,
                       ),
                     ),
                   ),

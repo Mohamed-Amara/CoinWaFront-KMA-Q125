@@ -58,8 +58,7 @@ class _TaxPieChartPageState extends State<TaxPieChartPage> {
   void _showPopup(String title, String description, String icon) {
     showDialog(
       context: context,
-      barrierColor:
-          Colors.black.withOpacity(0.7),
+      barrierColor: Colors.black.withOpacity(0.7),
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(

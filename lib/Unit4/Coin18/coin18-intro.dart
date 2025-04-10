@@ -1,56 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
+import 'package:flutter_application_1/Unit4/Coin18/coin18-page2.dart';
+import '../../Templates/typing_text.dart';
 
-Widget SpeechBubble(String description, bool isLeft) {
-  return Stack(
-    clipBehavior: Clip.none, // Allow the triangle to overflow
-    children: [
-      Positioned(
-        bottom: -15,
-        left: isLeft ? 80 : null, // Conditionally set left
-        right: !isLeft ? 80 : null, // Conditionally set right
-        child: Image.asset('assets/triangle.png', width: 35),
-      ),
-      Container(
-        width: 320,
-        decoration: BoxDecoration(
-          color: const Color(0xff7870DE),
-          borderRadius: BorderRadius.circular(20),
+Widget SpeechBubble(String description) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 24),
+    child: Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          bottom: -15,
+          right: 40,
+          child: Image.asset(
+            'assets/triangle.png',
+            width: 30,
+          ),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-            child: Text(
-              description,
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0xff7870DE),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 32,
+            ),
+            child: TypingText(
+              text: description,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                height: 1.2,
+                height: 1.4,
                 color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
+              softWrap: true,
             ),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
-
 
 class Coin18Intro extends StatelessWidget {
   const Coin18Intro({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double imageSize = screenWidth * 0.6; // Image scales to 40% of screen width
+
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const Coin11Page2()),
-        // );
-        print("hi");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Coin18Page2()),
+        );
       },
       child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
@@ -61,24 +73,10 @@ class Coin18Intro extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: const Text(
-                      "To start off, let's first explore what debt is!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff5e17eb),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                  SpeechBubble('Debt is when you owe something (usually money) to someone else!', true),
+                  SpeechBubble(
+                      "THESE TAXES ARE TOO HIGH! THIS CAN'T BE RIGHT, LET ME CALL RICH WAWA"),
                   const SizedBox(height: 20),
-                  SpeechBubble('It is money that is borrowed for a certain period of time and has to be returned', false),
-                  const SizedBox(height: 20),
-                  Image.asset('assets/wawaTalk.png', width: 150),
+                  Image.asset('assets/calling_wawa.png', width: imageSize),
                 ],
               ),
               ExitButton(),
@@ -89,7 +87,7 @@ class Coin18Intro extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: TopBar(
                         currentPage: 1,
-                        totalPages: 6,
+                        totalPages: 16,
                       ),
                     ),
                   ),
@@ -101,5 +99,4 @@ class Coin18Intro extends StatelessWidget {
       ),
     );
   }
-
 }

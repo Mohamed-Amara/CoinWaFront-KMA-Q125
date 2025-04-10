@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Unit1/Coin2/coin2-catchgame1.dart';
+import 'package:flutter_application_1/Unit1/Coin2/coin2-game1.dart';
 import 'package:flutter_application_1/Unit1/Coin3/coin3-intro.dart';
 import 'package:flutter_application_1/Providers/progress_provider.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
@@ -57,7 +57,7 @@ class FullScreenImagePage extends StatelessWidget {
                  Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FallingCoins1(),
+                  builder: (context) => const FallingCoins(),
                 ),
               );
               },

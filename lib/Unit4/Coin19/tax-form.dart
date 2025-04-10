@@ -12,13 +12,13 @@ class taxForm extends StatefulWidget {
 }
 
 class _taxFormState extends State<taxForm> {
-  List<String> _lessons = [
+  final List<String> _lessons = [
     "If you spell your name wrong or type the wrong address, your tax form might get delayed or even rejected! Always double-check your info before sending it.",
     "If you add or subtract numbers incorrectly, you might end up paying too much or too little tax. Using a calculator or tax software helps avoid this problem!",
     "If you had a part-time job, earned money from savings, or got paid for extra work, you need to report all of it. Forgetting some income can cause problems later!",
     "Taxes have a due date, just like homework! If you file late, you might have to pay extra money (a penalty). Mark the deadline on a calendar so you don’t forget!"
   ];
-  List<String> _title = [
+  final List<String> _title = [
     "Personal Info",
     "Math Mistakes",
     "Wrong Income",
