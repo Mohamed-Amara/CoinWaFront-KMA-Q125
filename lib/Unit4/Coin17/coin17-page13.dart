@@ -15,8 +15,8 @@ class SummaryPage extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => const CoinApp(
-              coinNumber: 16,
-              description: 'What are Taxes?',
+              coinNumber: 17,
+              description: 'Income Taxes',
             ),
           ),
         );
