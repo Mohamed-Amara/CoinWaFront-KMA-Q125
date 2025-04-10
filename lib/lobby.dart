@@ -34,6 +34,11 @@ import 'Providers/profile_provider.dart';
 import 'Templates/lives_widget.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_application_1/CoinEnd.dart';
+import 'Unit5/Coin21/Coin21-Intro.dart';
+import 'Unit5/Coin22/Coin22-Intro.dart';
+import 'Unit5/Coin23/coin23-Intro.dart';
+import 'Unit5/Coin24/Coin24-Intro.dart';
+import 'Unit5/coin25.dart';
 
 class LobbyApp extends StatelessWidget {
   const LobbyApp({super.key});
@@ -57,6 +62,7 @@ List<String> titles = [
   "Assets/Liabilities",
   "Credit Cards",
   "Taxes",
+  "Investing",
   "This Isn't the End!"
 ];
 
@@ -72,6 +78,8 @@ Color _getColorForUnit(int unit) {
     case 3:
       return const Color.fromARGB(255, 231, 61, 61);
     case 4:
+      return const Color.fromARGB(255, 255, 105, 180);
+    case 5:
       return const Color(0xFF7B73DF); // Gradient takes over when unit == 3
     default:
       return const Color(0xff21945C);
@@ -105,6 +113,7 @@ class _LobbyPageState extends State<LobbyPage> {
     const Color(0xFF7870DE),
     const Color.fromARGB(255, 61, 121, 231),
     const Color.fromARGB(255, 231, 61, 61),
+    const Color.fromARGB(255, 255, 105, 180),
     const Color(0xFF7B73DF)
   ];
 
@@ -114,6 +123,7 @@ class _LobbyPageState extends State<LobbyPage> {
     "assets/coin_level.png",
     "assets/creditCardCoin.png",
     "assets/TaxCoin.png",
+    "assets/investing_coin.png"
     //add here
   ];
   final ScrollController _scrollController =
@@ -142,12 +152,15 @@ class _LobbyPageState extends State<LobbyPage> {
     const changeColorPosition1 = 550;
     const changeColorPosition2 = 1100;
     const changeColorPosition3 = 1650;
-    const changeColorPositionEnd = 2200; // Position for End Coin
+    const changeColorPosition4 = 2200;
+    const changeColorPositionEnd = 2750; // Position for End Coin
 
     int newUnit = 0;
 
     if (scrollPosition >= changeColorPositionEnd) {
       newUnit = titles.length - 1; // Special case for End Coin
+    }else if (scrollPosition >= changeColorPosition4) {
+      newUnit = 4;
     } else if (scrollPosition >= changeColorPosition3) {
       newUnit = 3;
     } else if (scrollPosition >= changeColorPosition2) {
@@ -193,6 +206,8 @@ class _LobbyPageState extends State<LobbyPage> {
                       _buildUnit3(context),
                       _buildHorizontalLine(titles[3]),
                       _buildUnit4(context),
+                      _buildHorizontalLine(titles[4]),
+                      _buildUnit5(context),
                       _buildHorizontalLine(titles[titles.length - 1]),
                       _buildEnd(context),
                       const SizedBox(height: 200),
@@ -539,14 +554,37 @@ class _LobbyPageState extends State<LobbyPage> {
       ),
     );
   }
+  Widget _buildUnit5(BuildContext context) {
+    return CustomPaint(
+      painter: PathPainter(),
+      child: Column(
+        children: <Widget>[
+          _buildCoinLevel(
+              context, Alignment.centerLeft, "What is Investing",
+              index: 20, isFirst: true),
+          _buildCoinLevel(
+              context, Alignment.centerRight, "Investment Types",
+              index: 21),
+          _buildCoinLevel(
+              context, Alignment.centerLeft, "How The Stock Market Works",
+              index: 22, isFirst: true),
+          _buildCoinLevel(
+              context, Alignment.centerRight, "Beginner Investing Strategies",
+              index: 23),
+          _buildCoinLevel(context, Alignment.centerLeft, "Piggy Bank 4 End",
+              index: 24, isFirst: true),
+        ],
+      ),
+    );
+  }
 
   Widget _buildEnd(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 40.0),
       child: Consumer<ProgressProvider>(
         builder: (context, progressProvider, child) {
-          bool canAccessEndCoin = progressProvider.level >= 20;
-          bool isSelected = progressProvider.level == 21;
+          bool canAccessEndCoin = progressProvider.level >= 25;
+          bool isSelected = progressProvider.level == 26;
 
           return Column(
             children: <Widget>[
@@ -715,6 +753,31 @@ class _LobbyPageState extends State<LobbyPage> {
       levelNumber: 19,
     ),
     Coin20(),
+    const CoinStackTemplate(
+      title: "Coin 21: What is Investing",
+      transfer: Coin21Intro(),
+      sublevelCount: 10, // need to change
+      levelNumber: 21,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 22: Investment Types",
+      transfer: Coin22Intro(),
+      sublevelCount: 13,//need to change
+      levelNumber: 22,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 23: How the Stock Market Works",
+      transfer: Coin23Intro(),
+      sublevelCount: 10, //need to change
+      levelNumber: 23,
+    ),
+    const CoinStackTemplate(
+      title: "Coin 24: Managing your Investments",
+      transfer: Coin24Intro(), //need to change
+      sublevelCount: 11,
+      levelNumber: 24,
+    ),
+    Coin25(),
     const CoinEnd()
   ];
 
@@ -1066,7 +1129,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
   @override
   Widget build(BuildContext context) {
     // Only animate when unit == 3
-    bool shouldAnimate = widget.currentUnit == 4;
+    bool shouldAnimate = widget.currentUnit == 5;
 
     return AnimatedBuilder(
       animation: _colorAnimation,
