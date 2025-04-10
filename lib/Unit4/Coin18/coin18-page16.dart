@@ -15,8 +15,8 @@ class Coin18Page16 extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => const CoinApp(
-              coinNumber: 19,
-              description: 'Your Taxes',
+              coinNumber: 18,
+              description: 'Tax Deductions',
             ),
           ),
         );
