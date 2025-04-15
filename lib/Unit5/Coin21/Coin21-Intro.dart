@@ -2,51 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Templates/typing_text.dart';
-
-Widget SpeechBubble(String description) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 24),
-    child: Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          bottom: -15,
-          left:40,
-          child: Image.asset(
-            'assets/triangle.png',
-            width: 30,
-          ),
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 300,
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xff7870DE),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 32,
-            ),
-            child: TypingText(
-              text: description,
-              style: const TextStyle(
-                height: 1.4,
-                color: Color.fromARGB(255, 248, 248, 248),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
+import './page2.dart';
 
 class Coin21Intro extends StatelessWidget {
   const Coin21Intro({super.key});
@@ -55,10 +11,10 @@ class Coin21Intro extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => CityScrollPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Page2()),
+        );
       },
       child: Scaffold(
         backgroundColor: const Color(0xfffff1db),
@@ -69,18 +25,71 @@ class Coin21Intro extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 100),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5), // Add padding from screen edges
-                    child: SpeechBubble(
-                        'Hmm....... I wonder what taxes are'),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Positioned(
+                        top: 15,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 91, 24, 233),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 140, 82, 255),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                        ),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 30),
+                            Text(
+                              "What is Investing",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Source",
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  Image.asset('assets/wawatax.png',
-                      width: 250,
-                      height: 300,
-                      fit: BoxFit.contain), // Keep image size unchanged
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: TypingText(
+                      text: "WaWa is running a Lemonade stand to make some extra cash!",
+                      style: const TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                  Image.asset("Unit5/lemonade.png")
                 ],
               ),
               ExitButton(),
