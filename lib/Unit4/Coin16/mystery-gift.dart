@@ -136,17 +136,9 @@ class _MysteryGiftPageState extends State<MysteryGiftPage>
                         animationSpeed: const Duration(milliseconds: 8000),
                       ),
                     ),
-                    Positioned(
-                      right: -15,
-                      top: 30,
-                      child: Transform.rotate(
-                        angle: 90 *
-                            (3.1415926535 / 180), // Convert degrees to radians
-                        child: Image.asset(
-                          'assets/triangle.png',
+                    Image.asset(
+                          'assets/trianglecut2.png',
                           width: 10,
-                        ),
-                      ),
                     ),
 
                     const SizedBox(height: 25),
