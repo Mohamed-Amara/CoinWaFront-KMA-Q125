@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Templates/exit_button.dart';
 import 'package:flutter_application_1/Templates/topbar.dart';
 import 'package:flutter_application_1/Templates/typing_text.dart';
-import 'package:flutter_application_1/Unit1/Coin4/coin4-compounding.dart';
-import 'package:flutter_application_1/Unit5/Coin23/coin23-page2.dart';
+import 'package:flutter_application_1/Unit5/Coin23/coin23-page5.dart';
 
 Widget SpeechBubble(String description) {
   return Padding(
@@ -13,14 +12,10 @@ Widget SpeechBubble(String description) {
       children: [
         Positioned(
           bottom: -15,
-          right: 0,
-          left: 0,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Image.asset(
-              'assets/triangle.png',
-              width: 30,
-            ),
+          right: 60,
+          child: Image.asset(
+            'assets/triangle.png',
+            width: 30,
           ),
         ),
         ConstrainedBox(
@@ -53,8 +48,8 @@ Widget SpeechBubble(String description) {
   );
 }
 
-class Coin23Intro extends StatelessWidget {
-  const Coin23Intro({super.key});
+class coin23Page4 extends StatelessWidget {
+  const coin23Page4({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +57,7 @@ class Coin23Intro extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => coin23Page2()),
+          MaterialPageRoute(builder: (context) => coin23Page5()),
         );
       },
       child: Scaffold(
@@ -70,17 +65,6 @@ class Coin23Intro extends StatelessWidget {
         body: SafeArea(
           child: Stack(
             children: [
-              // Green background at the bottom
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: MediaQuery.of(context).size.height * 0.35,
-                child: Container(
-                  color: Colors.lightGreen,
-                ),
-              ),
-
               // Top banner
               Positioned(
                 top: 0,
@@ -145,12 +129,10 @@ class Coin23Intro extends StatelessWidget {
 
               // Center image
               Positioned(
-                bottom: 200,
-                left: 60,
-                right: 60,
+                bottom: 100,
                 child: Image.asset(
-                  'assets/Unit5/SRSA.png', // Update with correct path + extension
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  'assets/Unit5/shuttle.png', // Update with correct path + extension
+                  width: MediaQuery.of(context).size.width,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -164,12 +146,12 @@ class Coin23Intro extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SpeechBubble(
-                      'I’m at the Stock Rocket Space Agency today to learn about the stock market!',
+                      'So its like I can own a part of that whole company!',
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     Image.asset(
-                      'assets/wawa_talking.png',
-                      width: 200,
+                      'assets/Unit5/martianandwawa.png',
+                      width: MediaQuery.of(context).size.width * 0.8,
                       fit: BoxFit.contain,
                     ),
                   ],
@@ -188,7 +170,7 @@ class Coin23Intro extends StatelessWidget {
                 top: 10,
                 right: 10,
                 child: TopBar(
-                  currentPage: 1,
+                  currentPage: 4,
                   totalPages: 28,
                 ),
               ),

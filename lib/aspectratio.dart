@@ -1,14 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Providers/coin_provider.dart';
-import 'package:flutter_application_1/Providers/friend_provider.dart';
-import 'package:flutter_application_1/Providers/leader_provider.dart';
-import 'package:flutter_application_1/Providers/profile_provider.dart';
-import 'package:flutter_application_1/Providers/progress_provider.dart';
-import 'package:flutter_application_1/Login-Logout/login2.dart';
-import 'package:flutter_application_1/Login-Logout/home_screen.dart';
-import 'package:provider/provider.dart';
-import 'Providers/lives_provider.dart';
-import 'welcome_page.dart';
 
 class AspectRatioScreen extends StatelessWidget {
   const AspectRatioScreen({super.key});
